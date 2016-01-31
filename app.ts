@@ -32,41 +32,55 @@ class Application {
         var app = express();        
 
         // view engine setup
-        app.set('view, path.join(__dirname, 'views'))        ;
-		app.set('view engine', 'jade');        
+        app.set('views', path.join(__dirname, 'views'));
+        app.set('view engine', 'jade');        
 
         // uncomment af        ter placing your favicon in /publi        c
         //app.use(favic        on(path.join(__dirname, 'public', 'favicon.ico')))        ;
-        app.use(logge  'dev'))        ;
-        app.use(bodyPar        ser.json());
-        app.use(bodyPar        ser.urlencoded({ extended: false }));
-        app.use(cookieP        arser());
-        app.use(expre.static(path.join(__dirname, 'public')));        
+        app.use(logger  'dev'))        ;
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
+        app.use(cookieParser());
+        app.use(express.static(path.join(__dirname, 'public')));        
 
-        // Make our db         accessible to our route        r
-        app.use(functio        n(re q, re s, next)              req.db   db              next()        ;
-    } p.use('/        ', ro        utes)        ;
-    app.use('/users        ', users);        
+        // Make our db accessible to our router
+        app.use(function(req, res, next) {
+            req.db = db;
+            next();
+        });
+        app.use('/', routes);
+        app.use('/users', users);       
 
-    // catch 404 an        d forward to error handle        r
-    app.use(functio        n(req, res, next)               var err = n   rror('Not Found')              err.status   4              next(err);
-})                    
-// error h        andle        rs        
-
-// development         error handle        r
-// will print s        tacktrac        e
-if (app.get('en        v') === 'development') app.use(funct            n(err, req, res, next)                   res.statu  status || 500)                  res.rende  or', {
-message: ssage                      error: er                    })          })    ; pro            ctio        n e        rror handle    r
-// no stacktrac        es leaked to use    r
-app.use(functio        n(err, req, res, next)           res.status(er            status || 500)      res.render('e            or', {
-    message: er                ssage,
-    error: {
-    });
-
-
-mod            e.ex        ports         = app;
-}
-}
-
-var applic    ation = new Application();
+        // catch 404 and forward to error handler
+        app.use(function(req, res, next) {
+            var err = new Error('Not Found');
+            err.status = 404;
+            next(err);
+        });
+        // error handlers
+        // development error handler
+        // will print stacktrace
+        if (app.get('env') === 'development') {
+            app.use(function(err, req, res, next) {
+                res.status(err.status || 500);
+                res.render('error', {
+                    message: err.message,
+                    error: err
+                });
+            });
+        }
+        		// production error handler
+        // no stacktraces leaked to user
+        app.use(functin (err, req, res, next) {
+            res.status(err.status || 500);
+            res.render('error', {
+                message: err.message,
+                error: {}
+            });
+        });
+        module.exports = app;
+    };
+    return Application;
+})();
+var application = new Application();
 application.startApp();
