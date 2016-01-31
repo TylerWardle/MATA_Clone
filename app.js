@@ -14,11 +14,11 @@ var Application = (function () {
         var mongo = require('mongodb');
         var monk = require('monk');
         //var db = monk('127.0.0.1:27017/MATA');
-        var db = monk('ds047315.mongolab.com:47315/heroku_21q1wxnl'),
+        var db = monk('ds047315.mongolab.com:47315/heroku_21q1wxnl',
         {
             username : 'heroku_21q1wxnl',
             password : 'otpu73q7n7h9o1ff9lvmbifs8q'
-        }
+        });
         var routes = require('./routes/index');
         var users = require('./routes/users');
         var app = express();
