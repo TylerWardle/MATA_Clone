@@ -35,9 +35,9 @@ class Application {
         app.set('views', path.join(__dirname, 'views'));
         app.set('view engine', 'jade');        
 
-        // uncomment af        ter placing your favicon in /publi        c
-        //app.use(favic        on(path.join(__dirname, 'public', 'favicon.ico')))        ;
-        app.use(logger  'dev'))        ;
+        // uncomment after placing your favicon in /public
+        //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+        app.use(logger('dev'));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
@@ -69,9 +69,9 @@ class Application {
                 });
             });
         }
-        		// production error handler
+        // production error handler
         // no stacktraces leaked to user
-        app.use(functin (err, req, res, next) {
+        app.use(function(err, req, res, next) {
             res.status(err.status || 500);
             res.render('error', {
                 message: err.message,
@@ -79,8 +79,9 @@ class Application {
             });
         });
         module.exports = app;
-    };
-    return Application;
-})();
+    }
+    
+}
+
 var application = new Application();
 application.startApp();

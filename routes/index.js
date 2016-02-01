@@ -23,10 +23,6 @@ var Router = (function () {
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'Express' });
         });
-        /* GET Hello World page. */
-        router.get('/helloworld', function (req, res) {
-            res.render('helloworld', { title: 'Hello, World!' });
-        });
         /* GET Userlist page. */
         router.get('/userlist', function (req, res) {
             var db = req.db;
@@ -40,6 +36,10 @@ var Router = (function () {
         /* GET New User page. */
         router.get('/newuser', function (req, res) {
             res.render('newuser', { title: 'Add New User' });
+        });
+        /* GET Sign Up page. */
+        router.get('/signup', function (req, res) {
+            res.render('signup', { title: 'Register' });
         });
         /* POST to Add User Service */
         router.post('/adduser', function (req, res) {
