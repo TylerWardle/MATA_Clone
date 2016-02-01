@@ -2,30 +2,30 @@
 
 /// <reference path='..\types\DefinitelyTyped\express\express.d.ts'/>
 
-interface UserInterface {
+// interface UserInterface {
 
-    getName(): string;
-    getEmail(): string;
+//     getName(): string;
+//     getEmail(): string;
 
-}
+// }
 
-class User implements UserInterface {
-    private name: string;
-    private email: string;
+// class User implements UserInterface {
+//     private name: string;
+//     private email: string;
 
-    constructor(name: string, email: string) {
-        this.name = name;
-        this.email = email;
-    }
+//     constructor(name: string, email: string) {
+//         this.name = name;
+//         this.email = email;
+//     }
 
-    getName(): string {
-        return this.name;
-    }
+//     getName(): string {
+//         return this.name;
+//     }
 
-    getEmail(): string {
-        return this.email;
-    }
-}
+//     getEmail(): string {
+//         return this.email;
+//     }
+// }
 
 class Router {
 
@@ -34,6 +34,7 @@ class Router {
     startRouter() {
         var express = require('express');
         var router = express.Router();
+        var User = require('./routes/user');
 
         /* GET home page. */
         router.get('/', function(req, res, next) {
