@@ -26,4 +26,3 @@ class User implements UserInterface {
         return this.email;
     }
 }
-export = User;
