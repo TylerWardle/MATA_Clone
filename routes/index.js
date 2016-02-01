@@ -1,30 +1,25 @@
 /// <reference path='..\types\DefinitelyTyped\node\node.d.ts'/>
 /// <reference path='..\types\DefinitelyTyped\express\express.d.ts'/>
-// interface UserInterface {
-//     getName(): string;
-//     getEmail(): string;
-// }
-// class User implements UserInterface {
-//     private name: string;
-//     private email: string;
-//     constructor(name: string, email: string) {
-//         this.name = name;
-//         this.email = email;
-//     }
-//     getName(): string {
-//         return this.name;
-//     }
-//     getEmail(): string {
-//         return this.email;
-//     }
-// }
+var User = (function () {
+    function User(name, email) {
+        this.name = name;
+        this.email = email;
+    }
+    User.prototype.getName = function () {
+        return this.name;
+    };
+    User.prototype.getEmail = function () {
+        return this.email;
+    };
+    return User;
+})();
 var Router = (function () {
     function Router() {
     }
     Router.prototype.startRouter = function () {
         var express = require('express');
         var router = express.Router();
-        var User = require('./routes/user');
+        //var User = require('./routes/user');
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'Express' });
