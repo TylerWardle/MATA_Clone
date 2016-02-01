@@ -28,6 +28,7 @@ class Application {
 
         var routes = require('./routes/index');
         var users = require('./routes/users');
+        var user = require('.routes/user');
 
         var app = express();        
 
