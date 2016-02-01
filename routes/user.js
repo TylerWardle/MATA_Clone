@@ -13,3 +13,4 @@ var User = (function () {
     };
     return User;
 })();
+module.exports = User;
