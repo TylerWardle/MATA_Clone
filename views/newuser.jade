@@ -4,5 +4,7 @@ block content
     h1= title
     form#formAddUser(name="adduser",method="post",action="/adduser")
         input#inputUserName(type="text", placeholder="username", name="username")
+        break
         input#inputUserEmail(type="text", placeholder="useremail", name="useremail")
+        break
         button#btnSubmit(type="submit") submit
