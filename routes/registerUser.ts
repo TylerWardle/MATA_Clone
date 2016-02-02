@@ -12,8 +12,7 @@ router.post('/', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var username = req.body.username;
-    //var password = req.body.password;
-    var password = 'test';
+    var password = req.body.password;
     var user = new User.User(username,password);
 
     // Set our collection
