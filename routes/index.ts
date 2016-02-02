@@ -13,7 +13,6 @@ class Router {
         //include other routes
         router.use('/registerUser', require('./registerUser'));
         router.use('/signUp', require('./signUp'));
-        
         router.use('/users', require('./users'));
         router.use('/userList', require('./userList'));
 
