@@ -27,7 +27,7 @@ class Application {
         var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
 
         var routes = require('./routes/index');
-        var signup = require('./routes/signup');
+        //var signup = require('./routes/signup');
         var users = require('./routes/users');
 
         var app = express();        
@@ -50,8 +50,7 @@ class Application {
             next();
         });
         app.use('/', routes);
-        //app.use('/users', users);
-        //app.use('/signup',signup);       
+        app.use('/users', users);      
 
         // catch 404 and forward to error handler
         app.use(function(req, res, next) {
