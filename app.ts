@@ -27,8 +27,8 @@ class Application {
         var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
 
         var routes = require('./routes/index');
-        //var signup = require('./routes/signup');
-        //var users = require('./routes/users');
+        var signup = require('./routes/signup');
+        var users = require('./routes/users');
 
         var app = express();        
 
