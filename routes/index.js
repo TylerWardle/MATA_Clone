@@ -7,8 +7,8 @@ var Router = (function () {
         var express = require('express');
         var router = express.Router();
         //include other routes
-        router.use('/signUp', require('./signUp'));
         router.use('/registerUser', require('./registerUser'));
+        router.use('/signUp', require('./signUp'));
         router.use('/users', require('./users'));
         router.use('/userList', require('./userList'));
         /* GET home page. */

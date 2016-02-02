@@ -11,8 +11,9 @@ class Router {
         var router = express.Router();
 
         //include other routes
-        router.use('/signUp', require('./signUp'));
         router.use('/registerUser', require('./registerUser'));
+        router.use('/signUp', require('./signUp'));
+        
         router.use('/users', require('./users'));
         router.use('/userList', require('./userList'));
 
