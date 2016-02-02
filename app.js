@@ -13,11 +13,11 @@ var Application = (function () {
         // New Code
         var mongo = require('mongodb');
         var monk = require('monk');
-        //var db = monk('127.0.0.1:27017/MATA');
-        var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+        var db = monk('127.0.0.1:27017/MATA');
+        //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
         var routes = require('./routes/index');
-        var users = require('./routes/users');
-        //var user = require('.routes/user');
+        //var signup = require('./routes/signup');
+        //var users = require('./routes/users');
         var app = express();
         // view engine setup
         app.set('views', path.join(__dirname, 'views'));
@@ -35,7 +35,8 @@ var Application = (function () {
             next();
         });
         app.use('/', routes);
-        app.use('/users', users);
+        //app.use('/users', users);
+        //app.use('/signup',signup);       
         // catch 404 and forward to error handler
         app.use(function (req, res, next) {
             var err = new Error('Not Found');
