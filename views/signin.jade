@@ -2,9 +2,7 @@ extends layout
 
 block content
     h1= title
-    form#formRegisterUser(name="registeruser",method="post",action="/registerUser")
+    form#formRegisterUser(name="signin",method="post",action="/signin")
         input#inputUserName(type="text", placeholder="username", name="username")
-        br
         input#inputUserPassword(type="text", placeholder="password", name="password")
-        br
         button#btnSubmit(type="submit") submit
