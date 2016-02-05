@@ -11,11 +11,14 @@ class Router {
         var router = express.Router();
 
         //include other routes
-        router.use('/registerUser', require('./registerUser'));
+        router.use('/register', require('./register'));
         router.use('/signUp', require('./signUp'));
         router.use('/users', require('./users'));
         router.use('/userList', require('./userList'));
-
+        router.use('/homepage', require('./homepage'));
+        router.use('/accountsettings', require('./accountsettings'));
+        router.use('/webcomic', require('./webcomic'));
+        
         /* GET home page. */
         router.get('/', function(req, res, next) {
             res.render('index', { title: 'Express' });

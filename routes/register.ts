@@ -29,9 +29,14 @@ router.post('/', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("userList");
+            res.redirect("homepage");
         }
     });
+});
+
+/* GET register page. */
+router.get('/', function(req, res) {
+    res.render('register', { title: 'Register' });
 });
 
 module.exports = router;
