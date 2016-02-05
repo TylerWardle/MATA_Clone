@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1.
+		Welcome to your Homepage #{user.username}
+	div
+		form#submitNewWebcomic(name="submitComic", method="get",action="/userlist")
+			button#btnNewWebcomic(type="submit") New Webcomic
+	div
+		form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
+			//input#userName(type="text",value="#{user.username}",name="username")
+			button#btnAccountSettings(type="submit") Accountsettings
+			
