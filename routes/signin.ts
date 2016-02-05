@@ -13,10 +13,15 @@ router.post('/', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var username = req.body.username;
-    //var user = new User.User(username);
 
     // Set our collection
     var collection = db.get('registerUsers');
+	
+	var findUser = collection.find({username: req.body.username});
+	
+	//collection.find({$where: function(){this.username === username}});
+
+
 
 	res.render('homepage', { title: 'Welcome back!' });
 });

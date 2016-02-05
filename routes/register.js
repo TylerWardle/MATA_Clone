@@ -1,6 +1,4 @@
-///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
-///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-var User = require('../models/User');
+var RegisteredUser = require('../models/RegisteredUser');
 var express = require('express');
 var router = express.Router();
 /* POST register (adds a new user to the system). */
@@ -12,15 +10,21 @@ router.post('/', function (req, res) {
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
     var accountType = req.body.accountType;
-    var user = new User.User(username, firstName, lastName, accountType);
+    var password = req.body.password;
+    var user = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
     // Set our collection
     var collection = db.get('registeredUsers');
+    var checkDuplicate = collection.find({ $where: function () { this.username === username; } });
+    if (!(checkDuplicate)) {
+    }
     // Submit to the DB
     collection.insert({
+        "guid": user.getGuid(),
         "username": user.getUsername(),
         "firstName": user.getLastName(),
         "lastName": user.getLastName(),
-        "accountType": user.getAccountType()
+        "accountType": user.getAccountType(),
+        "password": user.getPassword()
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -36,4 +40,13 @@ router.post('/', function (req, res) {
 router.get('/', function (req, res) {
     res.render('register', { title: 'Register!' });
 });
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
 module.exports = router;

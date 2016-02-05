@@ -10,7 +10,8 @@ export class User
 	private userId: string;
 	
 
-    constructor(username: string, firstName: string, lastName: string, accountType: string) 
+    constructor(username: string, firstName: string, lastName: 
+		string, accountType: string) 
 	{
         this.username = username;
 		this.firstName = firstName;
