@@ -20,14 +20,14 @@ class Application {
         var cookieParser = require('cookie-parser');
         var bodyParser = require('body-parser');
 
-        // New Code
+		//Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
         var db = monk('127.0.0.1:27017/MATA');
         //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
 
         //var routes = require('./routes');
-        //var webcomic = require('./routes/webcomic')
+
         var app = express();        
 
         // view engine setup
@@ -48,10 +48,11 @@ class Application {
             next();
         });
 
+
         //Tell the express app to use these routes defined in the index.js 
         //app.use('/', routes);
         app.use('/', require('./routes'));
-        //app.use('/webcomic', require('./routes/webcomic'));      
+        //app.use('/webcomic', require('./routes/webcomic'));
 
         // catch 404 and forward to error handler
         app.use(function(req, res, next) {
@@ -59,6 +60,7 @@ class Application {
             err.status = 404;
             next(err);
         });
+		
         // error handlers
         // development error handler
         // will print stacktrace
@@ -71,6 +73,7 @@ class Application {
                 });
             });
         }
+		
         // production error handler
         // no stacktraces leaked to user
         app.use(function(err, req, res, next) {
@@ -82,7 +85,6 @@ class Application {
         });
         module.exports = app;
     }
-    
 }
 
 var application = new Application();

@@ -1,6 +1,11 @@
 /node_modules
+/bin
 /data
 /types
+<<<<<<< HEAD
 /bin
 /.DS_Store
+=======
+.DS_Store
+>>>>>>> refs/heads/master
 
