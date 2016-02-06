@@ -24,18 +24,12 @@ router.post('/', function(req, res) {
     // Set our collection
     var collection = db.get('registeredUsers');
 	
-	//var checkDuplicate = collection.findOne(
-	//						{username : req.body.username}, 
-	//						{username: 1, _id: 0});
-	//console.log("number of entires in the table currently: " + collection.count);
-	//var myCursor = db.collection.find();
-	//var myFirstDocument = myCursor.hasNext() ? myCursor.next() : null;
-	
 	 // Fetch the document
     collection.findOne({username:req.body.username}, function(err, item) {
 		if(item)
 		{
-			res.send("username " + item.username + "is already taken!");			
+			res.send("username " + item.username + "is already taken!");
+			//send back a signal
 		}
 		else
 		{

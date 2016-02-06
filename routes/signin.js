@@ -4,13 +4,22 @@ var router = express.Router();
 router.post('/', function (req, res) {
     // Set our internal DB variable
     var db = req.db;
-    // Get our form values. These rely on the "name" attributes
-    var username = req.body.username;
     // Set our collection
-    var collection = db.get('registerUsers');
-    var findUser = collection.find({ username: req.body.username });
-    //if(findUser.)
-    res.render('homepage', { title: 'Welcome back!' });
+    var collection = db.get('registeredUsers');
+    // Fetch the document
+    collection.findOne({ username: req.body.username }, function (err, item) {
+        if (item) {
+            if (item.password === req.body.password) {
+                res.render('homepage', { title: 'Welcome back!' });
+            }
+            else {
+                res.send("Username and password do not match.");
+            }
+        }
+        else {
+            res.send("User does not exist");
+        }
+    });
 });
 /* GET register page. */
 router.get('/', function (req, res) {
