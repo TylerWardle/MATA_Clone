@@ -14,6 +14,7 @@ export class RegisteredUser
 	private accountType: string;
 	private guid: string;
 
+
     constructor(username: string, password: string, firstName: string,
 		lastName: string, accountType: string) 
 	{

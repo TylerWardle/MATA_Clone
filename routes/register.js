@@ -1,40 +1,57 @@
-var RegisteredUser = require('../models/RegisteredUser');
 var express = require('express');
 var router = express.Router();
 /* POST register (adds a new user to the system). */
 router.post('/', function (req, res) {
-    // Set our internal DB variable
     var db = req.db;
-    // Get our form values. These rely on the "name" attributes
-    var username = req.body.username;
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var accountType = req.body.accountType;
-    var password = req.body.password;
-    var user = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
-    // Set our collection
-    var collection = db.get('registeredUsers');
-    // Fetch the document
-    collection.findOne({ username: req.body.username }, function (err, item) {
+    var registeredUsers = db.get('registeredUsers');
+    registeredUsers.findOne({ username: req.body.username }, function (err, item) {
         if (item) {
             res.send("username " + item.username + "is already taken!");
         }
         else {
-            // Submit to the DB
-            collection.insert({
-                "guid": user.getGuid(),
-                "username": user.getUsername(),
-                "firstName": user.getLastName(),
-                "lastName": user.getLastName(),
-                "accountType": user.getAccountType(),
-                "password": user.getPassword()
+            var username = req.body.username;
+            var firstName = req.body.firstName;
+            var lastName = req.body.lastName;
+            var accountType = req.body.accountType;
+            var password = req.body.password;
+            //var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
+            registeredUsers.insert({
+                "username": req.body.username,
+                "firstName": req.body.firstName,
+                "lastName": req.body.lastName,
+                "accountType": req.body.accountType,
+                "password": req.body.password
             }, function (err, doc) {
                 if (err) {
-                    // If it failed, return error
                     res.send("There was a problem adding the information to the database.");
                 }
                 else {
-                    // And forward to success page
+                    if (accountType === "viewer") {
+                        var viewers = db.get('viewers');
+                        //var newViewer = new Viewer(username, password, firstName, lastName, accountType);
+                        viewers.insert({
+                            "username": req.body.username,
+                            "firstName": req.body.firstName,
+                            "lastName": req.body.lastName
+                        }, function (err, doc) {
+                            if (err) {
+                                res.send("There was a problem adding the information to the database.");
+                            }
+                        });
+                    }
+                    else {
+                        var contributors = db.get('contributors');
+                        //var newContributor = new Contributor(username, password, firstName, lastName, accountType);
+                        contributors.insert({
+                            "username": req.body.username,
+                            "firstName": req.body.firstName,
+                            "lastName": req.body.lastName
+                        }, function (err, doc) {
+                            if (err) {
+                                res.send("There was a problem adding the information to the database.");
+                            }
+                        });
+                    }
                     res.redirect("signin");
                 }
             });
@@ -45,13 +62,4 @@ router.post('/', function (req, res) {
 router.get('/', function (req, res) {
     res.render('register', { title: 'Register!' });
 });
-function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-}
 module.exports = router;
