@@ -33,8 +33,9 @@ router.post('/submitNew', function(req, res) {
     var description = req.body.description;
     var genre = req.body.genre;
     var toPublish = req.body.toPublish;
-    var firstImage = new Image();
-    firstImage.src = req.body.firstImage;
+    var firstImage = req.body.firstImage;
+    //var firstImage = new Image();
+    //firstImage.src = req.body.firstImage;
 
     // Set collection
     var collection = db.get('webcomiccollection');
@@ -59,7 +60,7 @@ router.post('/submitNew', function(req, res) {
 
 /* GET edit webcomic page. */
 router.get('/edit', function(req, res) {
-    res.render('createwebcomic', { title: 'Create Web Comic' });
+    res.render('webcomicedit', { title: 'Create Web Comic' });
 });
 
 
