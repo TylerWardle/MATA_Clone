@@ -10,9 +10,10 @@ var Router = (function () {
         router.use('/register', require('./register'));
         router.use('/users', require('./users'));
         router.use('/userList', require('./userList'));
-        router.use('/homepage', require('./homepage'));
+        router.use('/contributor', require('./contributor'));
         router.use('/accountsettings', require('./accountsettings'));
         router.use('/webcomic', require('./webcomic'));
+        router.use('/viewer', require('./viewer'));
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'Express' });

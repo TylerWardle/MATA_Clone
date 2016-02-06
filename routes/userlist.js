@@ -2,7 +2,7 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 var express = require('express');
 var router = express.Router();
-/* GET register page. */
+/* GET userlist page. */
 router.get('/', function (req, res) {
     var db = req.db;
     var collection = db.get('usercollection');
