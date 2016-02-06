@@ -14,25 +14,37 @@ router.post('/', function (req, res) {
     var user = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
     // Set our collection
     var collection = db.get('registeredUsers');
-    var checkDuplicate = collection.find({ $where: function () { this.username === username; } });
-    if (!(checkDuplicate)) {
-    }
-    // Submit to the DB
-    collection.insert({
-        "guid": user.getGuid(),
-        "username": user.getUsername(),
-        "firstName": user.getLastName(),
-        "lastName": user.getLastName(),
-        "accountType": user.getAccountType(),
-        "password": user.getPassword()
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+    //var checkDuplicate = collection.findOne(
+    //						{username : req.body.username}, 
+    //						{username: 1, _id: 0});
+    //console.log("number of entires in the table currently: " + collection.count);
+    //var myCursor = db.collection.find();
+    //var myFirstDocument = myCursor.hasNext() ? myCursor.next() : null;
+    // Fetch the document
+    collection.findOne({ username: req.body.username }, function (err, item) {
+        if (item) {
+            console.log();
+            res.send("username " + item.username + "is already taken!");
         }
         else {
-            // And forward to success page
-            res.redirect("signin");
+            // Submit to the DB
+            collection.insert({
+                "guid": user.getGuid(),
+                "username": user.getUsername(),
+                "firstName": user.getLastName(),
+                "lastName": user.getLastName(),
+                "accountType": user.getAccountType(),
+                "password": user.getPassword()
+            }, function (err, doc) {
+                if (err) {
+                    // If it failed, return error
+                    res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                    // And forward to success page
+                    res.redirect("signin");
+                }
+            });
         }
     });
 });

@@ -18,11 +18,7 @@ router.post('/', function(req, res) {
     var collection = db.get('registerUsers');
 	
 	var findUser = collection.find({username: req.body.username});
-	
-	//collection.find({$where: function(){this.username === username}});
-
-
-
+	//if(findUser.)
 	res.render('homepage', { title: 'Welcome back!' });
 });
 

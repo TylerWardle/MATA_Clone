@@ -55,6 +55,7 @@ class Application {
             err.status = 404;
             next(err);
         });
+		
         // error handlers
         // development error handler
         // will print stacktrace
@@ -67,6 +68,7 @@ class Application {
                 });
             });
         }
+		
         // production error handler
         // no stacktraces leaked to user
         app.use(function(err, req, res, next) {
@@ -78,7 +80,6 @@ class Application {
         });
         module.exports = app;
     }
-    
 }
 
 var application = new Application();
