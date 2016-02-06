@@ -23,34 +23,7 @@ router.post('/', function(req, res) {
 
     // Set our collection
     var collection = db.get('registeredUsers');
-	
-	 // Fetch the document
-    collection.findOne({username:req.body.username}, function(err, item) {
-		if(item)
-		{
-			res.send("username " + item.username + "is already taken!");
-			//send back a signal
-		}
-		else
-		{
-			// Submit to the DB
-			collection.insert({
-				"guid": user.getGuid(),
-				"username": user.getUsername(),
-				"firstName": user.getLastName(),
-				"lastName": user.getLastName(),
-				"accountType": user.getAccountType(),
-				"password": user.getPassword()
-			}, function(err, doc) {
-				if (err) {
-					// If it failed, return error
-					res.send("There was a problem adding the information to the database.");
-				}
-				else {
-					// And forward to success page
-					res.redirect("signin");
-				}
-		})}
+)}
 	});
 });
 
