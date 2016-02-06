@@ -48,7 +48,7 @@ class Application {
             next();
         });
 
-        //Tell the express app to use these routes
+        //Tell the express app to use these routes defined in the index.js 
         //app.use('/', routes);
         app.use('/', require('./routes'));
         //app.use('/webcomic', require('./routes/webcomic'));      
