@@ -26,10 +26,8 @@ class Application {
         var db = monk('127.0.0.1:27017/MATA');
         //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
 
-        var routes = require('./routes');
-        //var routes = require('./routes/index');
-        //var users = require('./routes/users');
-
+        //var routes = require('./routes');
+        //var webcomic = require('./routes/webcomic')
         var app = express();        
 
         // view engine setup
@@ -49,8 +47,11 @@ class Application {
             req.db = db;
             next();
         });
-        app.use('/', routes);
-        //app.use('/users', users);      
+
+        //Tell the express app to use these routes
+        //app.use('/', routes);
+        app.use('/', require('./routes'));
+        //app.use('/webcomic', require('./routes/webcomic'));      
 
         // catch 404 and forward to error handler
         app.use(function(req, res, next) {

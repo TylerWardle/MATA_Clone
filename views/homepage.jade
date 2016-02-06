@@ -4,7 +4,7 @@ block content
 	h1.
 		Welcome to your Homepage #{user.username}
 	div
-		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic")
+		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/createNew")
 			button#btnNewWebcomic(type="submit") New Webcomic
 		form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
 			//input#userName(type="text",value="#{user.username}",name="username")
