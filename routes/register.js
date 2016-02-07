@@ -6,7 +6,7 @@ router.post('/', function (req, res) {
     var registeredUsers = db.get('registeredUsers');
     registeredUsers.findOne({ username: req.body.username }, function (err, item) {
         if (item) {
-            res.send("username " + item.username + "is already taken!");
+            res.send("username " + item.username + " is already taken!");
         }
         else {
             var username = req.body.username;
