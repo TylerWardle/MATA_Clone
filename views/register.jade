@@ -10,7 +10,10 @@ block content
         input#inputUserName(type="text", placeholder="First Name", name="firstName")
         input#inputUserPassword(type="text", placeholder="Last Name", name="lastname")
         br
-        input#inputUserName(type="text", placeholder="Account type", name="accountType")
+        //input#inputUserName(type="text", placeholder="Account type", name="accountType")
+        select(name="accountType")
+            option(value="Contributor") Contributor
+            option(value="Viewer") Viewer
 
         br
         button#btnSubmit(type="submit") submit
