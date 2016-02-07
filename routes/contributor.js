@@ -7,9 +7,10 @@ var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 /* GET Contributors homepage. */
 router.get('/', function (req, res, db) {
+    var db = req.db;
     var contributors = db.get('contributors');
     contributors.findOne({ guid: res.headers['guid'] }, function (error, contributor) {
-        res.render('contributor', { "Contributor": contributor });
+        res.render('contributor', { "contributor": contributor });
     });
 });
 module.exports = router;

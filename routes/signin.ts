@@ -25,11 +25,11 @@ router.post('/', function(req, res) {
 			{
 				if(user.accountType === "Contributor")
 				{
-					res.render('contributor', { title: 'Welcome back!'});	
+					res.redirect('contributor');	
 				}
 				else
 				{
-					res.render('viewer', { title: 'Welcome back!'});
+					res.redirect('viewer');
 				}
 			}
 			else

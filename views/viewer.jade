@@ -2,7 +2,7 @@ extends layout
 
 block content
 	h1.
-		Welcome to your Homepage #{user.username}
+		Welcome to your Homepage #{viewer.username}
 	div
 		form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
 			button#btnAccountSettings(type="submit") Accountsettings
