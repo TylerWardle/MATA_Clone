@@ -14,15 +14,23 @@ router.post('/', function(req, res) {
     var db = req.db;
 
     // Set our collection
-    var collection = db.get('registeredUsers');
+    var registeredUsers = db.get('registeredUsers');
 		
 	 // Fetch the document
-    collection.findOne({username:req.body.username}, function(err, item) {
-		if(item)
+    registeredUsers.findOne({username:req.body.username}, function(err, user) {
+		if(user)
 		{
-			if(item.password === req.body.password)
+			res.set('_id', user._id);
+			if(user.password === req.body.password)
 			{
-				res.render('homepage', { title: 'Welcome back!' });
+				if(user.accountType === "Contributor")
+				{
+					res.render('contributor', { title: 'Welcome back!'});	
+				}
+				else
+				{
+					res.render('viewer', { title: 'Welcome back!'});
+				}
 			}
 			else
 			{

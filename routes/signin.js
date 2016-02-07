@@ -5,12 +5,18 @@ router.post('/', function (req, res) {
     // Set our internal DB variable
     var db = req.db;
     // Set our collection
-    var collection = db.get('registeredUsers');
+    var registeredUsers = db.get('registeredUsers');
     // Fetch the document
-    collection.findOne({ username: req.body.username }, function (err, item) {
-        if (item) {
-            if (item.password === req.body.password) {
-                res.render('homepage', { title: 'Welcome back!' });
+    registeredUsers.findOne({ username: req.body.username }, function (err, user) {
+        if (user) {
+            res.set('_id', user._id);
+            if (user.password === req.body.password) {
+                if (user.accountType === "Contributor") {
+                    res.render('contributor', { title: 'Welcome back!' });
+                }
+                else {
+                    res.render('viewer', { title: 'Welcome back!' });
+                }
             }
             else {
                 res.send("Username and password do not match.");

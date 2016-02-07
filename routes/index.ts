@@ -10,7 +10,8 @@ var Router = (function () {
 		
         router.use('/register', require('./register'));
         router.use('/signin', require('./signin'));
-        router.use('/homepage', require('./homepage'));
+        router.use('/viewer', require('./viewer'));
+        router.use('/contributor', require('./contributor'));
 		
         //router.use('/accountsettings', require('./accountsettings'));
         //router.use('/webcomic', require('./webcomic'));

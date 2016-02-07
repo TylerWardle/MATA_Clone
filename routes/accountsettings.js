@@ -4,15 +4,15 @@
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
-/* GET  homepage. */
+/* GET  Account settings. */
 router.get('/', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
     // Fetch the document
-    registeredUsers.findOne({ username: req.body.username }, function (err, item) {
-        if (item) {
-            if (item.password === req.body.password) {
-                res.render('homepage', { "accountsettings": item });
+    registeredUsers.findOne({ _id: req.headers['_id'] }, function (err, user) {
+        if (user) {
+            if (user.password === req.body.password) {
+                res.render('account', { "accountsettings": user });
             }
             else {
                 res.send("Username and password do not match.");

@@ -11,7 +11,6 @@ var router = express.Router();
 router.post('/', function(req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
-	req.headers
 	
     registeredUsers.findOne({username:req.body.username}, function(err, item) {
 		if(item){
@@ -25,6 +24,7 @@ router.post('/', function(req, res) {
 			var accountType = req.body.accountType;
 			var password = req.body.password;
 			console.log("request headers " + req.headers);
+			// need to add registered user number to different types of users.
 			
 			//var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
 				
@@ -46,9 +46,10 @@ router.post('/', function(req, res) {
 						//var newViewer = new Viewer(username, password, firstName, lastName, accountType);
 						
 						viewers.insert({
-						"username": req.body.username,
-						"firstName": req.body.firstName,
-						"lastName": req.body.lastName
+						"username": doc.username,
+						"firstName": doc.firstName,
+						"lastName": doc.lastName,
+						"guid": doc._id
 							
 						}, function(err, doc) {
 							if (err) {
@@ -61,10 +62,11 @@ router.post('/', function(req, res) {
 						var contributors = db.get('contributors');
 						//var newContributor = new Contributor(username, password, firstName, lastName, accountType);
 					
-						contributors.insert({
-						"username": req.body.username,
-						"firstName": req.body.firstName,
-						"lastName": req.body.lastName
+						contributors.insert({						
+							"username": doc.username,
+							"firstName": doc.firstName,
+							"lastName": doc.lastName,
+							"guid": doc._id
 							
 						}, function(err, doc) {
 							if (err) {
