@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1.
+    #{user.username}
+  form#formProfile(name="profile",method="post",action="/profile")
+  p #{user.firstname} #{user.lastname}
+  br
+  p Viewer
+  p Contributor
+  br
+  div
+    img(src="profilepicture.jpg")
+  br 
+  html
+  body
+    label about me:
+    br
+    input.field.left(type="text", value="this will be the user's about me", readonly="readonly")
+  br
+  form#Edit(type="edit", method="get", action="edit profile")
+    button#btnEdit(type="submit") edit

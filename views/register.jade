@@ -4,11 +4,14 @@ block content
     h1= title
     form#formRegisterUser(name="register",method="post",action="/register")
         input#inputUserName(type="text", placeholder="username", name="username")
-        input#inputUserPassword(type="text", placeholder="password", name="password")
+        input#inputUserPassword(type="password", placeholder="password", name="password")
+        br
         br
         input#inputUserName(type="text", placeholder="First Name", name="firstName")
         input#inputUserPassword(type="text", placeholder="Last Name", name="lastname")
         br
+        br
         input#inputUserName(type="text", placeholder="Account type", name="accountType")
+        br
         br
         button#btnSubmit(type="submit") submit

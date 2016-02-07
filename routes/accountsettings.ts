@@ -20,6 +20,7 @@ router.get('/', function(req, res) {
 			if(user.password === req.body.password)
 			{
 				res.render('account', { "accountsettings": user });
+				res.redirect("accountsettings");
 				
 			}
 			else

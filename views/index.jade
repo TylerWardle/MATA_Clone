@@ -3,3 +3,9 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  br
+  form#SignIn(type="sign in", method="get", action="signin")
+    button#btwSignIn(type="submit") sign in
+  br
+  form#Register(type="register", method="get", action="register")
+    button#btnRegister(type="submit") register

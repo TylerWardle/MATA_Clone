@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
         if (user) {
             if (user.password === req.body.password) {
                 res.render('account', { "accountsettings": user });
+                res.redirect("accountsettings");
             }
             else {
                 res.send("Username and password do not match.");

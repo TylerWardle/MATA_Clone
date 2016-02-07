@@ -13,7 +13,7 @@ var Router = (function () {
         router.use('/viewer', require('./viewer'));
         router.use('/contributor', require('./contributor'));
 		
-        //router.use('/accountsettings', require('./accountsettings'));
+        router.use('/accountsettings', require('./accountsettings'));
         //router.use('/webcomic', require('./webcomic'));
 		
         /* GET home page. */
