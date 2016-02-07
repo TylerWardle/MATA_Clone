@@ -4,12 +4,10 @@
 export class ComicCell {
     private comicID: number;
     private img: string;
-    private imgSeqNum: number;
 
-    constructor(comicID: number, img: string, imgSeqNum: number) {
+    constructor(comicID: number, img: string) {
         this.comicID = comicID;
         this.img= img;
-        this.imgSeqNum = imgSeqNum;
     }
 
     getComicID(): number {
@@ -19,10 +17,5 @@ export class ComicCell {
     getImage(): string {
         return this.img;
     }
-
-    getImgSeqNum(): number {
-        return this.imgSeqNum;
-    }
-
 }
 
