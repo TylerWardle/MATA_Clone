@@ -2,7 +2,7 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 
 export class Comic {
-    private comicID: number;
+    private comicID: string;
     private title: string;
     private author: string;
     private publicationDate: string;
@@ -10,7 +10,7 @@ export class Comic {
     private genre: string;
     private toPublish: boolean;
     
-    constructor(comicID: number, title: string, author: string, publicationDate: string, description: string, genre: string, toPublish: boolean) {
+    constructor(comicID: string, title: string, author: string, publicationDate: string, description: string, genre: string, toPublish: boolean) {
         this.comicID = comicID;
         this.title = title;
         this.author = author;
@@ -20,7 +20,7 @@ export class Comic {
         this.toPublish = toPublish;
     }
 
-    getComicID(): number {
+    getComicID(): string {
         return this.comicID;
     }
 
