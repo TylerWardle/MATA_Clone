@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
     var db = req.db;
     var contributors = db.get('contributors');
     contributors.findOne({ guid: res.headers['_id'] }, function (error, contributor) {
-        res.render('contributor', { "Contributor": contributor });
+        res.render('contributor', { "contributor": contributor });
     });
 });
 module.exports = router;

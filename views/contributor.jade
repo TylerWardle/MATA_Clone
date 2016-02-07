@@ -3,7 +3,6 @@ extends layout
 block content
 	h1.
 		Welcome to your Homepage 
-	div
 		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/createNew")
 			button#btnNewWebcomic(type="submit") New Webcomic
 		form#accountSettings(name="accountSettings", method="get", action="/accountsettings")

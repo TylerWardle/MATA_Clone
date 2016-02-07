@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 /* GET Viewers homepage. */
-router.get('/', function (req, res) {
+router.get('/', function (req, res, db) {
     var db = req.db;
     var viewers = db.get('viewers');
     viewers.findOne({ guid: res.headers['_id'] }, function (error, viewer) {

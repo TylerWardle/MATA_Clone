@@ -10,7 +10,7 @@ var Application = (function () {
         var logger = require('morgan');
         var cookieParser = require('cookie-parser');
         var bodyParser = require('body-parser');
-        // New Code
+        //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
         var db = monk('127.0.0.1:27017/MATA');
