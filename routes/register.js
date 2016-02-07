@@ -4,6 +4,7 @@ var router = express.Router();
 router.post('/', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
+    req.headers;
     registeredUsers.findOne({ username: req.body.username }, function (err, item) {
         if (item) {
             res.send("username " + item.username + "is already taken!");
@@ -14,6 +15,7 @@ router.post('/', function (req, res) {
             var lastName = req.body.lastName;
             var accountType = req.body.accountType;
             var password = req.body.password;
+            console.log("request headers " + req.headers);
             //var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
             registeredUsers.insert({
                 "username": req.body.username,

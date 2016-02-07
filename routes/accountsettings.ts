@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
     var registeredUsers = db.get('registeredUsers');
 	
 	 // Fetch the document
-    collection.findOne({username:req.body.username}, function(err, item) {
+    registeredUsers.findOne({username:req.body.username}, function(err, item) {
 		if(item)
 		{
 			if(item.password === req.body.password)

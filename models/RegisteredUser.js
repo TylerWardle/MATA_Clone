@@ -1,7 +1,7 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 // This class represents a registered user in the system. 
-// Thsi class is used to verify a user before granting them
+// This class is used to verify a user before granting them
 // access to the system.
 var RegisteredUser = (function () {
     function RegisteredUser(username, password, firstName, lastName, accountType) {

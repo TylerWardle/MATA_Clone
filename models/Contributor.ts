@@ -1,16 +1,9 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-import RegisteredUser = require('../models/RegisteredUser');
+import {RegisteredUser} from './RegisteredUser';
 
-export class Contributor extends RegisteredUser 
+class Contributor extends RegisteredUser 
 {
-	private firstName: string;
-	private lastName: string;
-	private username: string;
-    private password: string;
-	private accountType: string;
-	private guid: string;
-
     constructor(username: string, password: string, firstName: string,
 		lastName: string, accountType: string) 
 	{

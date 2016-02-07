@@ -3,7 +3,7 @@
 
 
 // This class represents a registered user in the system. 
-// Thsi class is used to verify a user before granting them
+// This class is used to verify a user before granting them
 // access to the system.
 export class RegisteredUser 
 {
@@ -13,7 +13,6 @@ export class RegisteredUser
     private password: string;
 	private accountType: string;
 	private guid: string;
-
 
     constructor(username: string, password: string, firstName: string,
 		lastName: string, accountType: string) 
