@@ -67,15 +67,18 @@ router.put('/:id', function(req, res) {
     // get web comic id from reqest parameter in the URL
     var comicID = req.params.id;
 
+    // extract user id of creator/owner of comic from request header
+    var author_ID = req.headers['_id'];
+
     // extract values of all the comic data fields incl. ones to be updated
     var title = req.body.title; 
-    var author = req.body.author;
+    var author_username = req.body.author_username;
     var description = req.body.description; 
     var genre = req.body.genre;
     var toPublish = req.body.toPublish;
 
     // find the comic document in the DB and update it
-    var doc = ComicCollection.update({_id : comicID }, {title: title, author: author, description: description, genre: genre, toPublish: toPublish});
+    var doc = ComicCollection.update({_id : comicID }, {author_ID: author_ID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish});
 
     // make new collection if comic does not exist in DB
     //   { upsert: true }
