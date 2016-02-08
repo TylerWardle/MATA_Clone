@@ -19,13 +19,14 @@ router.get('/:id', function(req, res) {
 
     // extract the value of each field from the comic document
     var title = doc.title;
-    var author = doc.author;
+    var author_ID = doc.author_ID;
+    var author_username = doc.author_username;
     var publicationDate = doc.publicationDate;
     var description = doc.description;
     var genre = doc.genre;
     var toPublish = doc.toPublish;
     
-    var comic = new Comic.Comic(comicID, title, author, publicationDate, description, genre, toPublish);
+    var comic = new Comic.Comic(comicID, author_ID, title, author_username, publicationDate, description, genre, toPublish);
 
     var response = JSON.stringify(comic);
 
@@ -37,16 +38,19 @@ router.post('/create', function(req, res) {
     var db = req.db;
     var ComicCollection = db.get('ComicCollection');
     
+    // extract user id of creator/owner of comic from request header
+    var author_ID = req.headers['_id'];
+
     // extract values of new comic data fields
     var title = req.body.title; 
-    var author = req.body.author;
+    var author_username = req.body.author_username;
     var description = req.body.description; 
     var genre = req.body.genre;
     var toPublish = req.body.toPublish;
     //var img = req.body.img;
 
     // insert comic in DB
-    ComicCollection.insert({title: title, author: author, description: description, genre: genre, toPublish: toPublish}, function(err, doc) {
+    ComicCollection.insert({author_ID: author_ID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish}, function(err, doc) {
         var comicID = doc._id;
     });
 
@@ -90,7 +94,6 @@ router.delete('/:id', function(req, res) {
 
     // Remove this comic document from DB    
     ComicCollection.remove({_id: comicID });
-
 });
 
 
