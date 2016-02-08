@@ -6,21 +6,24 @@ import Comic = require('../models/Comic');
 var express = require('express');
 var router = express.Router();
 
+var db = req.db;
+var ComicCollection = db.get('ComicCollection');
+
 /* View Comic: Get from Comic DB */
 router.get('/:id', function(req, res) {
     // get web comic id from reqest parameter in the URL
     var comicID = req.params.id;
 
-    // get web comic id from reqest parameter in the URL
-    // send dummy values back to client
+    // find comic in the db table
+    var doc = ComicCollection.findOne({_id : comicID });
 
-    var title = "dummyTitle";
-    var author = "dummyAuthor";
-    var publicationDate = "dummyPublicationDate";
-    var description = "dummyDescrip";
-    var genre = "dummyGenre";
-    var toPublish = true;
-
+    // extract the value of each field from the comic document
+    var title = doc.title;
+    var author = doc.author;
+    var description = doc.description;
+    var genre = doc.genre;
+    var toPublish = doc.toPublish;
+    
     var comic = new Comic.Comic(comicID, title, author, publicationDate, description, genre, toPublish);
 
     var response = JSON.stringify(comic);
