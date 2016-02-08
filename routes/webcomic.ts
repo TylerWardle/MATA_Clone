@@ -6,7 +6,6 @@ import Comic = require('../models/Comic');
 var express = require('express');
 var router = express.Router();
 
-
 /* View Comic: Get from Comic DB */
 router.get('/:id', function(req, res) {
     // get web comic id from reqest parameter in the URL
@@ -14,6 +13,7 @@ router.get('/:id', function(req, res) {
 
     // get web comic id from reqest parameter in the URL
     // send dummy values back to client
+
     var title = "dummyTitle";
     var author = "dummyAuthor";
     var publicationDate = "dummyPublicationDate";
@@ -27,7 +27,6 @@ router.get('/:id', function(req, res) {
 
     res.send(response);
 });
-
 
 /* Create Comic: Post Comic to ComicCollection and ComicCellCollection in DB */
 router.post('/create', function(req, res) {
