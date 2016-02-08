@@ -85,10 +85,11 @@ router.delete('/:id', function(req, res) {
     var db = req.db;
     var ComicCollection = db.get('ComicCollection');
 
- // get web comic id from reqest parameter in the URL
+    // get web comic id from reqest parameter in the URL
     var comicID = req.params.id;
 
-     res.send("removed a web comic");
+    // Remove this comic document from DB    
+    ComicCollection.remove({_id: comicID });
 
 });
 
