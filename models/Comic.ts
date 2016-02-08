@@ -3,7 +3,7 @@
 
 export class Comic {
     private comicID: string;
-    private author_ID: string;          // for internal storing ownership purposes
+    private authorID: string;          // for internal storing ownership purposes
     private title: string;
     private author_username: string;    // for publishing credit purposes
     private publicationDate: string;
@@ -11,9 +11,9 @@ export class Comic {
     private genre: string;
     private toPublish: boolean;
     
-    constructor(comicID: string, author_ID: string, title: string, author_username: string, publicationDate: string, description: string, genre: string, toPublish: boolean) {
+    constructor(comicID: string, authorID: string, title: string, author_username: string, publicationDate: string, description: string, genre: string, toPublish: boolean) {
         this.comicID = comicID;
-        this.author_ID = author_ID;
+        this.authorID = authorID;
         this.title = title;
         this.author_username = author_username;        
         this.publicationDate = publicationDate;
@@ -27,7 +27,7 @@ export class Comic {
     }
 
     getAuthorID(): string {
-        return this.author_ID;
+        return this.authorID;
     }
 
     getTitle(): string {

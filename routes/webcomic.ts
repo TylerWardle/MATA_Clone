@@ -19,14 +19,14 @@ router.get('/:id', function(req, res) {
 
     // extract the value of each field from the comic document
     var title = doc.title;
-    var author_ID = doc.author_ID;
+    var authorID = doc.authorID;
     var author_username = doc.author_username;
     var publicationDate = doc.publicationDate;
     var description = doc.description;
     var genre = doc.genre;
     var toPublish = doc.toPublish;
     
-    var comic = new Comic.Comic(comicID, author_ID, title, author_username, publicationDate, description, genre, toPublish);
+    var comic = new Comic.Comic(comicID, authorID, title, author_username, publicationDate, description, genre, toPublish);
 
     var response = JSON.stringify(comic);
 
@@ -39,7 +39,7 @@ router.post('/create', function(req, res) {
     var ComicCollection = db.get('ComicCollection');
     
     // extract user id of creator/owner of comic from request header
-    var author_ID = req.headers['_id'];
+    var authorID = req.headers['_id'];
 
     // extract values of new comic data fields
     var title = req.body.title; 
@@ -50,7 +50,7 @@ router.post('/create', function(req, res) {
     //var img = req.body.img;
 
     // insert comic in DB
-    ComicCollection.insert({author_ID: author_ID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish}, function(err, doc) {
+    ComicCollection.insert({authorID: authorID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish}, function(err, doc) {
         var comicID = doc._id;
     });
 
@@ -68,7 +68,7 @@ router.put('/:id', function(req, res) {
     var comicID = req.params.id;
 
     // extract user id of creator/owner of comic from request header
-    var author_ID = req.headers['_id'];
+    var authorID = req.headers['_id'];
 
     // extract values of all the comic data fields incl. ones to be updated
     var title = req.body.title; 
@@ -78,7 +78,7 @@ router.put('/:id', function(req, res) {
     var toPublish = req.body.toPublish;
 
     // find the comic document in the DB and update it
-    var doc = ComicCollection.update({_id : comicID }, {author_ID: author_ID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish});
+    var doc = ComicCollection.update({_id : comicID }, {authorID: authorID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish});
 
     // make new collection if comic does not exist in DB
     //   { upsert: true }
