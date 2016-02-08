@@ -43,4 +43,27 @@ router.post('/create', function(req, res) {
     */
 });
 
+/* Edit Comic: Patch Comic to ComicCollection and ComicCellCollection DB */
+router.put('/:id', function(req, res) {
+    
+    // get web comic id from reqest parameter in the URL
+    var comicID = req.params.id;
+
+    res.send("edited a web comic");
+
+    // redirect client to updated comic web page
+    //res.redirect(“webcomic/comicID”);
+});
+
+/* Delete Comic: Delete from ComicCollection and ComicCellCollection in DB */
+router.delete('/:id', function(req, res) {
+
+ // get web comic id from reqest parameter in the URL
+    var comicID = req.params.id;
+
+     res.send("removed a web comic");
+
+});
+
+
 module.exports = router;
