@@ -17,20 +17,7 @@ router.get('/', function(req, res) {
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
 		if(user)
 		{			
-            if(user.accountType === "viewer"){
-                var viewers = db.get('viewers');
-                viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
-                    res.render('accountsettings', { "accountsettings": viewer });
-			        //res.redirect("accountsettings");
-                    });
-            }else if(user.accountType === "contributor"){
-                var contributors = db.get('contributors');
-                contributors.findOne({guid:ObjectID(req.cookies._id)}, function(err, contributor) {
-                    res.render('accountsettings', { "accountsettings": contributor });
-                });
-            }else{
-                res.send("ACCESS DENIED");
-            }
+           res.render('accountsettings', { "accountsettings": user });
         }else
 		{
 			res.send("ACCESS DENIED");
@@ -47,6 +34,13 @@ router.post('/', function (req, res) {
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
 		if(user)
 		{
+            registeredUsers.update({_id:ObjectID(req.cookies._id)},{
+                            username: user.username,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            accountType: user.accountType,
+                            password: req.body.password
+                            }); 
 			if (user.accountType === "viewer") {
 				var viewers = db.get('viewers');
 				viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
@@ -61,8 +55,6 @@ router.post('/', function (req, res) {
                             username: viewer.username,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            accountType: viewer.accountType,
-                            password: req.body.password,
                             guid: viewer.guid
                         })
 					}
@@ -84,8 +76,6 @@ router.post('/', function (req, res) {
                             username: contributor.username,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            accountType: contributor.accountType,
-                            password: req.body.password,
                             guid: contributor.guid
                         })
 					}
