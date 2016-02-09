@@ -2,6 +2,13 @@
 /bin
 /data
 /types
+/node_modules
+/public
+/views
+.project
+app.js
+app.ts
+package.json
+procfile
+README.md
 /.DS_Store
-/types/.DS_Store
-/npm-debug
