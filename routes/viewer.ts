@@ -15,7 +15,7 @@ router.get('/', function(req, res, db) {
 	var viewers = db.get('viewers');
 	viewers.findOne({guid: ObjectID(req.cookies._id)}, function(error, viewer)
 	{
-		res.render('viewer', {"Viewer": viewer});
+		res.render('viewer', {"viewer": viewer});
 	});
 });
 

@@ -1,17 +1,15 @@
-extends layout
+extends layoutLoggedIn
 
 block content
     h1.
         Account Settings for #{accountsettings.username}
-    form#formChangeSettings(name="accountsetting",method="post",action="/accountsettings")
+    form#formChangeSettings(name="accountsettings",method="post",action="/accountsettings")
         input#inputUserEmail(type="password", value="#{accountsettings.password}", name="password")
         br
         input#inputUserEmail(type="text", value="#{accountsettings.firstName}", name="firstName")
         br
         input#inputUserEmail(type="text", value="#{accountsettings.lastName}", name="lastName")
         br
-        select(name="usertype", form="changeAccountsettings")
-            option(value="Contributor") Contributor
-            option(value="Viewer") Viewer
+        
         br
         button#btnSubmit(type="submit") Save

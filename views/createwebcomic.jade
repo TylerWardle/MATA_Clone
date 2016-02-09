@@ -1,10 +1,10 @@
-extends layout 
+extends layoutloggedIn 
 
 block content
     h1.
         New Comic!
     div
-        form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submitNew")
+        form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/create")
             input#comicTitle(type="text", placeholder="Title",name="title")
             br
             input#description(type="text", placeholder="description",name="description")

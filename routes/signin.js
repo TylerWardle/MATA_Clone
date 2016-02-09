@@ -30,6 +30,7 @@ router.post('/', function (req, res) {
 });
 /* GET register page. */
 router.get('/', function (req, res) {
+    res.clearCookie('_id');
     res.render('signin', { title: 'Sign In!' });
 });
 module.exports = router;

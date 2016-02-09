@@ -11,7 +11,8 @@ var Router = (function () {
         router.use('/contributor', require('./contributor'));
         router.use('/profile', require('./profile'));
         router.use('/accountsettings', require('./accountsettings'));
-        //router.use('/webcomic', require('./webcomic'));
+        router.use('/webcomic', require('./webcomic'));
+        router.use('/logout', require('./logout'));
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'HerroPrease' });

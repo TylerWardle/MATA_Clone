@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div
+        form#logout(name="logout",method="get", action= "/logout")
+          button#btnLogout(type="submit") Log Out
+    block content

@@ -15,7 +15,7 @@ router.post('/', function(req, res) {
 
     // Set our collection
     var registeredUsers = db.get('registeredUsers');
-		
+	
 	 // Fetch the document
     registeredUsers.findOne({username:req.body.username}, function(err, user) {
 		if(user)
@@ -53,6 +53,7 @@ router.post('/', function(req, res) {
 /* GET register page. */
 router.get('/', function(req, res) 
 {
+    res.clearCookie('_id');
 	res.render('signin', { title: 'Sign In!' });
 });
 

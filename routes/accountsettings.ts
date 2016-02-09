@@ -17,10 +17,21 @@ router.get('/', function(req, res) {
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
 		if(user)
 		{			
-			res.render('accountsettings', { "accountsettings": user });
-			//res.redirect("accountsettings");
-		}
-		else
+            if(user.accountType === "viewer"){
+                var viewers = db.get('viewers');
+                viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
+                    res.render('accountsettings', { "accountsettings": viewer });
+			        //res.redirect("accountsettings");
+                    });
+            }else if(user.accountType === "contributor"){
+                var contributors = db.get('contributors');
+                contributors.findOne({guid:ObjectID(req.cookies._id)}, function(err, contributor) {
+                    res.render('accountsettings', { "accountsettings": contributor });
+                });
+            }else{
+                res.send("ACCESS DENIED");
+            }
+        }else
 		{
 			res.send("ACCESS DENIED");
 		}
@@ -38,7 +49,7 @@ router.post('/', function (req, res) {
 		{
 			if (user.accountType === "viewer") {
 				var viewers = db.get('viewers');
-				viewers.findOne({_id:ObjectID(req.cookies._id)}, function(err, viewer) {
+				viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
 					if (err) {
 						res.send("ACCESS DENIED" + err);
 					}
@@ -46,11 +57,11 @@ router.post('/', function (req, res) {
 					{
 						// need to ask client to give format of data being sent up for account settings..
 						// are they only sending updated settings? or all.
-                        viewers.update({_id:ObjectID(req.cookies._id)},{
+                        viewers.update({guid:ObjectID(req.cookies._id)},{
                             username: viewer.username,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            accountType: req.body.accountType,
+                            accountType: viewer.accountType,
                             password: req.body.password,
                             guid: viewer.guid
                         })
@@ -73,7 +84,7 @@ router.post('/', function (req, res) {
                             username: contributor.username,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            accountType: req.body.accountType,
+                            accountType: contributor.accountType,
                             password: req.body.password,
                             guid: contributor.guid
                         })

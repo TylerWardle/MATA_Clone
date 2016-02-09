@@ -117,5 +117,9 @@ router.delete('/:id', function(req, res) {
     ComicCollection.remove({_id : ObjectId(comicID)});
 });
 
+router.get('/create', function(req,res){
+    res.render('createwebcomic',{ title: 'Create a Comic!' });    
+});
+    
 
 module.exports = router;

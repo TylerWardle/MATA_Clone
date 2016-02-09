@@ -1,10 +1,10 @@
-extends layout
+extends layoutloggedIn
 
 block content
 	h1.
 		Welcome to your Homepage #{contributor.username}
 	div
-		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/createNew")
+		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/create")
 			button#btnNewWebcomic(type="submit") New Webcomic
 		form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
 			button#btnAccountSettings(type="submit") Accountsettings
