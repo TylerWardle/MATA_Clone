@@ -2,20 +2,16 @@ extends layout
 
 block content
     h1.
-        Account Settings
-    form#formChangeSettings(name="accountsetting",method="post",action="/accountsetting")
-        input#inputUserName(type="text", placeholder="#{user.username}", name="username")
+        Account Settings for #{accountsettings.username}
+    form#formChangeSettings(name="accountsetting",method="post",action="/accountsettings")
+        input#inputUserEmail(type="password", value="#{accountsettings.password}", name="password")
         br
-        input#inputUserEmail(type="password", placeholder="#{user.password}", name="password")
+        input#inputUserEmail(type="text", value="#{accountsettings.firstName}", name="firstName")
         br
-		input#inputUserEmail(type="text", placeholder="#{user.firstName}", name="firstName")
+        input#inputUserEmail(type="text", value="#{accountsettings.lastName}", name="lastName")
         br
-		input#inputUserEmail(type="text", placeholder="#{user.lastName}", name="lastName")
-        br
-        button#btnSubmit(type="submit") Save
-
-    div
         select(name="usertype", form="changeAccountsettings")
             option(value="Contributor") Contributor
             option(value="Viewer") Viewer
-
+        br
+        button#btnSubmit(type="submit") Save

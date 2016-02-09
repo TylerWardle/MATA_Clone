@@ -9,15 +9,14 @@ router.post('/', function (req, res) {
     // Fetch the document
     registeredUsers.findOne({ username: req.body.username }, function (err, user) {
         if (user) {
-            res.set('_id', user._id);
+            //res.set('_id', user._id);
             if (user.password === req.body.password) {
+                res.cookie('_id', user._id);
                 if (user.accountType === "contributor") {
-                    res.redirect("contributor/" + user._id);
-                    res.render('contributor', { title: 'Welcome back!' });
+                    res.redirect("contributor");
                 }
                 else {
-                    res.redirect("viewer/" + user._id);
-                    res.render('viewer', { title: 'Welcome back!' });
+                    res.redirect("viewer");
                 }
             }
             else {

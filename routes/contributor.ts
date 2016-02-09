@@ -13,7 +13,7 @@ var ObjectID = require('mongodb').ObjectID;
 router.get('/', function(req, res) {
 	var db = req.db;
     var contributors = db.get('contributors');
-	contributors.findOne({guid: res.headers['_id']}, function(error, contributor)
+	contributors.findOne({guid: ObjectID(req.cookies._id)}, function(error, contributor)
 	{
 		res.render('contributor',{"contributor": contributor});		
 	});
