@@ -12,11 +12,11 @@ router.post('/', function (req, res) {
             res.set('_id', user._id);
             if (user.password === req.body.password) {
                 if (user.accountType === "contributor") {
-                    res.redirect("contributor");
+                    res.redirect("contributor/" + user._id);
                     res.render('contributor', { title: 'Welcome back!' });
                 }
                 else {
-                    res.redirect("viewer");
+                    res.redirect("viewer/" + user._id);
                     res.render('viewer', { title: 'Welcome back!' });
                 }
             }
