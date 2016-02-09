@@ -1,0 +1,14 @@
+extends layout 
+
+block content
+	h1.
+		welcome to #{webcomic.title}
+	div.
+		Description: #{webcomic.description}
+	div
+		img(src="#{webcomic.firstImage}")
+	div
+		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit")
+			button#btnEditComic(type="submit") Edit
+
+
