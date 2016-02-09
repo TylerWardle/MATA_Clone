@@ -4,12 +4,13 @@ block content
     h1.
         Account Settings for #{accountsettings.username}
     form#formChangeSettings(name="accountsettings",method="post",action="/accountsettings")
+        lable="Password "
         input#inputUserEmail(type="password", value="#{accountsettings.password}", name="password")
         br
+        lable="First Name "
         input#inputUserEmail(type="text", value="#{accountsettings.firstName}", name="firstName")
         br
+        lable="Last Name "
         input#inputUserEmail(type="text", value="#{accountsettings.lastName}", name="lastName")
-        br
-        
         br
         button#btnSubmit(type="submit") Save
