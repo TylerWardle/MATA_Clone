@@ -5,6 +5,8 @@ import Comic = require('../models/Comic');
 
 var express = require('express');
 var router = express.Router();
+//var db = require('mongodb').Db;
+var ObjectId = require('mongodb').ObjectID;
 
 /* View Comic: Get from Comic DB */
 router.get('/:id', function(req, res) {
@@ -17,31 +19,36 @@ router.get('/:id', function(req, res) {
 
 // RETRIEVE COMIC DATA FROM DB----------------------------------------------------------------------------------------------
     // find comic in the db table
-    var doc = ComicCollection.findOne({_id : comicID });
+        //var title, authorID, author_username, publicationDate, description, genre, toPublish;
 
-    // extract the value of each field from the comic document
-    var title = doc.title;
-    var authorID = doc.authorID;
-    var author_username = doc.author_username;
-    var publicationDate = doc.publicationDate;
-    var description = doc.description;
-    var genre = doc.genre;
-    var toPublish = doc.toPublish;
+    ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, doc) {
+        // extract the value of each field from the comic document
+        var title = doc.title;
+        var authorID = doc.authorID;
+        var author_username = doc.author_username;
+        var publicationDate = doc.publicationDate;
+        var description = doc.description;
+        var genre = doc.genre;
+        var toPublish = doc.toPublish;  
+
+        var comic = new Comic.Comic(comicID, authorID, title, author_username, publicationDate, description, genre, toPublish);
+        var response = JSON.stringify(comic);
+        res.send(response);
+    });
     
-    var comic = new Comic.Comic(comicID, authorID, title, author_username, publicationDate, description, genre, toPublish);
+    //var comic = new Comic.Comic(comicID, authorID, title, author_username, publicationDate, description, genre, toPublish);
 
 // RETRIEVE COMIC IMGS FROM DB----------------------------------------------------------------------------------------------
     // extract the image (only one for Sprint 1) associated with the comic from the DB. The img is in the form of a binary string
-    var doc = ComicCellCollection.findOne({comicID : comicID });
-    var img = doc.img;
+ //   var doc = ComicCellCollection.findOne({comicID : comicID });
+ //   var img = doc.img;
 
     // decode img str to rebuil
 
+   //var response = JSON.stringify(comic);
+   //res.send(title + authorID); //response);
+   
 
-
-    var response = JSON.stringify(comic);
-
-    res.send(response);
 });
 
 /* Create Comic: Post Comic to ComicCollection and ComicCellCollection in DB */
