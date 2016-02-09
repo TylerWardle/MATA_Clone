@@ -12,7 +12,7 @@ var Router = (function () {
         router.use('/signin', require('./signin'));
         router.use('/viewer', require('./viewer'));
         router.use('/contributor', require('./contributor'));
-		
+		router.use('/profile', require('./profile'));
         router.use('/accountsettings', require('./accountsettings'));
         //router.use('/webcomic', require('./webcomic'));
 		
