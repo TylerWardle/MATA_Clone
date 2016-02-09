@@ -13,7 +13,7 @@ var Application = (function () {
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        var db = monk('127.0.0.1:27017/MATA');
+        var db = monk('localhost:27017/MATA');
         //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
         var routes = require('./routes');
         var app = express();
