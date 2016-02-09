@@ -1,18 +1,6 @@
 /node_modules
-/bin
 /data
 /types
-<<<<<<< HEAD
 /.DS_Store
-/types/.DS_Store
+/types
 /npm-debug
-=======
-.DS_Store
-.project
-app.js
-app.ts
-package.json
-procfile
-README.md
-
->>>>>>> refs/heads/master
