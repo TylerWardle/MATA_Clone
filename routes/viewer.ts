@@ -13,9 +13,8 @@ var ObjectID = require('mongodb').ObjectID;
 router.get('/', function(req, res, db) {
 	var db = req.db;
 	var viewers = db.get('viewers');
-	viewers.findOne({guid: res.headers['_id']}, function(error, viewer)
+	viewers.findOne({guid: req.param.id}, function(error, viewer)
 	{
-		res.redirect("viewer");
 		res.render('viewer', {"Viewer": viewer});
 	});
 });

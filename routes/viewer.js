@@ -6,11 +6,14 @@ var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 /* GET Viewers homepage. */
+<<<<<<< HEAD
 router.get('/', function (req, res, db) {
+=======
+router.get('/:id', function (req, res) {
+>>>>>>> refs/heads/master
     var db = req.db;
     var viewers = db.get('viewers');
-    viewers.findOne({ guid: res.headers['_id'] }, function (error, viewer) {
-        res.redirect("viewer");
+    viewers.findOne({ guid: req.param.id }, function (error, viewer) {
         res.render('viewer', { "Viewer": viewer });
     });
 });
