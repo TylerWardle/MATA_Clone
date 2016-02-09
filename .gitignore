@@ -3,4 +3,10 @@
 /data
 /types
 .DS_Store
+.project
+app.js
+app.ts
+package.json
+procfile
+README.md
 
