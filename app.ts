@@ -23,11 +23,11 @@ class Application {
 		//Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        var db = monk('localhohst:27017/MATA');
+        var db = monk('localhost:27017/MATA');
         //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
 
         var routes = require('./routes');
-
+        
         var app = express();        
 
         // view engine setup
@@ -40,7 +40,7 @@ class Application {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
-        app.use(express.static(path.join(__dirname, 'public')));        
+        app.use(express.static(path.join(__dirname, 'public')));      
 
         // Make our db accessible to our router
         app.use(function(req, res, next) {

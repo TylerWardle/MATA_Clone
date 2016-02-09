@@ -10,10 +10,12 @@ var router = express.Router();
 router.get('/:id', function(req, res) {
     var db = req.db;
     var ComicCollection = db.get('ComicCollection');
+    var ComicCellCollection = db.get('ComicCellCollection');
 
     // get web comic id from reqest parameter in the URL
     var comicID = req.params.id;
 
+// RETRIEVE COMIC DATA FROM DB----------------------------------------------------------------------------------------------
     // find comic in the db table
     var doc = ComicCollection.findOne({_id : comicID });
 
@@ -27,6 +29,15 @@ router.get('/:id', function(req, res) {
     var toPublish = doc.toPublish;
     
     var comic = new Comic.Comic(comicID, authorID, title, author_username, publicationDate, description, genre, toPublish);
+
+// RETRIEVE COMIC IMGS FROM DB----------------------------------------------------------------------------------------------
+    // extract the image (only one for Sprint 1) associated with the comic from the DB. The img is in the form of a binary string
+    var doc = ComicCellCollection.findOne({comicID : comicID });
+    var img = doc.img;
+
+    // decode img str to rebuil
+
+
 
     var response = JSON.stringify(comic);
 
@@ -50,9 +61,9 @@ router.post('/create', function(req, res) {
     //var img = req.body.img;
 
     // insert comic in DB
-    ComicCollection.insert({authorID: authorID, title: title, author_username: author_username, description: description, genre: genre, toPublish: toPublish}, function(err, doc) {
+    ComicCollection.insert({"authorID": authorID, "title": title, "author_username": author_username, "description": description, "genre": genre, "toPublish": toPublish}, function(err, doc) {
         var comicID = doc._id;
-    });
+    })
 
     // redirect client to newly created web comic page
     //res.redirect("111");
