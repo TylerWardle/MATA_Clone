@@ -8,10 +8,12 @@ block content
         br
         br
         input#inputUserName(type="text", placeholder="First Name", name="firstName")
-        input#inputUserPassword(type="text", placeholder="Last Name", name="lastname")
+        input#inputUserPassword(type="text", placeholder="Last Name", name="lastName")
         br
-        br
-        input#inputUserName(type="text", placeholder="Account type", name="accountType")
+        p select a user type:
+        select(name="accountType", form="accountType")
+            option(value="contributor", name="contributor") Contributor
+            option(value="viewer", name="viewer") Viewer
         br
         br
         button#btnSubmit(type="submit") submit
