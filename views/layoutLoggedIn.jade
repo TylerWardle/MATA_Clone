@@ -4,7 +4,8 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div
-        form#logout(name="logout",method="get", action= "/logout")
-          button#btnLogout(type="submit") Log Out
+    div(id="banner")
+        div(id="logout")
+            form#logout(name="logout",method="get", action= "/logout")
+            button#btnLogout(type="submit") Log Out
     block content
