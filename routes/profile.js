@@ -18,6 +18,11 @@ router.get('/', function (req, res) {
                     if (err) {
                         res.send("ACCESS DENIED");
                     }
+                    else {
+                        viewers.findOne({ guid: req.headers['_id'] }, function (error, viewer) {
+                            res.render('viewer', { "Viewer": viewer });
+                        });
+                    }
                 });
             }
             else {
@@ -25,6 +30,11 @@ router.get('/', function (req, res) {
                 contributors.findOne({ _id: req.headers['_id'] }, function (err, contributor) {
                     if (err) {
                         res.send("ACCESS DENIED");
+                    }
+                    else {
+                        contributors.findOne({ guid: req.headers['_id'] }, function (error, contributor) {
+                            res.render('contributor', { "Contributor": contributor });
+                        });
                     }
                 });
             }

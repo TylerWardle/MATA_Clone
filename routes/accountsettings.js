@@ -28,21 +28,27 @@ router.post('/', function (req, res) {
         if (user) {
             if (user.accountType === "viewer") {
                 var viewers = db.get('viewers');
-                viewers.findOne({ _id: req.headers['_id'] }, function (err, viewer) {
+                viewers.findOne({ xuid: req.headers['_id'] }, function (err, viewer) {
                     if (err) {
                         res.send("ACCESS DENIED");
                     }
                     else {
+                        viewers.update({ xuid: req.headers['_id'] }, { $set: { firstName: req.body.firstName,
+                                lastName: req.body.lastName,
+                                password: req.body.password } });
                     }
                 });
             }
             else {
                 var contributors = db.get('contributors');
-                contributors.findOne({ _id: req.headers['_id'] }, function (err, contributor) {
+                contributors.findOne({ xuid: req.headers['_id'] }, function (err, contributor) {
                     if (err) {
                         res.send("ACCESS DENIED");
                     }
                     else {
+                        contributors.update({ xuid: req.headers['_id'] }, { $set: { firstName: req.body.firstName,
+                                lastName: req.body.lastName,
+                                password: req.body.password } });
                     }
                 });
             }
