@@ -1,6 +1,6 @@
-/node_modules
-/bin
 /data
 /types
 /.DS_Store
-
+/npm-debug
+/node_modules
+/uploads

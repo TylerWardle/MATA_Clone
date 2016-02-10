@@ -1,4 +1,4 @@
-extends layout
+extends layoutLoggedIn
 
 block content
   h1.
@@ -6,17 +6,16 @@ block content
   form#formProfile(name="profile",method="post",action="/profile")
   p #{user.firstname} #{user.lastname}
   br
-  p Viewer
-  p Contributor
+  p #{user.accountType}
+  
   br
   div
     img(src="profilepicture.jpg")
   br 
-  html
-  body
+  div
     label about me:
     br
     input.field.left(type="text", value="this will be the user's about me", readonly="readonly")
   br
-  form#Edit(type="edit", method="get", action="edit profile")
+  form#Edit(type="edit", method="get", action="/profile/edit")
     button#btnEdit(type="submit") edit
