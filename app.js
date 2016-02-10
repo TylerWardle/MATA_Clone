@@ -10,6 +10,7 @@ var Application = (function () {
         var logger = require('morgan');
         var cookieParser = require('cookie-parser');
         var bodyParser = require('body-parser');
+        var multer = require('multer');
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
@@ -27,6 +28,7 @@ var Application = (function () {
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
         app.use(express.static(path.join(__dirname, 'public')));
+        app.use(multer({ dest: './uploads/fullsize/' }).single('image'));
         // Make our db accessible to our router
         app.use(function (req, res, next) {
             req.db = db;

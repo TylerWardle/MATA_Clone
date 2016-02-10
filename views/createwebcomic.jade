@@ -4,7 +4,7 @@ block content
     h1.
         New Comic!
     div
-        form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/create")
+        form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
             input#comicTitle(type="text", placeholder="Title",name="title")
             br
             input#description(type="text", placeholder="description",name="description")
@@ -14,7 +14,7 @@ block content
             | Publish now?
             input#toPublish(type="checkbox", name="toPublish", value="toPublish")
             br
-            input#firstImage(type="file",name="firstImage")
+            input#firstImage(type="file",name="image")
             br
             button#btnSubmit(type="submit") submit
 
