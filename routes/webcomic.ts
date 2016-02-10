@@ -30,6 +30,7 @@ router.get('/id/:id', function(req, res) {
 router.post('/submit', function(req, res) {
     var db = req.db;
     var ComicCollection = db.get('ComicCollection');
+    var contributors = db.get('contributors');
     
     // extract user id of creator/owner of comic from request header
     var authorID = req.cookies._id;
@@ -69,6 +70,12 @@ router.post('/submit', function(req, res) {
             function(err, doc) {
                 //redirect to the newly created comic
                 var comicID = doc._id;
+                
+                contributors.update({guid : ObjectId(req.cookies._id)}, { $addToSet:{
+                    "comics": [comicID] 
+                    }
+                });
+                
                 res.redirect('./id/' + comicID);
           })  
             
