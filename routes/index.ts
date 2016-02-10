@@ -16,6 +16,7 @@ var Router = (function () {
         router.use('/accountsettings', require('./accountsettings'));
         router.use('/webcomic', require('./webcomic'));
         router.use('/logout', require('./logout'));
+        router.use('/home', require('./home'));
         
 		
         /* GET home page. */

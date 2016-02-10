@@ -5,13 +5,14 @@ block content
 		welcome to #{webcomic.title}
 	div.
 		Description: #{webcomic.description}
+		Genre: #{webcomic.genre}
 	div(id="images")
 		img(id="images", src="http://#{webcomic.images}")
 		script.
 			for(i=0;i<images.length;i++)
-				img(src="#{webcomic.images}")
+				img(src="http://#{webcomic.images}")
 	div
-		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit")
+		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 			button#btnEditComic(type="submit") Edit
 
 

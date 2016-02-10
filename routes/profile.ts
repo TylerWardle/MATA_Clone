@@ -59,4 +59,13 @@ router.get('/', function(req, res) {
 	
 });
 
+router.get('/edit',function(req, res) {
+    var db = req.db;
+    var registeredUsers = db.get('registeredUsers');
+    registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
+            //res.render('profileEdit', {"user":user});
+            res.send("Nothing here yet");
+    });
+});
+
 module.exports = router;

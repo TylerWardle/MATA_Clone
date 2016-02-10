@@ -4,16 +4,17 @@ block content
     h1.
         Edit WebComic
     div
-        form#formCreateWebComic(name="createWebComic", method="put", action="/webcomic/edit")
-            input#comicTitle(type="text", placeholder="Title",name="title")
+        form#formEditWebcomic(name="editWebcomic", method="post", action="/webcomic/update/#{webcomic._id}")
+            |Title
+            input#comicTitle(type="text", value="#{webcomic.title}" ,name="title")
             br
-            input#description(type="text", placeholder="description",name="description")
+            |Description
+            input#description(type="text", value="#{webcomic.description}",name="description")
             br
-            input#genre(type="text", placeholder="genre", name="genre")
+            |Genre
+            input#genre(type="text", value="#{webcomic.genre}", name="genre")
             br
-            | Publish now?
-            input#toPublish(type="checkbox", name="toPublish", value="toPublish")
-            br
-            input#firstImage(type="file",name="firstImage")
+            |Publish now?
+            input#toPublish(type="checkbox", name="toPublish", value="#{webcomic.toPublish}")
             br
             button#btnSubmit(type="submit") submit
