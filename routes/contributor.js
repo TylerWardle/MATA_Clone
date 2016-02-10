@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
     var db = req.db;
     var contributors = db.get('contributors');
     contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (error, contributor) {
-        if (contributor.comics.length > 0) {
+        if (contributor.comics != null) {
             var link = req.headers['host'] + "/webcomic/id/" + contributor.comics[0];
         }
         res.render('contributor', { "contributor": contributor, "link": link });
