@@ -39,12 +39,12 @@ router.post('/', function(req, res) {
 			}
 			else
 			{
-				res.render('error', { message: "Username and password do not match."});
+				res.send("Username and password do not match.");	
 			}
 		}
 		else
 		{
-			res.render('error', { message: "User does not exist"});
+			res.send("User does not exist");
 		}
 	});
 	
