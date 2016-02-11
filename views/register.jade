@@ -4,16 +4,18 @@ block content
     h1= title
 
     form#formRegisterUser(name="register",method="post",action="/register")
-        input#inputUsername(type="text", placeholder="username", name="username", required="", autocomplete="off")
-        input#inputUserPassword(type="password", placeholder="password", name="password", required="", autocomplete="off")
+        input#inputUserName(type="text", placeholder="username", name="username", required="", autocomplete="off")
+        input#inputUserPassword(type="password", placeholder="password", name="password", required="")
         br
-
+        br
         input#inputFirstName(type="text", placeholder="First Name", name="firstName", required="", autocomplete="off")
         input#inputLastName(type="text", placeholder="Last Name", name="lastName", required="", autocomplete="off")
         br
-        p select a user type:
-        select(name="accountType", form="accountType")
-            option(type= "contributor", value="contributor", name="contributor") Contributor
-            option(type="viewer", value="viewer", name="viewer") Viewer
         br
-        button#btnSubmit(type="submit") submit
+        p Please select a user type:
+        select(name="accountType",)
+            option(value="contributor") Contributor
+            option(value="viewer") Viewer
+        br
+        br
+        button#btnSubmit(type="submit") Submit

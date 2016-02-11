@@ -7,14 +7,17 @@ block content
         form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
             input#comicTitle(type="text", placeholder="Title",name="title")
             br
-            input#description(type="text", placeholder="description",name="description")
+            input#description(type="text", placeholder="Description",name="description")
             br
-            input#genre(type="text", placeholder="genre", name="genre")
+            input#genre(type="text", placeholder="Genre", name="genre")
             br
-            | Publish now?
+            br
+            | Publish now? 
             input#toPublish(type="checkbox", name="toPublish", value="toPublish")
             br
+            br
             input#firstImage(type="file",name="image")
+            br
             br
             button#btnSubmit(type="submit") submit
 

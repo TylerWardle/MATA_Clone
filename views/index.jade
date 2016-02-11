@@ -4,8 +4,14 @@ block content
   h1= title
   p Welcome to #{title}
   br
-  form#SignIn(type="sign in", method="get", action="signin")
-    button#btwSignIn(type="submit") sign in
   br
-  form#Register(type="register", method="get", action="register")
-    button#btnRegister(type="submit") register
+  body
+  div(id="bannerIndex")
+  div(id="signin")
+    form#SignIn(name="sign in", method="get", action="signin")
+        button#btnSignIn(type="submit") Sign In
+  div(id="register")
+    form#Register(name="register", method="get", action="register")
+        button#btnRegister(type="submit") Register
+
+

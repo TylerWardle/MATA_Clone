@@ -16,7 +16,7 @@ var Router = (function () {
         router.use('/home', require('./home'));
         /* GET home page. */
         router.get('/', function (req, res, next) {
-            res.render('index', { title: 'HerroPrease' });
+            res.render('index', { title: '' });
         });
         module.exports = router;
     };

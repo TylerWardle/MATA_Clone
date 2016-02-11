@@ -2,7 +2,7 @@ extends layoutLoggedIn
 
 block content
 	h1.
-		Welcome to your Homepage #{contributor.username}
+		Welcome to your Homepage #{contributor.username}!
 	div
 		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/create")
 			button#btnNewWebcomic(type="submit") New Webcomic
