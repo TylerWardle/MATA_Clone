@@ -22,7 +22,7 @@ var Router = (function () {
 		
         /* GET home page. */
         router.get('/', function (req, res, next) {
-            res.render('index', { title: 'HerroPrease' });
+            res.render('index', { title: 'MATA_WEBCOMICS' });
         });
 		
         module.exports = router;
