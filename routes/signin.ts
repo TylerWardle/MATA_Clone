@@ -15,23 +15,26 @@ router.post('/', function(req, res) {
 
     // Set our collection
     var registeredUsers = db.get('registeredUsers');
-		
+	
 	 // Fetch the document
     registeredUsers.findOne({username:req.body.username}, function(err, user) {
 		if(user)
 		{
-			res.set('_id', user._id);
+			//res.set('_id', user._id);
 			if(user.password === req.body.password)
 			{
+                res.cookie('_id',user._id);
 				if(user.accountType === "contributor")
 				{
-					res.redirect("contributor/"+user._id);
-					res.render('contributor', { title: 'Welcome back!'});	
+                    res.redirect("contributor");
+					//res.redirect("contributor/"+user._id);
+					//res.render('contributor', { title: 'Welcome back!'});	
 				}
 				else
 				{
-					res.redirect("viewer/"+user._id);
-					res.render('viewer', { title: 'Welcome back!'});
+                    res.redirect("viewer");
+					//res.redirect("viewer/"+user._id);
+					//res.render('viewer', { title: 'Welcome back!'});
 				}
 			}
 			else
@@ -50,6 +53,7 @@ router.post('/', function(req, res) {
 /* GET register page. */
 router.get('/', function(req, res) 
 {
+    res.clearCookie('_id');
 	res.render('signin', { title: 'Sign In!' });
 });
 

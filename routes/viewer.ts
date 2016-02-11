@@ -10,12 +10,12 @@ var ObjectID = require('mongodb').ObjectID;
 
 
 /* GET Viewers homepage. */
-router.get('/:id', function(req, res) {
-	var  db = req.db;
+router.get('/', function(req, res, db) {
+	var db = req.db;
 	var viewers = db.get('viewers');
-	viewers.findOne({guid: req.param.id}, function(error, viewer)
+	viewers.findOne({guid: ObjectID(req.cookies._id)}, function(error, viewer)
 	{
-		res.render('viewer', {"Viewer": viewer});
+		res.render('viewer', {"viewer": viewer});
 	});
 });
 

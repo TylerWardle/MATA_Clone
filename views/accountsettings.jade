@@ -1,15 +1,16 @@
-extends layout
+extends layoutLoggedIn
 
 block content
     h1.
-        Account Settings
-    form#formChangeSettings(name="accountsetting",method="post",action="/accountsetting")
-        input#inputUserName(type="text", placeholder="#{user.username}", name="username")
+        Account Settings for #{accountsettings.username}
+    form#formChangeSettings(name="accountsettings",method="post",action="/accountsettings")
+        lable="Password "
+        input#inputUserEmail(type="password", value="#{accountsettings.password}", name="password")
         br
-        input#inputUserEmail(type="password", placeholder="#{user.password}", name="password")
+        lable="First Name "
+        input#inputUserEmail(type="text", value="#{accountsettings.firstName}", name="firstName")
         br
-		input#inputUserEmail(type="text", placeholder="#{user.firstName}", name="firstName")
-        br
-		input#inputUserEmail(type="text", placeholder="#{user.lastName}", name="lastName")
+        lable="Last Name "
+        input#inputUserEmail(type="text", value="#{accountsettings.lastName}", name="lastName")
         br
         button#btnSubmit(type="submit") Save

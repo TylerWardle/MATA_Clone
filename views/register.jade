@@ -2,11 +2,12 @@ extends layout
 
 block content
     h1= title
+
     form#formRegisterUser(name="register",method="post",action="/register")
         input#inputUserName(type="text", placeholder="username", name="username", required="")
         input#inputUserPassword(type="password", placeholder="password", name="password", required="")
         br
-        br
+
         input#inputFirstName(type="text", placeholder="First Name", name="firstName", required="")
         input#inputLastName(type="text", placeholder="Last Name", name="lastName", required="")
         br
@@ -14,6 +15,5 @@ block content
         select(name="accountType", form="accountType")
             option(type= "contributor" value="contributor", name="contributor") Contributor
             option(type="contributor" value="viewer", name="viewer") Viewer
-        br
         br
         button#btnSubmit(type="submit") submit

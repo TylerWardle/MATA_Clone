@@ -3,6 +3,8 @@ extends layout
 block content
     h1= title
     form#formRegisterUser(name="signin",method="post",action="/signin")
+
         input#inputUserName(type="text", placeholder="username", name="username", required="")
         input#inputUserPassword(type="password", placeholder="password", name="password", required="")
+
         button#btnSubmit(type="submit") submit

@@ -6,11 +6,14 @@ var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 /* GET Contributors homepage. */
-router.get('/:id', function (req, res) {
+router.get('/', function (req, res) {
     var db = req.db;
     var contributors = db.get('contributors');
-    contributors.findOne({ guid: req.params.id }, function (error, contributor) {
-        res.render('contributor', { "Contributor": contributor });
+    contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (error, contributor) {
+        if (contributor.comics != null) {
+            var link = req.headers['host'] + "/webcomic/id/" + contributor.comics[0];
+        }
+        res.render('contributor', { "contributor": contributor, "link": link });
     });
 });
 module.exports = router;

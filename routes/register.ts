@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
 				
 			}, function(err, doc) {
 				if (err) {
-					res.send("There was a problem adding the information to the database.");
+					res.send("There was a problem adding the information to the database.1");
 				} else 
 				{
 					if(accountType === "viewer")
@@ -53,7 +53,7 @@ router.post('/', function(req, res) {
 							
 						}, function(err, doc) {
 							if (err) {
-								res.send("There was a problem adding the information to the database.");
+								res.send("There was a problem adding the information to the database.2");
 							}
 						})
 					}
@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
 							
 						}, function(err, doc) {
 							if (err) {
-								res.send("There was a problem adding the information to the database.");
+								res.send("There was a problem adding the information to the database.3");
 							} 
 						})
 					}
