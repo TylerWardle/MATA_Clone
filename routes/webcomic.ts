@@ -19,9 +19,13 @@ router.get('/id/:id', function(req, res) {
     
 // RETRIEVE COMIC DATA FROM DB----------------------------------------------------------------------------------------------
     // find comic in the db table
-    ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, webcomic) {
-        res.render('webcomic',{"webcomic": webcomic});
-    });
+    if(req.cookies._id != null){
+        ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, webcomic) {
+            res.render('webcomic',{"webcomic": webcomic});
+        });
+    }else{
+        res.redirect('/');    
+    }
     
 
 });

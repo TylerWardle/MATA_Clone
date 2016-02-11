@@ -13,9 +13,12 @@ var ObjectID = require('mongodb').ObjectID;
 router.get('/', function(req, res, db) {
 	var db = req.db;
 	var viewers = db.get('viewers');
+    //var comicsList = "test,test"
+    
 	viewers.findOne({guid: ObjectID(req.cookies._id)}, function(error, viewer)
 	{
-		res.render('viewer', {"viewer": viewer});
+		//res.render('viewer', {"viewer": viewer, "comicsList": comicsList});
+        res.render('viewer', {"viewer": viewer});
 	});
 });
 

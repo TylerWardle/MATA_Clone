@@ -3,3 +3,39 @@ extends layoutLoggedIn
 block content
 	h1.
 		Welcome to your Homepage, #{viewer.username}!
+
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+    script.
+        function makeList(){
+            var comicString = "#{comicsList}"
+            var comicsList = comicString.split(",")    
+            	
+            for(i=0; i<comicsList.length;i++){
+                $('<li><a href=' + comicsList[i] + '>' + comicsList[i] + '</a></li>').appendTo('ul.comicsList')
+            }
+        }
+    
+  body(onLoad="makeList()")
+    div(id="banner")
+        div(id="logout")
+            form#logout(name="logout",method="get", action= "/logout")
+                button#btnLogout(type="submit") Log Out
+        div(id="home")        
+            form#home(name="home",method="get", action= "/home")
+                button#btnHome(type="submit") Home               
+    h1.
+        Welcome to your Homepage #{viewer.username}
+    div
+        form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
+            button#btnAccountSettings(type="submit") Accountsettings
+        form#Profile(type="profile", method="get", action="/profile")
+            button#btnProfile(type="submit") Public Profile
+    br
+    br        
+    |Published comics
+    ul(class="comicsList")
