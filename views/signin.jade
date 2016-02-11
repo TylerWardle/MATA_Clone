@@ -1,8 +1,13 @@
 extends layout
 
 block content
-    h1= title
+    div(id="title")
+        h1= title
+    br
     form#formRegisterUser(name="signin",method="post",action="/signin")
-        input#inputUsername(type="text", placeholder="username", name="username", , required="", autocomplete="off")
-        input#inputUserPassword(type="password", placeholder="password", name="password", required="", autocomplete="off")
-        button#btnSubmit(type="submit") Submit
+        div(id="signInUsername")
+            input#inputUsername(type="text", placeholder="username", name="username", , required="", autocomplete="off")
+        div(id="signInPassword")
+            input#inputUserPassword(type="password", placeholder="password", name="password", required="", autocomplete="off")
+        div(id="signInSubmit")
+                button#btnSubmit(type="submit") Submit

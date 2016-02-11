@@ -1,12 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(id="title")
+      h1= title
   br
   br
   body
-  div(id="bannerIndex")
   div(id="signin")
     form#SignIn(name="sign in", method="get", action="signin")
         button#btnSignIn(type="submit") Sign In

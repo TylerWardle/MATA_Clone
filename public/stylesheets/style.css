@@ -6,18 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
-#colorforbackground {
-	background-color: lightyellow;
-}
 #banner {
-	background-color: lightskyblue;
+	background-color: steelblue;
 	width:100%;
     min-height:60px;
-}
-#bannerIndex {
-	background-color: powderblue;
-	width:100%;
-    min-height:40px;
 }
 #logout{
 	position: absolute;
@@ -45,14 +37,14 @@ a {
 }
 #btnRegister{
     position: absolute;
-    right: 180px;
-    top: 130px;
+    right: 100px;
+    top: 40px;
     width: 100px;
 }
 #btnSignIn{
     position: absolute;
-    right: 300px;
-    top: 130px;
+    right: 220px;
+    top: 40px;
     width: 100px;
 }
 #profilePicture{
@@ -67,4 +59,28 @@ a {
     margin-right: auto;
     width: 75%;
 }
-
+#title{
+	position: absolute;
+	left:100px;
+	top: 15px;
+}
+#signInSubmit{
+    position: absolute;
+    right: 100px;
+    top: 40px;
+    width: 100px;
+}
+#signInPassword{
+	position: absolute;
+    right: 210px;
+    top: 40px;
+}
+#signInUsername{
+	position: absolute;
+    right: 350px;
+    top: 40px;
+}
+#registerform{
+	position: absolute;;
+	left:100px;
+}
