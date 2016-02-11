@@ -1,20 +1,23 @@
 extends layout
 
 block content
-    h1= title
-
-    form#formRegisterUser(name="register",method="post",action="/register")
-        input#inputUserName(type="text", placeholder="username", name="username")
-        input#inputUserPassword(type="password", placeholder="password", name="password")
-        br
-        br
-        input#inputUserName(type="text", placeholder="First Name", name="firstName")
-        input#inputUserPassword(type="text", placeholder="Last Name", name="lastName")
-        br
-        br
-        select(name="accountType",)
-            option(value="contributor") Contributor
-            option(value="viewer",selected) Viewer
-        br
-        br
-        button#btnSubmit(type="submit") submit
+    div(id="title")
+        h1= title
+    br
+    div(id="registerform")
+        form#formRegisterUser(name="register",method="post",action="/register")
+            input#inputUserName(type="text", placeholder="username", name="username", required="", autocomplete="off")
+            input#inputUserPassword(type="password", placeholder="password", name="password", required="")
+            br
+            br
+            input#inputFirstName(type="text", placeholder="First Name", name="firstName", required="", autocomplete="off")
+            input#inputLastName(type="text", placeholder="Last Name", name="lastName", required="", autocomplete="off")
+            br
+            br
+            p Please select a user type:
+            select(name="accountType")
+                option(value="contributor") Contributor
+                option(value="viewer") Viewer
+            br
+            br
+            button#btnSubmit(type="submit") Submit

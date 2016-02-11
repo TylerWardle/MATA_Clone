@@ -6,9 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
-
 #banner {
-	background-color: blue;
+	background-color: steelblue;
 	width:100%;
     min-height:60px;
 }
@@ -18,14 +17,70 @@ a {
 	top: 20px;
 	width: 100px;
 }
+#profile{
+	position: absolute;
+	right: 125px;
+	top: 20px;
+	width: 100px;
+}
+#accountSettings{
+	position: absolute;
+	right: 70px;
+	top: 20px;
+	width: 120px;
+}
 #home{
 	position: absolute;
 	left:5%;
 	top: 20px;
 	width: 100px;
 }
-
+#btnRegister{
+    position: absolute;
+    right: 100px;
+    top: 40px;
+    width: 100px;
+}
+#btnSignIn{
+    position: absolute;
+    right: 220px;
+    top: 40px;
+    width: 100px;
+}
+#profilePicture{
+	position: absolute;
+	left: 400px;
+	top: 90px;
+	width: 100px;
+}
 #images{
-	width: 75%;
-
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+#title{
+	position: absolute;
+	left:100px;
+	top: 15px;
+}
+#signInSubmit{
+    position: absolute;
+    right: 100px;
+    top: 40px;
+    width: 100px;
+}
+#signInPassword{
+	position: absolute;
+    right: 210px;
+    top: 40px;
+}
+#signInUsername{
+	position: absolute;
+    right: 350px;
+    top: 40px;
+}
+#registerform{
+	position: absolute;;
+	left:100px;
 }
