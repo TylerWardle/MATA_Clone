@@ -44,22 +44,20 @@ a {
 	width: 100px;
 }
 #btnRegister{
-	position: absolute;
-	right: 180px;
-	padding: 110px;
-	top: 20px;
-	width: 100px;
+    position: absolute;
+    right: 180px;
+    top: 130px;
+    width: 100px;
 }
 #btnSignIn{
-	position: absolute;
-	right: 240px;
-	padding: 110px;
-	top: 20px;
-	width: 100px;
+    position: absolute;
+    right: 300px;
+    top: 130px;
+    width: 100px;
 }
 #profilePicture{
 	position: absolute;
-	left: 300px;
+	left: 400px;
 	top: 90px;
 	width: 100px;
 }

@@ -21,7 +21,7 @@ var Router = (function () {
 		
         /* GET home page. */
         router.get('/', function (req, res, next) {
-            res.render('index', { title: '' });
+            res.render('index', { title: 'HerroPrease' });
         });
 		
         module.exports = router;
