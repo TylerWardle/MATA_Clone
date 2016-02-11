@@ -4,18 +4,18 @@ block content
   h1.
     #{user.username}
   form#formProfile(name="profile",method="post",action="/profile")
-  p #{user.firstName} #{user.lastName}
+  p My name is #{user.firstName} #{user.lastName}!
   br
-  p #{user.accountType}
+  p I am a #{user.accountType}.
   
   br
   div
-    img(src="profilepicture.jpg")
+    img(src="http://www.adtechnology.co.uk/images/UGM-default-user.png")
   br 
   div
     label about me:
     br
-    input.field.left(type="text", value="this will be the user's about me", readonly="readonly")
+    input.field.left(type="text", value="this will be the user's about me", readonly="readonly", width="300", height="100")
   br
   form#Edit(type="edit", method="get", action="/profile/edit")
     button#btnEdit(type="submit") edit

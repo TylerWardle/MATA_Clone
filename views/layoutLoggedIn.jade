@@ -8,6 +8,12 @@ html
         div(id="logout")
             form#logout(name="logout",method="get", action= "/logout")
                 button#btnLogout(type="submit") Log Out
+        div(id="accountSettings")
+            form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
+                button#btnAccountSettings(type="submit") Account Settings
+        div(id="profile")
+            form#profile(type="profile", method="get", action="/profile")
+                button#btnProfile(type="submit") Public Profile
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
                 button#btnHome(type="submit") Home               
