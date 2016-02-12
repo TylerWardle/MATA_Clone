@@ -10,13 +10,9 @@ var router = express.Router();
 /* POST to sign into the system. */
 router.post('/', function(req, res) {
 	
-    // Set our internal DB variable
     var db = req.db;
-
-    // Set our collection
     var registeredUsers = db.get('registeredUsers');
 	
-	 // Fetch the document
     registeredUsers.findOne({username:req.body.username}, function(err, user) {
 		if(user)
 		{
@@ -27,14 +23,10 @@ router.post('/', function(req, res) {
 				if(user.accountType === "contributor")
 				{
                     res.redirect("contributor");
-					//res.redirect("contributor/"+user._id);
-					//res.render('contributor', { title: 'Welcome back!'});	
 				}
 				else
 				{
                     res.redirect("viewer");
-					//res.redirect("viewer/"+user._id);
-					//res.render('viewer', { title: 'Welcome back!'});
 				}
 			}
 			else
@@ -47,7 +39,6 @@ router.post('/', function(req, res) {
 			res.send("User does not exist");
 		}
 	});
-	
 });
 
 /* GET register page. */
