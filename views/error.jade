@@ -1,13 +1,13 @@
 extends layout
 
 block content
-  div(id="title")
-      h1.
-        #{message}
-  body
-  div(id="signin")
-    form#SignIn(name="sign in", method="get", action="signin")
-        button#btnSignIn(type="submit") Sign In
-  div(id="register")
-    form#Register(name="register", method="get", action="register")
-        button#btnRegister(type="submit") Register
+    div(id="title")
+        h1.
+          #{message}
+    body
+    div(id="signin")
+        form#SignIn(name="sign in", method="get", action="signin")
+            button#btnSignIn(type="submit") Sign In
+    div(id="register")
+        form#Register(name="register", method="get", action="register")
+            button#btnRegister(type="submit") Register
