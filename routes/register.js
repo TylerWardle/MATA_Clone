@@ -6,7 +6,7 @@ router.post('/', function (req, res) {
     var registeredUsers = db.get('registeredUsers');
     registeredUsers.findOne({ username: req.body.username }, function (err, item) {
         if (item) {
-            res.send("username " + item.username + " is already taken!");
+            res.render("error", { message: "username " + item.username + " is already taken!" });
         }
         else {
             var username = req.body.username;
@@ -25,7 +25,7 @@ router.post('/', function (req, res) {
                 "password": req.body.password
             }, function (err, doc) {
                 if (err) {
-                    res.send("There was a problem adding the information to the database.1");
+                    res.render("error", { message: "There was a problem adding the information to the database.1" });
                 }
                 else {
                     if (accountType === "viewer") {
@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
                             "guid": doc._id
                         }, function (err, doc) {
                             if (err) {
-                                res.send("There was a problem adding the information to the database.2");
+                                res.render("error", { message: "There was a problem adding the information to the database.2" });
                             }
                         });
                     }
@@ -52,7 +52,7 @@ router.post('/', function (req, res) {
                             "guid": doc._id
                         }, function (err, doc) {
                             if (err) {
-                                res.send("There was a problem adding the information to the database.3");
+                                res.render("error", { message: "There was a problem adding the information to the database.3" });
                             }
                         });
                     }
