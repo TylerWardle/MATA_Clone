@@ -4,18 +4,22 @@ block content
   h1.
     #{user.username}
   form#formProfile(name="profile",method="post",action="/profile")
-  p #{user.firstname} #{user.lastname}
+  p My name is #{user.firstName} #{user.lastName}!
   br
-  p #{user.accountType}
+  p I am a #{user.accountType}.
   
   br
-  div
-    img(src="profilepicture.jpg")
+  div(id="profilePicture")
+    img(src="http://www.openshot.org/images/blank_profile.png")
   br 
+  br
   div
-    label about me:
-    br
-    input.field.left(type="text", value="this will be the user's about me", readonly="readonly")
+    label About me:
+    form(action="").form-inline
+      .form-group.col-md-4
+        textarea(readonly="", rows=5, cols=70).form-control
+          | this will be the user's about me
+
   br
   form#Edit(type="edit", method="get", action="/profile/edit")
-    button#btnEdit(type="submit") edit
+    button#btnEdit(type="submit") Edit

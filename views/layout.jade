@@ -1,7 +1,9 @@
 doctype html
 html
   head
-    title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block script
   body
+        div(id="banner")
+            title=title
     block content

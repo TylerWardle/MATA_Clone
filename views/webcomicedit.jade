@@ -5,16 +5,18 @@ block content
         Edit WebComic
     div
         form#formEditWebcomic(name="editWebcomic", method="post", action="/webcomic/update/#{webcomic._id}")
-            |Title
-            input#comicTitle(type="text", value="#{webcomic.title}" ,name="title")
+            |Title:
+            input#comicTitle(type="text", value="#{webcomic.title}" ,name="title", required="", autocomplete="off")
             br
-            |Description
-            input#description(type="text", value="#{webcomic.description}",name="description")
+            |Description:
+            input#description(type="text", value="#{webcomic.description}",name="description", required="", autocomplete="off")
             br
-            |Genre
-            input#genre(type="text", value="#{webcomic.genre}", name="genre")
+            |Genre:
+            input#genre(type="text", value="#{webcomic.genre}", name="genre", required="")
+            br
             br
             |Publish now?
             input#toPublish(type="checkbox", name="toPublish", value="#{webcomic.toPublish}")
             br
-            button#btnSubmit(type="submit") submit
+            br
+            button#btnSubmit(type="submit") Submit

@@ -5,18 +5,21 @@ block content
         New Comic!
     div
         form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
-            input#comicTitle(type="text", placeholder="Title",name="title")
+            input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
             br
-            input#description(type="text", placeholder="description",name="description")
+            input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
             br
-            input#genre(type="text", placeholder="genre", name="genre")
+            input#genre(type="text", placeholder="Genre", name="genre", required="")
             br
-            | Publish now?
+            br
+            | Publish now? 
             input#toPublish(type="checkbox", name="toPublish", value="toPublish")
             br
-            input#firstImage(type="file",name="image")
             br
-            button#btnSubmit(type="submit") submit
+            input#firstImage(type="file",name="image", required="")
+            br
+            br
+            button#btnSubmit(type="submit") Submit
 
 
 
