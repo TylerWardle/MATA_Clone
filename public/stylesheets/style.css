@@ -7,10 +7,18 @@ a {
   color: #00B7FF;
 }
 
+#colorforbackground {
+	background-color: lightyellow;
+}
 #banner {
-	background-color: blue;
+	background-color: lightskyblue;
 	width:100%;
     min-height:60px;
+}
+#bannerIndex {
+	background-color: powderblue;
+	width:100%;
+    min-height:40px;
 }
 #logout{
 	position: absolute;
@@ -18,14 +26,45 @@ a {
 	top: 20px;
 	width: 100px;
 }
+#profile{
+	position: absolute;
+	right: 125px;
+	top: 20px;
+	width: 100px;
+}
+#accountSettings{
+	position: absolute;
+	right: 70px;
+	top: 20px;
+	width: 120px;
+}
 #home{
 	position: absolute;
 	left:5%;
 	top: 20px;
 	width: 100px;
 }
-
+#btnRegister{
+    position: absolute;
+    right: 180px;
+    top: 130px;
+    width: 100px;
+}
+#btnSignIn{
+    position: absolute;
+    right: 300px;
+    top: 130px;
+    width: 100px;
+}
+#profilePicture{
+	position: absolute;
+	left: 400px;
+	top: 90px;
+	width: 100px;
+}
 #images{
-	width: 75%;
-
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
 }
