@@ -49,15 +49,17 @@ a {
 }
 #profilePicture{
 	position: absolute;
-	left: 400px;
-	top: 90px;
+	left: 470px;
+	top: -40px;
 	width: 100px;
 }
 #images{
     display: block;
+    top:170px;
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    max-width: 75%;
+    max-height: 700px
 }
 #title{
 	position: absolute;
@@ -80,7 +82,26 @@ a {
     right: 350px;
     top: 40px;
 }
-#registerform{
+#form{
 	position: absolute;;
 	left:100px;
+}
+#titleS{
+	position: absolute;
+	left:100px;
+}
+#belowform{
+	position: absolute;
+	left: 100px;
+	top: 140px
+}
+#belowbelowform{
+	position: absolute;
+	left: 100px;
+	top: 160px
+}
+#belowimage{
+	position: absolute;
+	left: 100px;
+	top: 90%px
 }
