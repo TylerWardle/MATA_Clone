@@ -19,7 +19,7 @@ router.get('/', function(req, res, db) {
         if(user.accountType == 'viewer'){
 		     res.redirect('viewer');
 
-        }else{
+        } else {
             res.redirect('contributor');  
         }
 	});

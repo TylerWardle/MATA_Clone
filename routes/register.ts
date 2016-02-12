@@ -4,7 +4,6 @@ import RegisteredUser = require('../models/RegisteredUser');
 import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
 
-
 var express = require('express');
 var router = express.Router();
 
@@ -16,13 +15,16 @@ router.post('/', function(req, res) {
     registeredUsers.findOne({username:req.body.username}, function(err, item) {
 		if(item){
 			res.send("username " + item.username + " is already taken!");
+			//send back a signal
 		} else{
+			
 			var username = req.body.username;
 			var firstName = req.body.firstName;
 			var lastName = req.body.lastName;
 			var accountType = req.body.accountType;
 			var password = req.body.password;
 			console.log("request headers " + req.headers);
+			// need to add registered user number to different types of users.
 			
 			//var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
 				
@@ -75,6 +77,8 @@ router.post('/', function(req, res) {
 					res.redirect("signin");
 				}
 			})
+			
+			
 		}
 	});
 });

@@ -2,11 +2,8 @@ var express = require('express');
 var router = express.Router();
 /* POST to sign into the system. */
 router.post('/', function (req, res) {
-    // Set our internal DB variable
     var db = req.db;
-    // Set our collection
     var registeredUsers = db.get('registeredUsers');
-    // Fetch the document
     registeredUsers.findOne({ username: req.body.username }, function (err, user) {
         if (user) {
             //res.set('_id', user._id);

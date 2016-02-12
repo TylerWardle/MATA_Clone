@@ -14,28 +14,19 @@ router.post('/', function(req, res) {
     var registeredUsers = db.get('registeredUsers');
 	
     registeredUsers.findOne({username:req.body.username}, function(err, user) {
-		if(user)
-		{
+		if(user){
 			//res.set('_id', user._id);
-			if(user.password === req.body.password)
-			{
+			if(user.password === req.body.password){
                 res.cookie('_id',user._id);
-				if(user.accountType === "contributor")
-				{
+				if(user.accountType === "contributor"){
                     res.redirect("contributor");
-				}
-				else
-				{
+				} else {
                     res.redirect("viewer");
 				}
-			}
-			else
-			{
+			} else {
 				res.send("Username and password do not match.");	
 			}
-		}
-		else
-		{
+		} else {
 			res.send("User does not exist");
 		}
 	});

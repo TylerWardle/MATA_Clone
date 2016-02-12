@@ -15,7 +15,6 @@ router.post('/', function (req, res) {
             var accountType = req.body.accountType;
             var password = req.body.password;
             console.log("request headers " + req.headers);
-            // need to add registered user number to different types of users.
             //var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
             registeredUsers.insert({
                 "username": req.body.username,

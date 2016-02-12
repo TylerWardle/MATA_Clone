@@ -2,7 +2,6 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
-
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
