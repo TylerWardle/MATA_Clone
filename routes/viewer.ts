@@ -10,9 +10,8 @@ var ObjectID = require('mongodb').ObjectID;
 router.get('/', function(req, res, db) {
 	var db = req.db;
 	var viewers = db.get('viewers');
-    var comicsList = "http:\/\/localhost:3000\/webcomic\/id\/56bd093db5e073c827280b30,http:\/\/localhost:3000\/webcomic\/id\/56bd10d806ceb1640fd33a5b";
-    // https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60f
-    
+    var comicsList = "https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60f, https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60f";
+
 	viewers.findOne({guid: ObjectID(req.cookies._id)}, function(error, viewer)
 	{
 		console.log("this should display something: " + comicsList);
