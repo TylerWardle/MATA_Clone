@@ -1,7 +1,15 @@
+/bin
 /data
-/types
-/.DS_Store
-/npm-debug
 /node_modules
-
+/public
+/types
+.project
+app.js
+app.ts
+myfiles
+compile.bat
+npm-debug.log
+procfile
+README.md
+tsconfig.json
 
