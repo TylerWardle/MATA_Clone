@@ -1,21 +1,27 @@
 extends layoutLoggedIn
 
 block content
-  h1.
-    #{user.username}
-  form#formProfile(name="profile",method="post",action="/profile")
-  p #{user.firstname} #{user.lastname}
-  br
-  p #{user.accountType}
-  
-  br
-  div
-    img(src="profilepicture.jpg")
-  br 
-  div
-    label about me:
+  div(id="form")
+    h1.
+      #{user.username}
+  div(id="belowform")
+    form#formProfile(name="profile",method="post",action="/profile")
+    p My name is #{user.firstName} #{user.lastName}!
     br
-    input.field.left(type="text", value="this will be the user's about me", readonly="readonly")
-  br
-  form#Edit(type="edit", method="get", action="/profile/edit")
-    button#btnEdit(type="submit") edit
+    p I am a #{user.accountType}.
+  
+    br
+    div(id="profilePicture")
+      img(src="http://www.openshot.org/images/blank_profile.png")
+    br 
+    br
+    div
+      label About me:
+      form(action="").form-inline
+        .form-group.col-md-4
+          textarea(readonly="", rows=5, cols=70).form-control
+            | this will be the user's about me
+
+    br
+    form#Edit(type="edit", method="get", action="/profile/edit")
+      button#btnEdit(type="submit") Edit

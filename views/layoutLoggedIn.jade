@@ -4,11 +4,18 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    div(id="background")
     div(id="banner")
         div(id="logout")
             form#logout(name="logout",method="get", action= "/logout")
-                button#btnLogout(type="submit") Log Out
+                button#btnLogout(type="submit", style='background-color: powderblue;') Log Out
+        div(id="accountSettings")
+            form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
+                button#btnAccountSettings(type="submit", style='background-color: powderblue;') Account Settings
+        div(id="profile")
+            form#profile(type="profile", method="get", action="/profile")
+                button#btnProfile(type="submit", style='background-color: powderblue;') Public Profile
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
-                button#btnHome(type="submit") Home               
+                button#btnHome(type="submit", style='background-color: powderblue;') Home               
     block content

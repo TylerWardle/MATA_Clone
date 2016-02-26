@@ -23,11 +23,15 @@ router.post('/', function(req, res) {
 				} else {
                     res.redirect("viewer");
 				}
-			} else {
-				res.send("Username and password do not match.");	
 			}
-		} else {
-			res.send("User does not exist");
+			else
+			{
+				res.render("error", { message: "Username and password do not match." });	
+			}
+		}
+		else
+		{
+			res.render("error", { message: "User does not exist" });
 		}
 	});
 });

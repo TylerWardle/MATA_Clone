@@ -1,20 +1,28 @@
 extends layoutLoggedIn 
 
 block content
-    h1.
-        Edit WebComic
-    div
+    div(id="form")
+        h1.
+            Edit WebComic
+    div(id="belowform")
         form#formEditWebcomic(name="editWebcomic", method="post", action="/webcomic/update/#{webcomic._id}")
-            |Title
-            input#comicTitle(type="text", value="#{webcomic.title}" ,name="title")
             br
-            |Description
-            input#description(type="text", value="#{webcomic.description}",name="description")
+            |Title:
+            input#comicTitle(type="text", value="#{webcomic.title}" ,name="title", required="", autocomplete="off")
             br
-            |Genre
-            input#genre(type="text", value="#{webcomic.genre}", name="genre")
+            br
+            |Description:
+            input#description(type="text", value="#{webcomic.description}",name="description", required="", autocomplete="off")
+            br
+            br
+            |Genre:
+            input#genre(type="text", value="#{webcomic.genre}", name="genre", required="")
+            br
+            br
             br
             |Publish now?
             input#toPublish(type="checkbox", name="toPublish", value="#{webcomic.toPublish}")
             br
-            button#btnSubmit(type="submit") submit
+            br
+            br
+            button#btnSubmit(type="submit") Submit

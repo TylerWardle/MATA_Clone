@@ -1,18 +1,25 @@
 extends layoutLoggedIn 
 
 block content
-	h1.
-		welcome to #{webcomic.title}
-	div.
-		Description: #{webcomic.description}
-		Genre: #{webcomic.genre}
+	div(id="form")
+		h1.
+			#{webcomic.title}
+	div(id="belowform")
+		p Description: #{webcomic.description}
+	div(id="belowbelowform")
+		p Genre: #{webcomic.genre}
+	br
 	div(id="images")
 		img(id="images", src="http://#{webcomic.images}")
 		script.
 			for(i=0;i<images.length;i++)
 				img(src="http://#{webcomic.images}")
-	div
+	br
+	div(id="belowimage")
 		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 			button#btnEditComic(type="submit") Edit
+	br
+	br
+	br
 
 
