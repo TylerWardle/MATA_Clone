@@ -8,7 +8,6 @@
 .project
 app.js
 app.ts
-package.json
 procfile
 README.md
 /.DS_Store
