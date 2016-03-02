@@ -9,9 +9,8 @@ var Comic = (function () {
         this.schema = this.mongoose.Schema;
         // define Comic Object schema for storing Comic data fields
         this.comicSchema = new this.schema({
-            authorID: String,
             title: String,
-            author_username: String,
+            authorUsername: String,
             publicationDate: String,
             description: String,
             genre: String,
@@ -19,16 +18,15 @@ var Comic = (function () {
         });
         this.comic = this.mongoose.model('Comic', this.comicSchema);
     }
-    // INSERT
+    // INSERT **WORKS**
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB
     // we pass this id back to the client
-    Comic.prototype.insert = function (_authorID, _title, _author_username, _publicationDate, _description, _genre, _toPublish, callback) {
+    Comic.prototype.insert = function (_title, _authorUsername, _publicationDate, _description, _genre, _toPublish, callback) {
         var db = this.mongoose.connection;
         // create a new comic object with the client given data fields
         var c = new this.comic({
-            authorID: _authorID,
             title: _title,
-            author_username: _author_username,
+            authorUsername: _authorUsername,
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
@@ -42,9 +40,9 @@ var Comic = (function () {
             callback(doc._id.toString());
         });
     };
-    // GET
-    // we use the comic identifier to retrieve a comic from the DB
-    Comic.prototype.get = function (_comicID, callback) {
+    // GET **WORKS**
+    // we use the comicID to retrieve a comic from the DB
+    Comic.prototype.getByID = function (_comicID, callback) {
         var db = this.mongoose.connection;
         var comicModel = this.comic;
         comicModel.findById({ _id: _comicID }, function (err, doc) {
@@ -54,18 +52,38 @@ var Comic = (function () {
             callback(doc);
         });
     };
-    // UPDATE
-    Comic.prototype.update = function (_comicID, a_comic, callback) {
+    // GETALL **WORKS**
+    // we get every comic record in the collection
+    Comic.prototype.getAll = function (callback) {
         var db = this.mongoose.connection;
         var comicModel = this.comic;
-        // create a new document if no Comic document with "_id = comicID" exists, otherwise update the existing document by replacing all fields with comicObj fields
-        comicModel.update({ _id: _comicID }, a_comic, { upsert: true }, function (err, doc) {
+        comicModel.find({}, function (err, docs) {
+            if (err)
+                return console.error(err);
+            callback(docs);
+        });
+    };
+    // UPDATE **WORKS**
+    Comic.prototype.update = function (_comicID, _title, _authorUsername, _publicationDate, _description, _genre, _toPublish, callback) {
+        var db = this.mongoose.connection;
+        var comicModel = this.comic;
+        var a_comic = new this.comic({
+            title: _title,
+            authorUsername: _authorUsername,
+            publicationDate: _publicationDate,
+            description: _description,
+            genre: _genre,
+            toPublish: _toPublish
+        });
+        var comicData = a_comic.toObject();
+        delete comicData._id; // rid of mongoose error of updating id
+        comicModel.update({ _id: _comicID }, comicData, { multi: false }, function (err, doc) {
             if (err)
                 return console.error(err);
             callback();
         });
     };
-    // DELETE 
+    // DELETE **WORKS **
     Comic.prototype.delete = function (_comicID, callback) {
         var db = this.mongoose.connection;
         var comicModel = this.comic;
