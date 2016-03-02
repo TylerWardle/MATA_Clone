@@ -1,13 +1,7 @@
-/node_modules
 /bin
 /data
-/types
 /node_modules
 /public
+/types
 /views
-.project
-app.js
-app.ts
-procfile
-README.md
 /.DS_Store

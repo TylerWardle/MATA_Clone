@@ -4,8 +4,8 @@ var getOwnerID = (ownerID: String): any => {
     return ownerID;
 }
 
-var getContributorID = (contributorID: String): any =>  {
-    return contributorID;
+var getCollaboratorID = (collaboratorID: String): any =>  {
+    return collaboratorID;
 }
 */
 var ComicCell = (function () {
@@ -17,22 +17,22 @@ var ComicCell = (function () {
         // define ComicCell Object schema for storing Comic data fields
         this.comicCellSchema = new this.schema({
             comicID: String,
-            ownerID: String,
-            contributorID: String,
+            ownerUsername: String,
+            collaboratorUsername: String,
             toPublish: Boolean
         });
         this.comicCell = this.mongoose.model('ComicCell', this.comicCellSchema);
     }
-    // INSERT
+    // INSERT **WORKS**
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB
     // we pass this id back to the client
-    ComicCell.prototype.insert = function (_comicID, _ownerID, _contributorID, _toPublish, callback) {
+    ComicCell.prototype.insert = function (_comicID, _ownerUsername, _collaboratorUsername, _toPublish, callback) {
         var db = this.mongoose.connection;
         // create a new comicCell object with the client-given data fields
         var cc = new this.comicCell({
             comicID: _comicID,
-            ownerID: _ownerID,
-            contributorID: _contributorID,
+            ownerUsername: _ownerUsername,
+            collaboratorUsername: _collaboratorUsername,
             toPublish: _toPublish
         });
         // insert the new comic obj into the DB
@@ -43,15 +43,15 @@ var ComicCell = (function () {
             callback(doc._id.toString());
         });
     };
-    // GET one comicCell
-    ComicCell.prototype.get = function (_comicCellID, callback) {
+    // GET one comicCell by quering by cell's ID
+    ComicCell.prototype.getByID = function (_comicCellID, callback) {
         var db = this.mongoose.connection;
         var comicCellModel = this.comicCell;
         // find all the comicCells associated with a single comicID
-        comicCellModel.findOne({ 'comicCellID': _comicCellID }, function (err, doc) {
+        comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
-            // pass back the retrieved comic object to the client
+            // pass back the retrieved comic cell object to the client
             callback(doc);
         });
     };
@@ -67,13 +67,19 @@ var ComicCell = (function () {
             callback(docs);
         });
     };
-    // UPDATE
-    // NOTE: the contributor ID field identifies the contributor who is calling the update method
-    ComicCell.prototype.update = function (_comicCellID, a_comicCell, _contributorID, callback) {
+    // UPDATE **CHANGE OWNER AND COLLABORATOR ID TO USERNAME
+    // NOTE: the collaborator ID field identifies the collaborator who is calling the update method
+    ComicCell.prototype.update = function (_comicCellID, _comicID, _ownerID, _collaboratorID, _toPublish, callback) {
         var db = this.mongoose.connection;
         var comicCellModel = this.comicCell;
-        // can update if the contributor is either the OWNER of the COMIC or a COLLABORATOR who owns the COMICCELL
-        if (_contributorID == a_comicCell.ownerID || _contributorID == a_comicCell.contributorID) {
+        var a_comicCell = new this.comicCell({
+            comicID: _comicID,
+            ownerID: _ownerID,
+            collaboratorID: _collaboratorID,
+            toPublish: _toPublish
+        });
+        // can update if the collaborator is either the OWNER of the COMIC or a COLLABORATOR who owns the COMICCELL
+        if (_collaboratorID == _ownerID || _collaboratorID == _collaboratorID) {
             comicCellModel.update({ _id: _comicCellID }, a_comicCell, function (err, doc) {
                 if (err)
                     return console.error(err);
