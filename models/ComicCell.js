@@ -95,10 +95,9 @@ var ComicCell = (function () {
     }
     */
     // DELETE one comic cell
-    ComicCell.prototype.delete = function (_comicCellID, comicID, _contributorUsername, callback) {
+    ComicCell.prototype.delete = function (_comicCellID, _contributorUsername, callback) {
         var db = this.mongoose.connection;
         var comicCellModel = this.comicCell;
-        var ownerID, collaboratorID;
         comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
@@ -112,10 +111,33 @@ var ComicCell = (function () {
                     callback();
                 });
             }
+            else {
+                console.log("User not authorized to delete comic cell.");
+            }
         });
     };
     // DELETE ALL comic cells associated with the same comic
-    ComicCell.prototype.deleteAll = function () { };
+    ComicCell.prototype.deleteAll = function (_comicID, _contributorUsername, callback) {
+        var db = this.mongoose.connection;
+        var comicCellModel = this.comicCell;
+        // get one comic cell to retrieve the ownerUsername of that cell. Assume same ownerUsername for the same ComicID
+        comicCellModel.findOne({ 'comicID': _comicID }, function (err, doc) {
+            if (err)
+                return console.error(err);
+            var ownerUsername = doc.ownerUsername;
+            // can delete only if the contributor is the OWNER of the COMIC
+            if (_contributorUsername == ownerUsername) {
+                comicCellModel.remove({ 'comicID': _comicID }, function (err, doc) {
+                    if (err)
+                        return console.error(err);
+                    callback();
+                });
+            }
+            else {
+                console.log("User not authorized to delete comic cells.");
+            }
+        });
+    };
     return ComicCell;
 })();
 exports.ComicCell = ComicCell;
