@@ -42,7 +42,7 @@ var Comic = (function () {
     };
     // GET **WORKS**
     // we use the comicID to retrieve a comic from the DB
-    Comic.prototype.getByID = function (_comicID, callback) {
+    Comic.prototype.get = function (_comicID, callback) {
         var db = this.mongoose.connection;
         var comicModel = this.comic;
         comicModel.findById({ _id: _comicID }, function (err, doc) {

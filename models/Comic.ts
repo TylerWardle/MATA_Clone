@@ -57,7 +57,7 @@ export class Comic {
 
     // GET **WORKS**
     // we use the comicID to retrieve a comic from the DB
-    getByID(_comicID: String, callback: Function): any {
+    get(_comicID: String, callback: Function): any {
         var db = this.mongoose.connection;
         var comicModel = this.comic;
        
