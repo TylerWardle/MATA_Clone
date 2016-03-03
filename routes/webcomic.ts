@@ -149,26 +149,24 @@ class Webcomic {
         });
 
 
-        // make a route for get random webcomic ID
+        // make a route for get random webcomic ID **NEEDS TO BE TESTED**
         router.get('/random', function (req, res) {
             var c = new Comic.Comic(req.mongoose);
             c.getAll((docs: any): void => {
                 var numOfComicIDs = 0;
                 var comicIDArr = new Array<String>();
-                docs.forEach(function (docs, err) { // store each published comicID into the array
-                    if (err)
-                        console.error(err);
-                    else if (docs.toPublish) {
-                        comicIDArr.push(docs._id);
+                for (var i = 0; i < docs.length; i++) {
+                    if (docs[i].toPublish) {
+                        comicIDArr.push(docs[i]._id);
                         numOfComicIDs++;
                     }
-                });
+                }
 
                 var min = 0;
                 var max = numOfComicIDs;
-                var randomComicID = Math.floor(Math.random() * (max - min + 1) + min);
+                var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
 
-                res.redirect('/webcomic/id/' + randomComicID);
+                res.redirect('/webcomic/id/' + comicIDArr[randomArrIndex]);
             });
         });
 
