@@ -2,10 +2,11 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 
 import Comic = require('../models/Comic');
+import ComicCell = require('../models/ComicCell');
 
 class Webcomic {
 
-    constructor() { }
+    constructor() {}
 
     startWebcomic() {
 
@@ -15,19 +16,17 @@ class Webcomic {
         var ObjectId = require('mongodb').ObjectID;
 
 
-        /* View Comic: Get from Comic DB */
+        // View comic with associated images (one image/comic for now) **WORKS** 
+        // TODO: image does not display correctly!!
         router.get('/id/:id', function(req, res) {
-            var db = req.db;
-            var ComicCollection = db.get('ComicCollection');
-
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
             
-        // RETRIEVE COMIC DATA FROM DB----------------------------------------------------------------------------------------------
-            // find comic in the db table
-            if(req.cookies._id != null){
-                ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, webcomic) {
-                    res.render('webcomic',{"webcomic": webcomic});
+            // get comic from the db
+            if (req.cookies._id != null){
+                var c = new Comic.Comic(req.mongoose);
+                c.get(comicID, (doc: any): void => {
+                    res.render('webcomic', { "webcomic": doc});
                 });
             }else{
                 res.redirect('/');    
@@ -36,63 +35,61 @@ class Webcomic {
 
         });
 
-        /* Create Comic: Post Comic to ComicCollection and ComicCellCollection in DB */
+        // Create new comic with associated images (one image/comic for now) **WORKS**
         router.post('/submit', function(req, res) {
-            var db = req.db;
-            var ComicCollection = db.get('ComicCollection');
-            var contributors = db.get('contributors');
-            
             // extract user id of creator/owner of comic from request header
-            var authorID = req.cookies._id;
+            var authorUsername = req.cookies._id;
             
-            // extract values of new comic data fields
-            var title = req.body.title; 
-            var description = req.body.description; 
+            // get values of comic data fields
+            var title = req.body.title;
+            var publicationDate = req.body.publicationDate;
+            var description = req.body.description;
             var genre = req.body.genre;
             var toPublish = req.body.toPublish;
+            var collaboratorUsername = req.body.collaboratorUsername;
             
-            // read the file passed in the request and save it
-            fs.readFile(req.file.path, function (err, data) {
-                console.log(data);
-                var imageName = req.file.originalname;
-                // If there's an error
-                if(!imageName){
-                  console.log("There was an error")
-                  res.redirect("./create");
-                  res.end();
-                } else {
-                  var newPath = "./uploads/fullsize/" + imageName;
-                  var imageList = [(req.headers['host'] + "/webcomic/image/" + imageName)];
+            var c = new Comic.Comic(req.mongoose);
+            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, (comicID: String): void => {
+                // read the image file passed in the request and save it
+                fs.readFile(req.file.path, function (err, img) {
+                    console.log(img);
                     
-                  // write file to uploads/fullsize folder
-                  fs.writeFile(newPath, data, function (err) {
-                  });
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, (imgName: String): void=> {
+                        // If there's an error
+                        if (!imgName) {
+                            console.log("There was an error")
+                            res.redirect("./create");
+                            res.end();
+                        } else {
+                            var newPath = "./uploads/fullsize/" + imgName;
+                            var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                     
-                  // insert comic in DB
-                  ComicCollection.insert({
-                    authorID: authorID, 
-                    title: title,  
-                    description: description, 
-                    genre: genre, 
-                    toPublish: toPublish,
-                    images: imageList
-                  },
-                    function(err, doc) {
-                        //redirect to the newly created comic
-                        var comicID = doc._id;
-                        
-                        contributors.update({guid : ObjectId(req.cookies._id)}, { $addToSet:{
-                            "comics": [comicID] 
+                            // write image file to uploads/fullsize folder
+                            fs.writeFile(newPath, img, function (err) {
+                                if (err)
+                                    return console.error(err);
+                                //redirect to the newly created comic
+                                res.redirect('./id/' + comicID);
+                            });
+                        }
+
+                        // TODO: need to change below code to reflect mongoose operations instead of mongodb
+                        // add comicID to Contributors Model
+                        /*
+                        var db = req.db;
+                        var contributors = db.get('contributors');
+                        var ObjectId = require('mongodb').ObjectID;
+                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
+                            $addToSet: {
+                                "comics": [comicID]
                             }
                         });
-                        
-                        res.redirect('./id/' + comicID);
-                  })  
-                    
-                }
-              });
-            
+                        */
+                    });
+                });
             });
+        });
               
         // get an image stored in uploads/fullsize/    
         router.get('/image/:file', function (req, res){
@@ -103,62 +100,55 @@ class Webcomic {
 
         });
 
-        /* Edit Comic: Patch Comic to ComicCollection and ComicCellCollection DB */
+        // Edit Comic (for now cannot edit associated images) **WORKS**
         router.post('/update/:id', function(req, res) {
-            var db = req.db;
-            var ComicCollection = db.get('ComicCollection');
-            
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
 
-            // extract user id of creator/owner of comic from request header
-            var authorID = req.cookies._id;
+            // extract username of owner of comic from the request header
+            var authorUsername = req.cookies._id;
 
-            // extract values of all the comic data fields incl. ones to be updated
+            // extract values of all the comic data fields 
             var title = req.body.title; 
-            //var author_username = req.body.author_username;
+            var publicationDate = req.body.publicationDate;
             var description = req.body.description; 
             var genre = req.body.genre;
             var toPublish = req.body.toPublish;
 
-            // find the comic document in the DB and update it
-            ComicCollection.update({_id : ObjectId(comicID)}, { $set:{
-                    "authorID": authorID, 
-                    "title": title, 
-                    "description": description, 
-                    "genre": genre, 
-                    "toPublish": toPublish
-                    }
-                });
-
-            // redirect client to updated comic web page
-            res.redirect('/webcomic/id/'+ comicID);
+            // update the comic
+            var c = new Comic.Comic(req.mongoose);
+            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, (): void => {
+                // redirect client to updated comic web page
+                res.redirect('/webcomic/id/' + comicID);
+            });
         });
 
+        // Retrieve old comic fields to edit on **WORKS**
         router.get('/edit/:id',function(req,res){
-            var db = req.db;
-            var ComicCollection = db.get('ComicCollection'); 
             var comicID = req.params.id;
             
-            // find comic in the db table
-            ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, webcomic) {
-                res.render('webcomicedit',{"webcomic": webcomic});
+            var c = new Comic.Comic(req.mongoose);
+            c.get(comicID, (doc: any): void => {
+                res.render('webcomicedit',{"webcomic": doc});
             });
-            
         });
 
-        ///* Delete Comic: Delete from ComicCollection and ComicCellCollection in DB */
-        //router.delete('./:id', function(req, res) {
-        //    var db = req.db;
-        //    var ComicCollection = db.get('ComicCollection');
-        //
-        //    // get web comic id from reqest parameter in the URL
-        //    var comicID = req.params.id;
-        //
-        //    // Remove this comic document from DB    
-        //    ComicCollection.remove({_id : ObjectId(comicID)});
-        //});
+        // Delete Comic: Delete one comic and all associated cells ** NEED TO BE TESTED**
+        router.delete('./:id', function(req, res) {
+            // get comicID identifying which comic to delete from reqest parameter in the URL
+            var comicID = req.params.id;
+            var authorUsername = req.cookies._id;
+        
+            // Remove this comic document
+            var c = new Comic.Comic(req.mongoose);
+            c.delete(comicID, authorUsername, (): void => {
+                // remove associated comic cell documents
+                var cc = new ComicCell.ComicCell(req.mongoose);
+                cc.deleteAll(comicID, authorUsername, (): void => { });
+            });
+        });
 
+        // create a webcomic route
         router.get('/create', function(req,res){
             res.render('createwebcomic',{ title: 'Create a Comic!' });    
         });
