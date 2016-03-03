@@ -54,8 +54,7 @@ class Webcomic {
             var collaboratorUsername = req.body.collaboratorUsername;
 
             // get server time for publicationDate
-            var currentdate = new Date(); 
-            var publicationDate = req.body.publicationDate;
+            var publicationDate = new Date();
             
             var c = new Comic.Comic(req.mongoose);
             c.insert(title, authorUsername, publicationDate, description, genre, toPublish, (comicID: String): void => {
