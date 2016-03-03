@@ -133,17 +133,20 @@ class Webcomic {
             });
         });
 
-        ///* Delete Comic: Delete from ComicCollection and ComicCellCollection in DB */
-        //router.delete('./:id', function(req, res) {
-        //    var db = req.db;
-        //    var ComicCollection = db.get('ComicCollection');
-        //
-        //    // get web comic id from reqest parameter in the URL
-        //    var comicID = req.params.id;
-        //
-        //    // Remove this comic document from DB    
-        //    ComicCollection.remove({_id : ObjectId(comicID)});
-        //});
+        // Delete Comic: Delete one comic and all associated cells ** NEED TO BE TESTED**
+        router.delete('./:id', function(req, res) {
+            // get comicID identifying which comic to delete from reqest parameter in the URL
+            var comicID = req.params.id;
+            var authorUsername = req.cookies._id;
+        
+            // Remove this comic document
+            var c = new Comic.Comic(req.mongoose);
+            c.delete(comicID, authorUsername, (): void => {
+                // remove associated comic cell documents
+                var cc = new ComicCell.ComicCell(req.mongoose);
+                cc.deleteAll(comicID, authorUsername, (): void => { });
+            });
+        });
 
         // create a webcomic route
         router.get('/create', function(req,res){
