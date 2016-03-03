@@ -108,16 +108,27 @@ export class Comic {
     }
 
     
-    // DELETE **WORKS **
-    delete(_comicID: String, callback: Function): void {
+    // DELETE **NEED TO BE TESTED **
+    delete(_comicID: String, _contributorUsername: String, callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
       
-        comicModel.remove({ _id: _comicID }, function (err, doc) {
+        // retrieve the authorUsername of the comic.
+        comicModel.findById({ _id: _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
-            callback();
+            var authorUsername = doc.authorUsername;
+                   
+            // can delete only if the contributor is the OWNER of the COMIC
+            if (_contributorUsername == authorUsername) {
+                comicModel.remove({ _id: _comicID }, function (err, doc) {
+                    if (err)
+                        return console.error(err);
+                    callback();
+                });
+            } else {
+                console.log("User not authorized to delete comic cells.");
+            }
         });
-
     }
 }
