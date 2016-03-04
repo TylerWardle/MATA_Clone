@@ -26,7 +26,10 @@ class Webcomic {
             if (req.cookies._id != null){
                 var c = new Comic.Comic(req.mongoose);
                 c.get(comicID, (doc: any): void => {
-                    res.render('webcomic', { "webcomic": doc});
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.getAll(comicID, (docs: any): void => {
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/"});
+                    });
                 });
             }else{
                 res.redirect('/');    

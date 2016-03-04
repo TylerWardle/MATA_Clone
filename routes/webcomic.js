@@ -19,7 +19,10 @@ var Webcomic = (function () {
             if (req.cookies._id != null) {
                 var c = new Comic.Comic(req.mongoose);
                 c.get(comicID, function (doc) {
-                    res.render('webcomic', { "webcomic": doc });
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.getAll(comicID, function (docs) {
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/" });
+                    });
                 });
             }
             else {

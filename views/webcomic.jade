@@ -10,10 +10,10 @@ block content
 		p Genre: #{webcomic.genre}
 	br
 	div(id="images")
-		img(id="images", src="http://#{webcomic.images}")
-		script.
-			for(i=0;i<images.length;i++)
-				img(src="http://#{webcomic.images}")
+		- for (var i = 0; i < cells.length; i++)
+			img(id="images", src="http://#{header}#{cells[i]._id}")
+			br
+		
 	br
 	div(id="belowimage")
 		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
@@ -21,5 +21,7 @@ block content
 	br
 	br
 	br
+	
+		
 
 
