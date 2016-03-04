@@ -70,9 +70,7 @@ router.post('/', function (req, res)
 				});
 				
                 res.redirect("contributor");
-			}	
-			//res.render('accountsettings', { "accountsettings": user });
-			//res.redirect("accountsettings");
+			}
 		}
 		else
 		{

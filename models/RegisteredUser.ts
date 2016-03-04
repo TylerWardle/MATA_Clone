@@ -16,7 +16,7 @@ export class RegisteredUser
 	private secretAnswer: string;
 
     constructor(username: string, password: string, firstName: string,
-		lastName: string, accountType: string, sQuestion: string, sAnswer:string) 
+		lastName: string, accountType: string /*,Question: string, sAnswer:string*/ ) 
 	{
         this.username = username;
         this.password = password;
@@ -24,8 +24,8 @@ export class RegisteredUser
 		this.lastName = lastName;
 		this.accountType = accountType;
 		this.guid = Guid.newGuid();
-		this.secretQuestion = sQuestion;
-		this.secretAnswer = secretAnswer;
+		//this.secretQuestion = sQuestion;
+		//this.secretAnswer = secretAnswer;
     }
 
     getUsername(): string 

@@ -2,19 +2,18 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 
 import Comic = require('../models/Comic');
-
 import ComicCell = require('../models/ComicCell');
 
 class Webcomic {
 
     constructor() {}
+
     startWebcomic() {
 
         var express = require('express');
         var router = express.Router();
         var fs = require('fs');
         var ObjectId = require('mongodb').ObjectID;
-
 
 
         // View comic with associated images (one image/comic for now) **WORKS** 
@@ -112,44 +111,9 @@ class Webcomic {
             // extract values of all the comic data fields 
             var title = req.body.title; 
             var publicationDate = req.body.publicationDate;
-			
-            // find the comic document in the DB and update it
-            ComicCollection.update({_id : ObjectId(comicID)}, { $set:{
-                    "authorID": authorID, 
-                    "title": title, 
-                    "description": description, 
-                    "genre": genre, 
-                    "toPublish": toPublish
-                    }
-                });
-
-            // redirect client to updated comic web page
-            res.redirect('/webcomic/id/'+ comicID);
-        });
-
-        router.get('/edit/:id',function(req,res){
-            var db = req.db;
-            var ComicCollection = db.get('ComicCollection'); 
-            var comicID = req.params.id;
-            
-            // find comic in the db table
-            ComicCollection.findOne({_id : ObjectId(comicID)}, function(err, webcomic) {
-                res.render('webcomicedit',{"webcomic": webcomic});
-            });
-            
-        });
-
-        ///* Delete Comic: Delete from ComicCollection and ComicCellCollection in DB */
-        //router.delete('./:id', function(req, res) {
-        //    var db = req.db;
-        //    var ComicCollection = db.get('ComicCollection');
-        //
-        //    // get web comic id from reqest parameter in the URL
-        //    var comicID = req.params.id;
-        //
-        //    // Remove this comic document from DB    
-        //    ComicCollection.remove({_id : ObjectId(comicID)});
-        //});
+            var description = req.body.description; 
+            var genre = req.body.genre;
+            var toPublish = req.body.toPublish;
 
             // update the comic
             var c = new Comic.Comic(req.mongoose);
@@ -195,3 +159,4 @@ class Webcomic {
 
 var webcomic = new Webcomic();
 webcomic.startWebcomic();
+

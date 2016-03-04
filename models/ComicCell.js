@@ -1,9 +1,8 @@
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
 var ComicCell = (function () {
     // intializing a comicCell object establishes a DB connection
-    function ComicCell() {
-        this.mongoose = require('mongoose');
-        this.mongoose.connect('mongodb://localhost/MATA');
+    function ComicCell(mongoose) {
+        this.mongoose = mongoose;
         this.schema = this.mongoose.Schema;
         // define ComicCell Object schema for storing Comic data fields
         this.comicCellSchema = new this.schema({
@@ -12,7 +11,9 @@ var ComicCell = (function () {
             collaboratorUsername: String,
             toPublish: Boolean
         });
-        this.comicCell = this.mongoose.model('ComicCell', this.comicCellSchema);
+        if (ComicCell.comicCell == null) {
+            ComicCell.comicCell = this.mongoose.model('ComicCell', this.comicCellSchema);
+        }
     }
     // INSERT **WORKS**
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB
@@ -20,7 +21,7 @@ var ComicCell = (function () {
     ComicCell.prototype.insert = function (_comicID, _ownerUsername, _collaboratorUsername, _toPublish, callback) {
         var db = this.mongoose.connection;
         // create a new comicCell object with the client-given data fields
-        var cc = new this.comicCell({
+        var cc = new ComicCell.comicCell({
             comicID: _comicID,
             ownerUsername: _ownerUsername,
             collaboratorUsername: _collaboratorUsername,
@@ -37,7 +38,7 @@ var ComicCell = (function () {
     // GET ONE comicCell by quering by cell's ID **WORKS**
     ComicCell.prototype.get = function (_comicCellID, callback) {
         var db = this.mongoose.connection;
-        var comicCellModel = this.comicCell;
+        var comicCellModel = ComicCell.comicCell;
         // find all the comicCells associated with a single comicID
         comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
@@ -49,7 +50,7 @@ var ComicCell = (function () {
     // GET all comicCells associated with a comic **WORKS**
     ComicCell.prototype.getAll = function (_comicID, callback) {
         var db = this.mongoose.connection;
-        var comicCellModel = this.comicCell;
+        var comicCellModel = ComicCell.comicCell;
         // find all the comicCells associated with a single comicID
         comicCellModel.find({ 'comicID': _comicID }, function (err, docs) {
             if (err)
@@ -58,46 +59,10 @@ var ComicCell = (function () {
             callback(docs);
         });
     };
-    // UPDATE **MAY NOT BE NEEDED **
-    // NOTE: the collaborator ID field identifies the collaborator who is calling the update method
-    /*
-    update(_comicCellID: String, _comicID: String, _ownerUsername: String, _collaboratorUsername: String, _toPublish: Boolean, callback: Function): any {
-        var db = this.mongoose.connection;
-        var comicCellModel = this.comicCell;
-        
-        var a_comicCell = new this.comicCell({
-            comicID: _comicID,
-            ownerUsername: _ownerUsername,
-            collaboratorUsername: _collaboratorUsername,
-            toPublish: _toPublish
-        });
-        
-        // get the username of the collaborator on this comic cell
-        // encapsulated rest of update method in this function's callback method for synchronous code execution
-        comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
-            if (err)
-                return console.error(err);
-            var collaboratorUsername = doc.collaboratorUsername;
-            
-            // can update if the collaborator is either the OWNER of the COMIC or a COLLABORATOR who owns the COMICCELL
-            if (_collaboratorUsername == _ownerUsername || _collaboratorUsername == collaboratorUsername) {
-                var comicCellData = a_comicCell.toObject();
-                delete comicCellData._id; // rid of mongoose error of updating id
-                comicCellModel.update({ _id: _comicCellID }, comicCellData, { multi: false }, function (err, doc) {
-                    if (err)
-                        return console.error(err);
-                    callback();
-                });
-            } else {
-                console.log("User not authorized to edit comic cell.");
-            }
-        });
-    }
-    */
-    // DELETE one comic cell
+    // DELETE one comic cell **WORKS**
     ComicCell.prototype.delete = function (_comicCellID, _contributorUsername, callback) {
         var db = this.mongoose.connection;
-        var comicCellModel = this.comicCell;
+        var comicCellModel = ComicCell.comicCell;
         comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
@@ -116,10 +81,10 @@ var ComicCell = (function () {
             }
         });
     };
-    // DELETE ALL comic cells associated with the same comic
+    // DELETE ALL comic cells associated with the same comic **WORKS**
     ComicCell.prototype.deleteAll = function (_comicID, _contributorUsername, callback) {
         var db = this.mongoose.connection;
-        var comicCellModel = this.comicCell;
+        var comicCellModel = ComicCell.comicCell;
         // get one comic cell to retrieve the ownerUsername of that cell. Assume same ownerUsername for the same ComicID
         comicCellModel.findOne({ 'comicID': _comicID }, function (err, doc) {
             if (err)
@@ -138,7 +103,7 @@ var ComicCell = (function () {
             }
         });
     };
+    ComicCell.comicCell = null; // static class variable
     return ComicCell;
 })();
 exports.ComicCell = ComicCell;
-//# sourceMappingURL=ComicCell.js.map

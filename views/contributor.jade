@@ -4,8 +4,6 @@ block content
 	div(id="form")
 		h1.
 			Welcome to your Homepage, #{contributor.username}!
-	div(id="belowform")
+	div(id="createwebcomic")
 		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/create")
 			button#btnNewWebcomic(type="submit") New Webcomic
-	div
-		//a(href="http://#{link}") first comic
