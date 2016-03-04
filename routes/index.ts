@@ -18,7 +18,7 @@ var Router = (function () {
 		router.use('/logout', require('./logout'));
         router.use('/webcomic', require('./webcomic'));
 		router.use('/forgotpassword', require('./forgotpassword'));
-
+		
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'MATA_WEBCOMICS' });

@@ -25,18 +25,6 @@ router.post('/', function (req, res) {
         }
     });
 });
-/* GET forgotpassword page. */
-router.get('/forgotpassword', function (req, res) {
-    //res.render('forgotposse', { title: 'Sign In!' });
-});
-/* PUT forgotpassword page to send user's answer. */
-router.put('/forgotpassword', function (req, res) {
-    //res.render('resetpassword', { title: 'Sign In!' });
-});
-/* PUT forgotpassword page to send user's answer. */
-router.put('/forgotpassword', function (req, res) {
-    //res.render('since', { title: 'Sign In!' });
-});
 /* GET register page. */
 router.get('/', function (req, res) {
     res.clearCookie('_id');

@@ -125,6 +125,14 @@ a {
 	position: absolute;;
 	left:100px;
 }
+
+#formResetPassword
+{
+	position: absolute;
+    left: 100px;
+    top: 80px;
+}
+
 #titleS{
 	position: absolute;
 	left:100px;
