@@ -4,6 +4,7 @@ var Application = (function () {
     function Application() {
     }
     Application.prototype.startApp = function () {
+        var http = require('http');
         var express = require('express');
         var path = require('path');
         var favicon = require('serve-favicon');
@@ -14,10 +15,10 @@ var Application = (function () {
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        //var db = monk('127.0.0.1:27017/MATA');
-        var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
-        var mongoose = require('mongoose');
-        mongoose.connect('mongodb://localhost/MATA');
+        var db = monk('127.0.0.1:27017/MATA');
+        //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+        var mongoose = require('mongoose'); // #al# : mongoose connection 
+        mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection 
         var routes = require('./routes');
         var app = express();
         // view engine setup
@@ -65,6 +66,10 @@ var Application = (function () {
                 error: {}
             });
         });
+        //app.set('port', process.env.PORT || 3000);
+        //        http.createServer(app).listen(app.get('port'), function () {
+        //            console.log('Express server listening on port ' + app.get('port'));
+        //        });
         module.exports = app;
     };
     return Application;

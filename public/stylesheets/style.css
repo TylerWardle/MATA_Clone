@@ -8,8 +8,14 @@ a {
 }
 #banner {
 	background-color: steelblue;
+
 	width:100%;
     min-height:60px;
+}
+#bannerIndex {
+	background-color: powderblue;
+	width:100%;
+    min-height:40px;
 }
 #logout{
 	position: absolute;

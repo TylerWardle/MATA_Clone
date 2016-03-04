@@ -41,7 +41,7 @@ export class ComicCell {
         });
         
         // insert the new comic obj into the DB
-        cc.save(function(err, doc) {
+        cc.save(function (err, doc) {
             if (err)
                 return console.error(err);
             // pass back the ComicID after the save function is done executing
@@ -55,7 +55,7 @@ export class ComicCell {
         var comicCellModel = ComicCell.comicCell;
 
         // find all the comicCells associated with a single comicID
-        comicCellModel.findById({ _id: _comicCellID }, function(err, doc) {
+        comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
             // pass back the retrieved comic cell object to the client
@@ -70,7 +70,7 @@ export class ComicCell {
         var comicCellModel = ComicCell.comicCell;
 
         // find all the comicCells associated with a single comicID
-        comicCellModel.find({ 'comicID': _comicID }, function(err, docs) {
+        comicCellModel.find({ 'comicID': _comicID }, function (err, docs) {
             if (err)
                 return console.error(err);
             // pass back the retrieved comic object to the client
@@ -84,7 +84,7 @@ export class ComicCell {
         var db = this.mongoose.connection;
         var comicCellModel = ComicCell.comicCell;
 
-        comicCellModel.findById({ _id: _comicCellID }, function(err, doc) {
+        comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
             var ownerUsername = doc.ownerUsername;
@@ -92,7 +92,7 @@ export class ComicCell {
         
             // can delete only if the contributor is either the OWNER of the COMIC or a COLLABORATOR who owns the COMICCELL
             if (_contributorUsername == ownerUsername || _contributorUsername == collaboratorUsername) {
-                comicCellModel.remove({ _id: _comicCellID }, function(err, doc) {
+                comicCellModel.remove({ _id: _comicCellID }, function (err, doc) {
                     if (err)
                         return console.error(err);
                     callback();
@@ -109,14 +109,14 @@ export class ComicCell {
         var comicCellModel = ComicCell.comicCell;
 
         // get one comic cell to retrieve the ownerUsername of that cell. Assume same ownerUsername for the same ComicID
-        comicCellModel.findOne({ 'comicID': _comicID }, function(err, doc) {
+        comicCellModel.findOne({ 'comicID' : _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
             var ownerUsername = doc.ownerUsername;
                    
             // can delete only if the contributor is the OWNER of the COMIC
             if (_contributorUsername == ownerUsername) {
-                comicCellModel.remove({ 'comicID': _comicID }, function(err, doc) {
+                comicCellModel.remove({ 'comicID' : _comicID }, function (err, doc) {
                     if (err)
                         return console.error(err);
                     callback();

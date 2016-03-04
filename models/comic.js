@@ -1,3 +1,5 @@
+///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
+///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
 var Comic = (function () {
     // intializing a comic object establishes a DB connection
@@ -8,7 +10,7 @@ var Comic = (function () {
         this.comicSchema = new this.schema({
             title: String,
             authorUsername: String,
-            publicationDate: { type: Date },
+            publicationDate: String,
             description: String,
             genre: String,
             toPublish: Boolean

@@ -3,7 +3,10 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block script
+
   body
+
     div(id="background")
     div(id="banner")
         div(id="logout")
@@ -18,4 +21,6 @@ html
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
                 button#btnHome(type="submit", style='background-color: powderblue;') Home               
+
     block content
+

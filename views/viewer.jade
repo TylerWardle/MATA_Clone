@@ -1,35 +1,26 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+extends layoutLoggedIn
+
+block script
+
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
     script.
+        
         function makeList(){
-            var comicString = "#{comicsList}"
+        
+            //var comicString = "#{comicsList}"
+            var comicString = "http://localhost:3000/webcomic/id/56bd82bc037e740c16896949,test"
             var comicsList = comicString.split(",")    
-            	
             for(i=0; i<comicsList.length;i++){
                 $('<li><a href=' + comicsList[i] + '>' + comicsList[i] + '</a></li>').appendTo('ul.comicsList')
             }
-        }
-    
-  body(onLoad="makeList()")
-   div(id="background")
-    div(id="banner")
-        div(id="logout")
-            form#logout(name="logout",method="get", action= "/logout")
-                button#btnLogout(type="submit", style='background-color: powderblue;') Log Out
-        div(id="accountSettings")
-            form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
-                button#btnAccountSettings(type="submit", style='background-color: powderblue;') Account Settings
-        div(id="profile")
-            form#profile(type="profile", method="get", action="/profile")
-                button#btnProfile(type="submit", style='background-color: powderblue;') Public Profile
-        div(id="home")        
-            form#home(name="home",method="get", action= "/home")
-                button#btnHome(type="submit", style='background-color: powderblue;') Home  
-    br
-    br        
-    |Published comics
-    ul(class="comicsList")
+
+block content
+    body(onLoad="makeList()")
+        
+        h1.
+            Welcome to your Homepage, #{viewer.username}!
+
+        br
+        br        
+        |Published comics
+        ul(class="comicsList")

@@ -1,9 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-//*********************************************************************************************
-// TODO: FIGURE OUT HOW TO FILTER GET RESULTS TO                                O   O
-//INCLUDE OR NOT TO INCLUDE UNPUBLISHED COMICS & CELLS BASED ON TYPE OF USER      V
-//*********************************************************************************************
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Webcomic = (function () {
@@ -23,7 +19,10 @@ var Webcomic = (function () {
             if (req.cookies._id != null) {
                 var c = new Comic.Comic(req.mongoose);
                 c.get(comicID, function (doc) {
-                    res.render('webcomic', { "webcomic": doc });
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.getAll(comicID, function (docs) {
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/" });
+                    });
                 });
             }
             else {
@@ -36,12 +35,11 @@ var Webcomic = (function () {
             var authorUsername = req.cookies._id;
             // get values of comic data fields
             var title = req.body.title;
+            var publicationDate = req.body.publicationDate;
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish = req.body.toPublish;
             var collaboratorUsername = req.body.collaboratorUsername;
-            // get server time for publicationDate
-            var publicationDate = new Date();
             var c = new Comic.Comic(req.mongoose);
             c.insert(title, authorUsername, publicationDate, description, genre, toPublish, function (comicID) {
                 // read the image file passed in the request and save it
@@ -66,6 +64,18 @@ var Webcomic = (function () {
                                 res.redirect('./id/' + comicID);
                             });
                         }
+                        // TODO: need to change below code to reflect mongoose operations instead of mongodb
+                        // add comicID to Contributors Model
+                        /*
+                        var db = req.db;
+                        var contributors = db.get('contributors');
+                        var ObjectId = require('mongodb').ObjectID;
+                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
+                            $addToSet: {
+                                "comics": [comicID]
+                            }
+                        });
+                        */
                     });
                 });
             });
@@ -120,24 +130,6 @@ var Webcomic = (function () {
         // create a webcomic route
         router.get('/create', function (req, res) {
             res.render('createwebcomic', { title: 'Create a Comic!' });
-        });
-        // make a route for get random webcomic ID **NEEDS TO BE TESTED**
-        router.get('/random', function (req, res) {
-            var c = new Comic.Comic(req.mongoose);
-            c.getAll(function (docs) {
-                var numOfComicIDs = 0;
-                var comicIDArr = new Array();
-                for (var i = 0; i < docs.length; i++) {
-                    if (docs[i].toPublish) {
-                        comicIDArr.push(docs[i]._id);
-                        numOfComicIDs++;
-                    }
-                }
-                var min = 0;
-                var max = numOfComicIDs;
-                var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
-                res.redirect('/webcomic/id/' + comicIDArr[randomArrIndex]);
-            });
         });
         module.exports = router;
     };
