@@ -1,7 +1,17 @@
+<<<<<<< HEAD
+=======
+/bin
+>>>>>>> origin/angela
 /data
+/node_modules
+/public
 /types
+<<<<<<< HEAD
 /.DS_Store
 /npm-debug
 /node_modules
 
 
+=======
+/.DS_Store
+>>>>>>> origin/angela

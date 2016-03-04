@@ -5,7 +5,11 @@
  */
 
 var app = require('../app');
+<<<<<<< HEAD
 var debug = require('debug')('nodetest1:server');
+=======
+var debug = require('debug')('MATA:server');
+>>>>>>> origin/angela
 var http = require('http');
 
 /**

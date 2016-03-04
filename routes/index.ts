@@ -15,10 +15,7 @@ var Router = (function () {
 		router.use('/profile', require('./profile'));
         router.use('/accountsettings', require('./accountsettings'));
         router.use('/webcomic', require('./webcomic'));
-        router.use('/logout', require('./logout'));
-        router.use('/home', require('./home'));
-        
-		
+
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'MATA_WEBCOMICS' });

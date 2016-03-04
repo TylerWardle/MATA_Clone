@@ -12,6 +12,12 @@ class Application {
     constructor() { }
 
     startApp() {
+<<<<<<< HEAD
+=======
+
+        var http = require('http');
+
+>>>>>>> origin/angela
         var express = require('express');
         var path = require('path');
         var favicon = require('serve-favicon');
@@ -22,8 +28,15 @@ class Application {
 		//Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
+<<<<<<< HEAD
         //var db = monk('127.0.0.1:27017/MATA');
         var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+=======
+        var db = monk('127.0.0.1:27017/MATA');
+        //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+        var mongoose = require('mongoose'); // #al# : mongoose connection 
+        mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection 
+>>>>>>> origin/angela
 
         var routes = require('./routes');
 
@@ -45,6 +58,7 @@ class Application {
         // Make our db accessible to our router
         app.use(function(req, res, next) {
             req.db = db;
+            req.mongoose = mongoose;
             next();
         });
         app.use('/', routes);    
@@ -78,6 +92,14 @@ class Application {
                 error: {}
             });
         });
+
+        app.set('port', process.env.PORT || 3000);
+
+        http.createServer(app).listen(app.get('port'), function () {
+            console.log('Express server listening on port ' + app.get('port'));
+        });
+
+
         module.exports = app;
     }
 }
