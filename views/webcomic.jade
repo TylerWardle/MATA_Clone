@@ -15,11 +15,24 @@ block content
 			for(i=0;i<images.length;i++)
 				img(src="http://#{webcomic.images}")
 	br
-	div(id="belowimage")
-		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
-			button#btnEditComic(type="submit") Edit
+	-var authorID=webcomic.authorID
+	-var username=username
+		if authorID==username
+			html
+			script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+			script.
+				$(document).ready(function(){
+				$("button").click(function(){
+				$("hide").toggle();
+				});
+				});
+			div(id="belowbelowimage")
+				button View-Mode
+			hide
+				form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
+					div(id="belowimage")
+						button#btnEditComic(type="submit", style=hiddenEdit) Edit
 	br
 	br
 	br
-
 

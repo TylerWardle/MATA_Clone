@@ -25,6 +25,9 @@ class Application {
         var monk = require('monk');
         //var db = monk('127.0.0.1:27017/MATA');
         var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+        var mongoose = require('mongoose');
+        mongoose.connect('mongodb://localhost/MATA');
+
 
         var routes = require('./routes');
 
@@ -46,6 +49,7 @@ class Application {
         // Make our db accessible to our router
         app.use(function(req, res, next) {
             req.db = db;
+            req.mongoose = mongoose;
             next();
         });
         app.use('/', routes);    
