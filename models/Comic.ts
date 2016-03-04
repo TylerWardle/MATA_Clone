@@ -131,4 +131,17 @@ export class Comic {
             }
         });
     }
+
+    getSortedTitle(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        // normalize title names to lower case to do case-insensitive sort
+        comicModel.aggregate([
+            { $project: { title: 1, titleLower: { $toLower: "$title" } } },
+            { $sort: { titleLower: 1 } }
+        ], function (err, docs) {
+            return docs
+        });
+    }
 }
