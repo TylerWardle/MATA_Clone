@@ -1,0 +1,30 @@
+extends layoutLoggedIn
+
+block content
+  div(id="form")
+    h1.
+      #{user.username}
+  div(id="profiledata")
+    form#formProfile(name="profile",method="post",action="/profile/edit")
+    p My name is #{user.firstName} #{user.lastName}!
+    br
+    p I am a #{user.accountType}.
+  div(id="aboutme")
+    label About me:
+    form(action="").form-inline
+      .form-group.col-md-4
+        textarea(readonly="", rows=5, cols=50).form-control
+          | this will be the user's about me
+    br
+  div(id="profilePicture")
+    img(src="#{user.profilePicture}")
+
+  div(id=cancel)
+    form#Edit(type="cancelEdit", method="get", action="/profile")
+        button#btnEdit(type="submit") Cancel Edit
+  div(id=updateProfile)
+    form#Edit(type="updateEdit", method="post", action="/profile/edit")
+        button#btnEdit(type="submit") Save Changes
+  div(id=editprofilepicture)
+    form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
+            input#firstImage(type="file",name="image", required="")
