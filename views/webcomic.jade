@@ -17,7 +17,8 @@ block content
 		- for (var i = 0; i < cells.length; i++)
 			img(id="images", src="http://#{header}#{cells[i]._id}")
 			br
-			a(href="#newCell" title="AddCell" class="AddCell") +
+			hide
+				a(href="#newCell" title="AddCell" class="AddCell") +
 	br
 	-var authorID=webcomic.authorID
 	-var username=username
@@ -31,7 +32,10 @@ block content
 				});
 				});
 			div(id="belowbelowimage")
-				button View-Mode
+				button#btnExit(type="button", value="View-Mode") Exit View-Mode
+			hide
+				div(id="belowbelowimage")
+					button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
 			hide
 				form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 					div(id="belowimage")
