@@ -14,15 +14,14 @@ router.post('/', function (req, res) {
             var lastName = req.body.lastName;
             var accountType = req.body.accountType;
             var password = req.body.password;
-            console.log("request headers " + req.headers);
-            // need to add registered user number to different types of users.
-            //var registeredUser = new RegisteredUser.RegisteredUser(username, password, firstName, lastName, accountType);
             registeredUsers.insert({
                 "username": req.body.username,
                 "firstName": req.body.firstName,
                 "lastName": req.body.lastName,
                 "accountType": req.body.accountType,
-                "password": req.body.password
+                "password": req.body.password,
+                "securityQuestion": req.body.securityQuestion,
+                "securityAnswer": req.body.securityAnswer
             }, function (err, doc) {
                 if (err) {
                     res.render("error", { message: "There was a problem adding the information to the database.1" });
