@@ -4,13 +4,15 @@
 // This class is used to verify a user before granting them
 // access to the system.
 var RegisteredUser = (function () {
-    function RegisteredUser(username, password, firstName, lastName, accountType) {
+    function RegisteredUser(username, password, firstName, lastName, accountType /*,Question: string, sAnswer:string*/) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.accountType = accountType;
         this.guid = Guid.newGuid();
+        //this.secretQuestion = sQuestion;
+        //this.secretAnswer = secretAnswer;
     }
     RegisteredUser.prototype.getUsername = function () {
         return this.username;
@@ -29,6 +31,12 @@ var RegisteredUser = (function () {
     };
     RegisteredUser.prototype.getGuid = function () {
         return this.guid;
+    };
+    RegisteredUser.prototype.getSecretQuestion = function () {
+        return this.secretQuestion;
+    };
+    RegisteredUser.prototype.getSecretAnswer = function () {
+        return this.secretAnswer;
     };
     return RegisteredUser;
 })();

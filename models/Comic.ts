@@ -1,5 +1,3 @@
-///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
-///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
 
