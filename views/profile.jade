@@ -16,7 +16,9 @@ block content
         textarea(readonly="", rows=5, cols=50).form-control
           | this will be the user's about me
     br
-    form#Edit(type="edit", method="get", action="/profile/edit")
-      button#btnEdit(type="submit") Edit
   div(id="profilePicture")
-    img(src="http://www.openshot.org/images/blank_profile.png")
+    img(src="#{user.profilePicture}")
+  
+  div(id=edit)
+    form#Edit(type="edit", method="get", action="/profile/edit")
+        button#btnEdit(type="submit") Edit Profile

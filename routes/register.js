@@ -21,7 +21,8 @@ router.post('/', function (req, res) {
                 "accountType": req.body.accountType,
                 "password": req.body.password,
                 "securityQuestion": req.body.securityQuestion,
-                "securityAnswer": req.body.securityAnswer
+                "securityAnswer": req.body.securityAnswer,
+                "profilePicture": "www.openshot.org/images/blank_profile.png"
             }, function (err, doc) {
                 if (err) {
                     res.render("error", { message: "There was a problem adding the information to the database.1" });
