@@ -18,7 +18,7 @@ block content
     br
   div(id="profilePicture")
     img(src="#{user.profilePicture}")
-  
-  div(id=edit)
-    form#Edit(type="edit", method="get", action="/profile/edit")
+
+  div(id="editProfile")
+    form#EditProfile(type="editProfile", method="get", action="/profile/edit")
         button#btnEdit(type="submit") Edit Profile

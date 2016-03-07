@@ -19,12 +19,13 @@ block content
   div(id="profilePicture")
     img(src="#{user.profilePicture}")
 
-  div(id=cancel)
-    form#Edit(type="cancelEdit", method="get", action="/profile")
-        button#btnEdit(type="submit") Cancel Edit
-  div(id=updateProfile)
-    form#Edit(type="updateEdit", method="post", action="/profile/edit")
-        button#btnEdit(type="submit") Save Changes
-  div(id=editprofilepicture)
-    form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
-            input#firstImage(type="file",name="image", required="")
+  div(id="editProfilePicture")
+    input#firstImage(type="file",name="image", required="")
+    br
+  div(id="cancelEditProfile")
+    form#cancelEdit(type="cancelEdit", method="get", action="/profile")
+        button#btnCancelUpdateProfile(type="submit") Cancel Edit
+  br
+  div(id="submitEditProfile")
+    form#confirmEdit(type="updateEdit", method="post", action="/profile")
+        button#btnUpdateProfile(type="submit") Save Changes
