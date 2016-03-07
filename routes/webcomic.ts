@@ -1,12 +1,15 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+//<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
+///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
 import Comic = require('../models/Comic');
 import ComicCell = require('../models/ComicCell');
+import RegisteredUser = require('../models/RegisteredUser');
 
 class Webcomic {
 
-    constructor() {}
+    constructor() { }
 
     startWebcomic() {
 
@@ -21,20 +24,23 @@ class Webcomic {
         router.get('/id/:id', function(req, res) {
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
+            var db = req.db;
+            var registeredUsers = db.get('registeredUsers');
             
-            // get comic from the db
-            if (req.cookies._id != null){
-                var c = new Comic.Comic(req.mongoose);
-                c.get(comicID, (doc: any): void => {
-                    var cc = new ComicCell.ComicCell(req.mongoose);
-                    cc.getAll(comicID, (docs: any): void => {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/"});
+            registeredUsers.findOne({ _id: req.cookies._id }, function(err, user) {
+                // get comic from the db
+                if (req.cookies._id != null) {
+                    var c = new Comic.Comic(req.mongoose);
+                    c.get(comicID, (doc: any): void => {
+                        var cc = new ComicCell.ComicCell(req.mongoose);
+                        cc.getAll(comicID, (docs: any): void => {
+                            res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "user":user});
+                        });
                     });
-                });
-            }else{
-                res.redirect('/');    
-            }
-            
+                } else {
+                    res.redirect('/');
+                }
+            });
 
         });
 

@@ -1,5 +1,7 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+//<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
+///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Webcomic = (function () {
@@ -15,19 +17,23 @@ var Webcomic = (function () {
         router.get('/id/:id', function (req, res) {
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
-            // get comic from the db
-            if (req.cookies._id != null) {
-                var c = new Comic.Comic(req.mongoose);
-                c.get(comicID, function (doc) {
-                    var cc = new ComicCell.ComicCell(req.mongoose);
-                    cc.getAll(comicID, function (docs) {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/" });
+            var db = req.db;
+            var registeredUsers = db.get('registeredUsers');
+            registeredUsers.findOne({ _id: req.cookies._id }, function (err, user) {
+                // get comic from the db
+                if (req.cookies._id != null) {
+                    var c = new Comic.Comic(req.mongoose);
+                    c.get(comicID, function (doc) {
+                        var cc = new ComicCell.ComicCell(req.mongoose);
+                        cc.getAll(comicID, function (docs) {
+                            res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "user": user });
+                        });
                     });
-                });
-            }
-            else {
-                res.redirect('/');
-            }
+                }
+                else {
+                    res.redirect('/');
+                }
+            });
         });
         // Create new comic with associated images (one image/comic for now) **WORKS**
         router.post('/submit', function (req, res) {

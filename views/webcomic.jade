@@ -17,29 +17,31 @@ block content
 		- for (var i = 0; i < cells.length; i++)
 			img(id="images", src="http://#{header}#{cells[i]._id}")
 			br
-			hide
-				a(href="#newCell" title="AddCell" class="AddCell") +
+
 	br
-	-var authorID=webcomic.authorID
-	-var username=username
-		if authorID==username
-			html
-			script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
-			script.
-				$(document).ready(function(){
-				$("button").click(function(){
-				$("hide").toggle();
-				});
-				});
+	-var authorUsername=webcomic.authorID
+	-var username=user.username
+	-var accountType=user.accountType
+	unless accountType=="viewer"
+		hide
+			a(href="#newCell" title="AddCell" class="AddCell") +
+		html
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+		script.
+			$(document).ready(function(){
+			$("button").click(function(){
+			$("hide").toggle();
+			});
+			});
+		div(id="belowbelowimage")
+			button#btnExit(type="button", value="View-Mode") Exit View-Mode
+		hide
 			div(id="belowbelowimage")
-				button#btnExit(type="button", value="View-Mode") Exit View-Mode
-			hide
-				div(id="belowbelowimage")
-					button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
-			hide
-				form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
-					div(id="belowimage")
-						button#btnEditComic(type="submit", style=hiddenEdit) Edit
+				button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
+		hide
+			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
+				div(id="belowimage")
+					button#btnEditComic(type="submit", style=hiddenEdit) Edit
 	br
 	br
 	br
