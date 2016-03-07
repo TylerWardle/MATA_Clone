@@ -78,6 +78,39 @@ a {
 	top: 350px;
 	width: 100px;
 }
+
+#submitEditProfile
+{
+   	position: absolute;
+	left: 400px;
+	top: 500px;
+	width: 150px;
+}
+
+#editProfilePicture
+{
+	position: absolute;
+	left: 100px;
+	top: 250px;
+	width: 100px;
+}
+
+#cancelEditProfile
+{
+	position: absolute;
+	left: 220px;
+	top: 113px;
+	width: 100px;
+}
+
+#editProfile
+{
+	position: absolute;
+	left: 220px;
+	top: 113px;
+	width: 100px;
+}
+
 #images{
     display: block;
     top:170px;
