@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    div(id="title")
+        h1= title
+    form#formForgotPassword(name="recover",method="post",action="/forgotpassword/recover")
+        div(id="secretQuestion")
+            h3= securityQuestion
+        div
+            p Please enter you answer:
+            input#inputUsername(type="text", placeholder="Secret Answer", name="securityAnswer",required="", autocomplete="off")
+            br
+            br
+            button#btnSubmit(type="submit") Submit Answer
+
+    div(id="signin")
+    form#SignIn(name="sign in", method="get", action="signin")
+       button#btnSignIn(type="submit") Sign In
+    div(id="register")
+    form#Register(name="register", method="get", action="register")
+        button#btnRegister(type="submit") Register

@@ -23,5 +23,9 @@ block content
             | this will be the user's about me
 
     br
-    form#Edit(type="edit", method="get", action="/profile/edit")
-      button#btnEdit(type="submit") Edit
+  div(id="profilePicture")
+    img(src="#{user.profilePicture}")
+
+  div(id="editProfile")
+    form#EditProfile(type="editProfile", method="get", action="/profile/edit")
+        button#btnEdit(type="submit") Edit Profile
