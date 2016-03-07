@@ -12,7 +12,6 @@ class Application {
     constructor() { }
 
     startApp() {
-
         var http = require('http');
 
         var express = require('express');
@@ -84,13 +83,6 @@ class Application {
                 error: {}
             });
         });
-
-        app.set('port', process.env.PORT || 3000);
-
-        http.createServer(app).listen(app.get('port'), function () {
-            console.log('Express server listening on port ' + app.get('port'));
-        });
-
 
         module.exports = app;
     }

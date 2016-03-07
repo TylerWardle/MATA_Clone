@@ -1,20 +1,36 @@
 extends layout
 
 block content
-    h1= title
-
-    form#formRegisterUser(name="register",method="post",action="/register")
-        input#inputUserName(type="text", placeholder="username", name="username")
-        input#inputUserPassword(type="password", placeholder="password", name="password")
-        br
-        br
-        input#inputUserName(type="text", placeholder="First Name", name="firstName")
-        input#inputUserPassword(type="text", placeholder="Last Name", name="lastname")
-        br
-        br
-        select(name="accountType")
-            option(value="contributor") Contributor
-            option(value="viewer") Viewer
-        br
-        br
-        button#btnSubmit(type="submit") submit
+    div(id="title")
+        h1= title
+    br
+    div(id="form")
+        form#formRegisterUser(name="register",method="post",action="/register")
+            input#inputUserName(type="text", placeholder="username", name="username", required="", autocomplete="off")
+            input#inputUserPassword(type="password", placeholder="password", name="password", required="")
+            br
+            br
+            input#inputFirstName(type="text", placeholder="First Name", name="firstName", required="", autocomplete="off")
+            input#inputLastName(type="text", placeholder="Last Name", name="lastName", required="", autocomplete="off")
+            br
+            br
+            p Please select a user type:   
+            select(name="accountType")
+                option(value="contributor") Contributor
+                option(value="viewer") Viewer
+            p Please select a security question:
+            select(name="securityQuestion")
+                option(value="What is your favorite movie?") "What is your favorite movie?"
+                option(value="What is your mother's maiden name?") "What is your mother's maiden name?"
+                option(value="What was your first pet's name?") "What was your first pet's name?"
+            br
+            p Please enter your answer:
+            input#inputSecurityQuestionAnswer(type="text", placeholder="Your Answer", name="securityAnswer", required="", autocomplete="off")
+            br
+            br
+            button#btnSubmit(type="submit") Submit
+    div(id="signin")
+        form#SignIn(name="sign in", method="get", action="/signin")
+            button#btnSignIn(type="submit") Sign In
+    div(id="forgotPasswordLink")
+        p: #[a(href="/forgotpassword") Forgot password?]

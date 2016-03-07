@@ -1,21 +1,15 @@
-extends layout
+extends layoutLoggedIn
 
 block content
-    h1.
-        Account Settings
-    form#formChangeSettings(name="accountsetting",method="post",action="/accountsetting")
-        input#inputUserName(type="text", placeholder="#{user.username}", name="username")
-        br
-        input#inputUserEmail(type="password", placeholder="#{user.password}", name="password")
-        br
-		input#inputUserEmail(type="text", placeholder="#{user.firstName}", name="firstName")
-        br
-		input#inputUserEmail(type="text", placeholder="#{user.lastName}", name="lastName")
-        br
-        button#btnSubmit(type="submit") Save
-
-    div
-        select(name="usertype", form="changeAccountsettings")
-            option(value="Contributor") Contributor
-            option(value="Viewer") Viewer
-
+    div(id="form")
+        h1.
+            Account Settings for #{accountsettings.username}
+        form#formChangeSettings(name="accountsettings",method="post",action="/accountsettings")         
+            lable="First Name "
+            input#inputUserEmail(type="text", value="#{accountsettings.firstName}", name="firstName", required="", autocomplete="off")
+            br
+            lable="Last Name "
+            input#inputUserEmail(type="text", value="#{accountsettings.lastName}", name="lastName", required="", autocomplete="off")
+            br
+            br
+            button#btnSubmit(type="submit") Save

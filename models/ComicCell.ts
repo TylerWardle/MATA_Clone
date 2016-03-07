@@ -35,8 +35,8 @@ export class ComicCell {
         // create a new comicCell object with the client-given data fields
         var cc = new ComicCell.comicCell({
             comicID: _comicID,
-            ownerUsername: _ownerID,  // ownerID and collaboratorID = owner username and collaborator username
-            collaboratorUsername: _collaboratorID,
+            ownerID: _ownerID,  // ownerID and collaboratorID = owner ID and collaborator ID
+            collaboratorID: _collaboratorID,
             toPublish: _toPublish
         });
         
@@ -108,7 +108,7 @@ export class ComicCell {
         var db = this.mongoose.connection;
         var comicCellModel = ComicCell.comicCell;
 
-        // get one comic cell to retrieve the ownerUsername of that cell. Assume same ownerUsername for the same ComicID
+        // get one comic cell to retrieve the ownerID of that cell. Assume same ownerID for the same ComicID
         comicCellModel.findOne({ 'comicID' : _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);

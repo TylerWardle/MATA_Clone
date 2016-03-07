@@ -4,17 +4,24 @@ var Application = (function () {
     function Application() {
     }
     Application.prototype.startApp = function () {
+        var http = require('http');
         var express = require('express');
         var path = require('path');
         var favicon = require('serve-favicon');
         var logger = require('morgan');
         var cookieParser = require('cookie-parser');
         var bodyParser = require('body-parser');
+        var multer = require('multer');
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        var db = monk('localhost:27017/MATA');
+        var db = monk('127.0.0.1:27017/MATA');
         //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+<<<<<<< HEAD
+=======
+        var mongoose = require('mongoose'); // #al# : mongoose connection 
+        mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection 
+>>>>>>> 0502efdad6d9debd9f4ebf8003e6a76ac970f5c9
         var routes = require('./routes');
         var app = express();
         // view engine setup
@@ -27,9 +34,11 @@ var Application = (function () {
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
         app.use(express.static(path.join(__dirname, 'public')));
+        app.use(multer({ dest: './uploads/fullsize/' }).single('image'));
         // Make our db accessible to our router
         app.use(function (req, res, next) {
             req.db = db;
+            req.mongoose = mongoose;
             next();
         });
         app.use('/', routes);

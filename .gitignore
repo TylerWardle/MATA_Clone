@@ -1,6 +1,32 @@
+<<<<<<< HEAD
 /bin
+/data
+=======
+<<<<<<< HEAD
+=======
+/bin
+>>>>>>> origin/angela
 /data
 /node_modules
 /public
 /types
+<<<<<<< HEAD
 /.DS_Store
+/npm-debug
+>>>>>>> 0502efdad6d9debd9f4ebf8003e6a76ac970f5c9
+/node_modules
+/public
+/types
+.project
+app.js
+app.ts
+myfiles
+compile.bat
+npm-debug.log
+procfile
+README.md
+tsconfig.json
+
+=======
+/.DS_Store
+>>>>>>> origin/angela
