@@ -21,7 +21,6 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
-    // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
             registeredUsers.update({ _id: ObjectID(req.cookies._id) }, {
@@ -38,8 +37,6 @@ router.post('/', function (req, res) {
                         res.send("ACCESS DENIED" + err);
                     }
                     else {
-                        // need to ask client to give format of data being sent up for account settings..
-                        // are they only sending updated settings? or all.
                         viewers.update({ guid: ObjectID(req.cookies._id) }, {
                             username: viewer.username,
                             firstName: req.body.firstName,
@@ -57,8 +54,6 @@ router.post('/', function (req, res) {
                         res.send("ACCESS DENIED");
                     }
                     else {
-                        // need to ask client to give format of data being sent up for account settings..
-                        // are they only sending updated settings? or all.
                         contributors.update({ guid: ObjectID(req.cookies._id) }, {
                             username: contributor.username,
                             firstName: req.body.firstName,

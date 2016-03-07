@@ -1,5 +1,9 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+<<<<<<< HEAD
+=======
+///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
+>>>>>>> 0502efdad6d9debd9f4ebf8003e6a76ac970f5c9
 
 var express = require('express');
 var router = express.Router();
@@ -13,42 +17,37 @@ router.get('/', function(req, res) {
 	
 	 // Fetch the document
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
-		if(user)
-		{			
+		if(user) {			
            res.render('accountsettings', { "accountsettings": user });
-        }else
-		{
+        } else {
 			res.send("ACCESS DENIED");
 		}
 	});
 	
 });
 
+
 /* POST Account setttings */
-router.post('/', function (req, res) {
+router.post('/', function (req, res) 
+{
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
-    // Fetch the document
+	
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
-		if(user)
-		{
+		if(user){
             registeredUsers.update({_id:ObjectID(req.cookies._id)},{
                             username: user.username,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             accountType: user.accountType,
                             password: req.body.password
-                            }); 
+						}); 
 			if (user.accountType === "viewer") {
 				var viewers = db.get('viewers');
 				viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
 					if (err) {
 						res.send("ACCESS DENIED" + err);
-					}
-					else
-					{
-						// need to ask client to give format of data being sent up for account settings..
-						// are they only sending updated settings? or all.
+					} else {
                         viewers.update({guid:ObjectID(req.cookies._id)},{
                             username: viewer.username,
                             firstName: req.body.firstName,
@@ -58,18 +57,13 @@ router.post('/', function (req, res) {
 					}
 				});
                 res.redirect("viewer");
-			}
-			else {
+			} else {
 				var contributors = db.get('contributors');
 				contributors.findOne({guid:ObjectID(req.cookies._id)}, function(err, contributor) {
                     
 					if (err) {
 						res.send("ACCESS DENIED");
-					}
-					else
-					{
-						// need to ask client to give format of data being sent up for account settings..
-						// are they only sending updated settings? or all.
+					} else {
                         contributors.update({guid:ObjectID(req.cookies._id)},{
                             username: contributor.username,
                             firstName: req.body.firstName,
@@ -78,10 +72,9 @@ router.post('/', function (req, res) {
                         })
 					}
 				});
+				
                 res.redirect("contributor");
-			}	
-			//res.render('accountsettings', { "accountsettings": user });
-			//res.redirect("accountsettings");
+			}
 		}
 		else
 		{

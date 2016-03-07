@@ -1,21 +1,41 @@
 extends layoutLoggedIn 
 
+block script
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+	script.
+
 block content
-	h1.
-		#{webcomic.title}
-	div.
-		Description: #{webcomic.description}
-	div.
-		Genre: #{webcomic.genre}
+	div(id="form")
+		h1.
+			#{webcomic.title}
+	div(id="belowform")
+		p Description: #{webcomic.description}
+	div(id="belowbelowform")
+		p Genre: #{webcomic.genre}
 	br
 	div(id="images")
-		img(id="images", src="http://#{webcomic.images}")
-		script.
-			for(i=0;i<images.length;i++)
-				img(src="http://#{webcomic.images}")
+		- for (var i = 0; i < cells.length; i++)
+			img(id="images", src="http://#{header}#{cells[i]._id}")
+			br
+			a(href="#newCell" title="AddCell" class="AddCell") +
 	br
-	div
+	div(id="belowimage")
 		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 			button#btnEditComic(type="submit") Edit
+	br
+	br
+	br
+	
+	div(id="newCell" class="newCellDialog")
+		div
+			a(href="#close" title="Close" class="close") X
+			h2.
+				Add a new Cell!
+			div
+				form#formComicCell(name="newComicCell", method="post", action="/webcomic/submit", enctype='multipart/form-data')
+					input#firstImage(type="file",name="image", required="")
+					br
+					button#btnSubmit(type="submit") Submit
+		
 
 

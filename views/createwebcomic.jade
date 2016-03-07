@@ -1,9 +1,10 @@
 extends layoutLoggedIn 
 
 block content
-    h1.
-        New Comic!
-    div
+    div(id="form")
+        h1.
+            New Comic!
+    div(id="belowform")
         form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
             input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
             br

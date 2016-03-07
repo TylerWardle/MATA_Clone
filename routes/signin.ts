@@ -10,45 +10,32 @@ var router = express.Router();
 /* POST to sign into the system. */
 router.post('/', function(req, res) {
 	
-    // Set our internal DB variable
     var db = req.db;
-
-    // Set our collection
     var registeredUsers = db.get('registeredUsers');
 	
-	 // Fetch the document
     registeredUsers.findOne({username:req.body.username}, function(err, user) {
-		if(user)
-		{
+		if(user){
 			//res.set('_id', user._id);
-			if(user.password === req.body.password)
-			{
+			if(user.password === req.body.password){
                 res.cookie('_id',user._id);
-				if(user.accountType === "contributor")
-				{
+				if(user.accountType === "contributor"){
                     res.redirect("contributor");
-					//res.redirect("contributor/"+user._id);
-					//res.render('contributor', { title: 'Welcome back!'});	
-				}
-				else
-				{
+				} else {
                     res.redirect("viewer");
-					//res.redirect("viewer/"+user._id);
-					//res.render('viewer', { title: 'Welcome back!'});
 				}
 			}
 			else
 			{
-				res.send("Username and password do not match.");	
+				res.render("error", { message: "Username and password do not match." });	
 			}
 		}
 		else
 		{
-			res.send("User does not exist");
+			res.render("error", { message: "User does not exist" });
 		}
 	});
-	
 });
+
 
 /* GET register page. */
 router.get('/', function(req, res) 
