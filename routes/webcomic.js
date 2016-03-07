@@ -70,18 +70,12 @@ var Webcomic = (function () {
                                 res.redirect('./id/' + comicID);
                             });
                         }
-                        // TODO: need to change below code to reflect mongoose operations instead of mongodb
-                        // add comicID to Contributors Model
-                        /*
                         var db = req.db;
                         var contributors = db.get('contributors');
                         var ObjectId = require('mongodb').ObjectID;
-                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
-                            $addToSet: {
-                                "comics": [comicID]
-                            }
+                        contributors.findOne({ guid: ObjectId(req.cookies._id) }, function (error, user) {
+                            user.addComicID(comicID);
                         });
-                        */
                     });
                 });
             });
