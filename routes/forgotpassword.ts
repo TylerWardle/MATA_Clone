@@ -59,7 +59,6 @@ router.post('/reset', function(req, res) {
 	registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
 		if(user)
 		{ 
-										console.log(req.body.password);
 			registeredUsers.update({username:req.cookies._username},
 								   {
 										$set:
@@ -67,7 +66,7 @@ router.post('/reset', function(req, res) {
 											password: req.body.password
 										}
 								   });
-			res.render('signin', { title: 'Your password was successfully reset!' });
+			res.render('signin', { title: 'Your password was successfully reset! Sign in!' });
 		}		
 		else
 		{

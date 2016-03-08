@@ -10,6 +10,7 @@ var Router = (function () {
         router.use('/viewer', require('./viewer'));
         router.use('/contributor', require('./contributor'));
         router.use('/profile', require('./profile'));
+        router.use('/edit', require('./profile'));
         router.use('/accountsettings', require('./accountsettings'));
         router.use('/webcomic', require('./webcomic'));
         router.use('/logout', require('./logout'));

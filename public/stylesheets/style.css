@@ -29,6 +29,12 @@ a {
 	top: 20px;
 	width: 100px;
 }
+#profiledata
+{
+	position: absolute;
+	left: 270px;
+	top: 170px;
+}
 #accountSettings{
 	position: absolute;
 	right: 70px;
@@ -55,8 +61,24 @@ a {
 }
 #profilePicture{
 	position: absolute;
-	left: 470px;
-	top: -40px;
+	left: 40px;
+	top: 147px;
+	width: 100px;
+}
+
+#aboutme
+{
+   	position: absolute;
+	left: 80px;
+	top: 395px;
+	width: 100px;
+}
+
+#aboutmeEdit
+{
+   	position: absolute;
+	left: 80px;
+	top: 411px;
 	width: 100px;
 }
 
@@ -71,24 +93,43 @@ a {
 #editProfilePicture
 {
 	position: absolute;
-	left: 100px;
-	top: 250px;
+	left: 260px;
+	top: 370px;
 	width: 100px;
 }
+
+#lastLogin
+{
+	position: absolute;
+	left: 80px;
+	top: 345px;
+	width: 300px;
+	font-weight: bold;
+}
+
+#editProfilePictureMessage
+{
+	position: absolute;
+	left: 80px;
+	top: 355px;
+	width: 300px;
+	font-weight: bold;
+}
+
 
 #cancelEditProfile
 {
 	position: absolute;
-	left: 220px;
-	top: 113px;
+	left: 410px;
+	top: 133px;
 	width: 100px;
 }
 
 #editProfile
 {
 	position: absolute;
-	left: 220px;
-	top: 113px;
+	left: 410px;
+	top: 133px;
 	width: 100px;
 }
 
