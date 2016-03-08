@@ -181,7 +181,18 @@ export class Comic {
         comicModel.aggregate([
             { $sort: { publicationDate: -1 } }
         ], function (err, docs) {
-            return docs
+            callback(docs);
+        });
+    }
+
+    getComicsSortedByLeastRecentlyPublished(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.aggregate([
+            { $sort: { publicationDate: 1 } }
+        ], function (err, docs) {
+            callback(docs);
         });
     }
 
