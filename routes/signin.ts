@@ -18,6 +18,8 @@ router.post('/', function(req, res) {
 			//res.set('_id', user._id);
 			if(user.password === req.body.password){
                 res.cookie('_id',user._id);
+                res.cookie('accountType',user.accountType);
+                res.cookie('userName',user.username);
 				if(user.accountType === "contributor"){
                     res.redirect("contributor");
 				} else {

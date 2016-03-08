@@ -20,9 +20,10 @@ block content
             br
             br
             br
-            |Publish now?
-            input#toPublish(type="checkbox", name="toPublish", value="#{webcomic.toPublish}")
+            button#btnSubmit(type="submit", name= "submit", value ="draft") Update
+            //If the webcomic is not yet published a "submit and publish" button is shown. The submit button pressed is checked in the /update route
+            -if (!webcomic.toPublish)
+                button#btnSubmit(type="submit", name="submit", value ="publish") Update and Publish
+        form#cancelEditWebcomic(name="cancelEditWebcomic", method="get", action="/webcomic/id/#{webcomic._id}")
             br
-            br
-            br
-            button#btnSubmit(type="submit") Submit
+            button#btnCancel(type="submit") Cancel

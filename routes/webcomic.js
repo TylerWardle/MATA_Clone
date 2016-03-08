@@ -20,8 +20,13 @@ var Webcomic = (function () {
                 var c = new Comic.Comic(req.mongoose);
                 c.get(comicID, function (doc) {
                     var cc = new ComicCell.ComicCell(req.mongoose);
+                    //used to inform the client if the user is the author of a webcomic they are viewing
+                    var isAuthor = false;
+                    if (req.cookies._id == doc.authorUsername) {
+                        isAuthor = true;
+                    }
                     cc.getAll(comicID, function (docs) {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/" });
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType });
                     });
                 });
             }
@@ -38,13 +43,20 @@ var Webcomic = (function () {
             var publicationDate = req.body.publicationDate;
             var description = req.body.description;
             var genre = req.body.genre;
-            var toPublish = req.body.toPublish;
+            var toPublish;
+            //set the toPublish field relative to which submit button is pushed
+            if (req.body.submit == "draft") {
+                toPublish = false;
+            }
+            else if (req.body.submit == "publish") {
+                toPublish = true;
+            }
             var collaboratorUsername = req.body.collaboratorUsername;
             var c = new Comic.Comic(req.mongoose);
             c.insert(title, authorUsername, publicationDate, description, genre, toPublish, function (comicID) {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
-                    console.log(img);
+                    //console.log(img);
                     var cc = new ComicCell.ComicCell(req.mongoose);
                     cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, function (imgName) {
                         // If there's an error
@@ -54,6 +66,7 @@ var Webcomic = (function () {
                             res.end();
                         }
                         else {
+                            //var newPath = "./uploads/fullsize/" + imgName;
                             var newPath = "./uploads/fullsize/" + imgName;
                             var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                             // write image file to uploads/fullsize folder
@@ -80,6 +93,41 @@ var Webcomic = (function () {
                 });
             });
         });
+        //Add a new cell to an existing web comic
+        router.post('/newCell/:id', function (req, res) {
+            // extract comic id from request header
+            var comicID = req.params.id;
+            console.log(comicID);
+            // extract the colaborators id from the cookie
+            var collaboratorUsername = req.cookies._id;
+            var c = new Comic.Comic(req.mongoose);
+            c.get(comicID, function (webcomic) {
+                var title = webcomic.title;
+                var authorUsername = webcomic.authorUsername;
+                var toPublish = webcomic.toPublish;
+                fs.readFile(req.file.path, function (err, img) {
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, function (imgName) {
+                        // If there's an error
+                        if (!imgName) {
+                            console.log("There was an error");
+                            res.redirect("./create");
+                            res.end();
+                        }
+                        else {
+                            var newPath = "./uploads/fullsize/" + imgName;
+                            // write image file to uploads/fullsize folder
+                            fs.writeFile(newPath, img, function (err) {
+                                if (err)
+                                    return console.error(err);
+                                //redirect to the newly created comic
+                                res.redirect('/webcomic/id/' + comicID);
+                            });
+                        }
+                    });
+                });
+            });
+        });
         // get an image stored in uploads/fullsize/    
         router.get('/image/:file', function (req, res) {
             var file = req.params.file;
@@ -98,7 +146,11 @@ var Webcomic = (function () {
             var publicationDate = req.body.publicationDate;
             var description = req.body.description;
             var genre = req.body.genre;
-            var toPublish = req.body.toPublish;
+            var toPublish;
+            //set the toPublish field relative to which submit button is pushed
+            if (req.body.submit == "publish") {
+                toPublish = true;
+            }
             // update the comic
             var c = new Comic.Comic(req.mongoose);
             c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, function () {

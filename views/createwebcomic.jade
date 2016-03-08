@@ -11,16 +11,15 @@ block content
             input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
             br
             input#genre(type="text", placeholder="Genre", name="genre", required="")
-            br
-            br
-            | Publish now? 
-            input#toPublish(type="checkbox", name="toPublish", value="toPublish")
+            input#toPublish(type="hidden", name="toPublish", value="false")
             br
             br
             input#firstImage(type="file",name="image", required="")
             br
             br
-            button#btnSubmit(type="submit") Submit
+            //Two submit buttons, which one is pressed is checked in the /submit route and the value of toPublish is set there
+            button#btnSubmit(type="submit", name="submit", value="draft") Submit
+            button#btnSubmit(type="submit", name="submit", value="publish") Submit and Publish
 
 
 
