@@ -1,0 +1,3 @@
+class RegisteredUserServiceProvider implements IRegisteredUserService 
+{
+} 
