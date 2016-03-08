@@ -50,10 +50,7 @@ router.post('/edit',function(req, res) {
 			
 		if(user)
 		{		
-			console.log(req.file);
 			fs.readFile(req.file.path, function (err, img) {
-			console.log("Reached here");
-
 			var newPath = "./uploads/profilepictures/" + user.username;
 					console.log(img);
 					// write image file to uploads/fullsize folder
@@ -67,7 +64,7 @@ router.post('/edit',function(req, res) {
 			   {
 					$set:
 					{
-						"profilePicture": req.headers['host'] + "/profilepictures/" +user.username
+						"profilePicture": "http://"+req.headers['host'] + "/profile/profilepictures/" +user.username
 					}
 			   });
 			if (req.body.aboutMe !== undefined) 

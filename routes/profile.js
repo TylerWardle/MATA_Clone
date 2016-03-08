@@ -35,9 +35,7 @@ router.post('/edit', function (req, res) {
     // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
-            console.log(req.file);
             fs.readFile(req.file.path, function (err, img) {
-                console.log("Reached here");
                 var newPath = "./uploads/profilepictures/" + user.username;
                 console.log(img);
                 // write image file to uploads/fullsize folder
@@ -49,7 +47,7 @@ router.post('/edit', function (req, res) {
             // the profile data (picture and about me section).
             registeredUsers.update({ _id: req.cookies._id }, {
                 $set: {
-                    "profilePicture": req.headers['host'] + "/profilepictures/" + user.username
+                    "profilePicture": "http://" + req.headers['host'] + "/profile/profilepictures/" + user.username
                 }
             });
             if (req.body.aboutMe !== undefined) {
