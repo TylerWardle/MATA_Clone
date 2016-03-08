@@ -21,7 +21,7 @@ class Webcomic {
         router.get('/id/:id', function(req, res) {
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
-            
+           
             // get comic from the db
             if (req.cookies._id != null){
                 var c = new Comic.Comic(req.mongoose);
@@ -32,8 +32,9 @@ class Webcomic {
                     if (req.cookies._id == doc.authorUsername){
                         isAuthor = true
                     }
+                    console.log(req.body.submit);
                     cc.getAll(comicID, (docs: any): void => {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType});
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType, "viewMode": req.body.submit});
                     });
                 });
             }else{

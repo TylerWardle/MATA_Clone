@@ -8,6 +8,7 @@ a {
 }
 #banner {
 	background-color: steelblue;
+	
 	width:100%;
     min-height:70px;
 }
@@ -181,7 +182,7 @@ a {
 	top: 160px
 }
 #belowimage{
-	position: absolute;
+	position: fixed;
 	left: 100px;
 	top: 90%;
 }
@@ -237,7 +238,7 @@ a {
 .close:hover { background: steelblue; }
 
 .AddCell {
-	background: #FF0000;
+	background: steelblue;
 	color: #FFFFFF;
 	font-size: 30px;
 	line-height: 25px;

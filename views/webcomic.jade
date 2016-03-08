@@ -18,14 +18,18 @@ block content
 			img(id="images", src="http://#{header}#{cells[i]._id}")
 			br
 		//If user is a contributor show the add cell button
-		-if(accountType == "contributor")
-			a(href="#newCell" title="AddCell" class="AddCell") +
+		p #{viewMode}
+		-if(accountType == "contributor" && !viewMode)
+			a(href="#newCell" title="AddCell" class="AddCell", id="contributor") +
 	br
 	div(id="belowimage")
 		//if the user viewing the comic is also the author of the comic then display the edit button
-		-if(isAuthor)
+		-if(isAuthor && !viewMode)
 			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
-				button#btnEditComic(type="submit") Edit
+				button#btnEditComic(type="submit", name="submit", value= "editMode") Edit
+		//form#formViewMode(name="viewMode", method="get", action="/webcomic/id/#{webcomic._id}")
+		form#formCreateWebComic(name="viewMode", method="get", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+			button#btnSubmit(type="submit", name="submit", value="viewMode") View Mode	
 	br
 	br
 	br

@@ -10,10 +10,16 @@ block content
             br
             input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
             br
-            input#genre(type="text", placeholder="Genre", name="genre", required="")
+            //input#genre(type="text", placeholder="Genre", name="genre", required="")
+           
+            p Genre 
+                select(name="genre")
+                    option(value="Zombies") Zombies
+                    option(value="Post Apocalyptic") Post Apocalyptic
+                    option(value="Action/Adventure") Action/Adventure
+                    option(value="Humor") Humor
+                    option(value="Superhero") Superhero
             input#toPublish(type="hidden", name="toPublish", value="false")
-            br
-            br
             input#firstImage(type="file",name="image", required="")
             br
             br

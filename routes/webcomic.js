@@ -25,8 +25,9 @@ var Webcomic = (function () {
                     if (req.cookies._id == doc.authorUsername) {
                         isAuthor = true;
                     }
+                    console.log(req.body.submit);
                     cc.getAll(comicID, function (docs) {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType });
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType, "viewMode": req.body.submit });
                     });
                 });
             }
