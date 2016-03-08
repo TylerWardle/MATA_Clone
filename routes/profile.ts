@@ -7,6 +7,7 @@
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
+var fs = require('fs');
 
 
 /* GET  Profile settings. */
@@ -41,14 +42,48 @@ router.get('/edit',function(req, res) {
 
 /* Updates users profile in the DB and redirect user to their newly updated profile*/
 router.post('/edit',function(req, res) {
- var db = req.db;
+	var db = req.db;
     var registeredUsers = db.get('registeredUsers');
-	
-	 // Fetch the document
+
+	// Fetch the document
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
+			
 		if(user)
 		{		
+			if (req.body.profilePicture !== undefined) 
+			{
+				 fs.readFile(req.file.path, function (err, img) {
+						var newPath = "./profilepictures/" + user.username;
+				
+						// write image file to uploads/fullsize folder
+						fs.writeFile(newPath, img, function (err) {
+							if (err)
+								return console.error(err);
+						});
+				 });
+				// the profile data (picture and about me section).
+				registeredUsers.update({_id:req.cookies._id},
+								   {
+										$set:
+										{
+											"profilePicture": req.headers['host'] + "/profilepictures/" +user.username
+										}
+								   });
+			}
+			if (req.body.aboutMe !== undefined) 
+			{
+				// the profile data (picture and about me section).
+				registeredUsers.update({_id:req.cookies._id},
+								   {
+										$set:
+										{
+											"aboutMe":req.body.aboutMe
+										}
+								   });
+			}
+			
 			res.render('profile', { "user": user });
+			
 		}
 		else
 		{
@@ -57,7 +92,14 @@ router.post('/edit',function(req, res) {
 	});
 });
 
+	// get an image stored in uploads/fullsize/    
+	router.get('/image/:file', function (req, res){
+		var file = req.params.file;
+		var img = fs.readFileSync("./uploads/fullsize/" + file);
+		res.writeHead(200, {'Content-Type': 'image/jpg' });
+		res.end(img, 'binary');
 
+	});
 
 /* Update profile page settings. */
 router.put('/edit', function(req,res)

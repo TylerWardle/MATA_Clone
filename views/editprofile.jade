@@ -4,26 +4,26 @@ block content
   div(id="form")
     h1.
       #{user.username}
-  div(id="profiledata")
-    form#formProfile(name="profile",method="post",action="/profile/edit")
-  div(id="aboutmeEdit")
-    form(action="").form-inline
-      .form-group.col-md-4
-        textarea(, rows=5, cols=50).form-control
+  form#formEditProfile(name="profile",method="post",action="/profile/edit")
+    div(id="aboutmeEdit")
+        textarea#inputAboutme(type="text",name="aboutMe",rows=5, cols=50).form-control
           | #{user.aboutMe}
     br
-  div(id="profilePicture")
-    img(src="#{user.profilePicture}")
-  div(id="editProfilePictureMessage")
-    p Change You Picture 
-    br
-  div(id="editProfilePicture")
-    input#firstImage(type="file",name="image", required="")
-    br
+    div(id="profilePicture")
+      img(src="#{user.profilePicture}")
+    div(id="editProfilePictureMessage")
+      p Change You Picture 
+      br
+    div(id="submitEditProfile")
+      form#confirmEdit(type="updateEdit", method="post", action="/profile/edit")
+          button#btnUpdateProfile(type="submit") Save Changes
+        script.
+          setTimeout(2000);
+    div(id="editProfilePicture")
+      input#firstImage(type="file",name="profilePicture", required="")
+      br
   div(id="cancelEditProfile")
     form#cancelEdit(type="cancelEdit", method="get", action="/profile")
         button#btnCancelUpdateProfile(type="submit") Cancel Edit
   br
-  div(id="submitEditProfile")
-    form#confirmEdit(type="updateEdit", method="post", action="/profile")
-        button#btnUpdateProfile(type="submit") Save Changes
+  
