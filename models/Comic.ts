@@ -185,14 +185,18 @@ export class Comic {
         });
     }
 
-    getComicsSortedByLeastRecentlyPublished(callback: Function): any {
-        var db = this.mongoose.connection;
-        var comicModel = Comic.comic;
+    // given a list of comic objects, return a list of comic links to published comics
+    extractPublishedComicIDs(comicObjs: any, callback: Function): any {
+        var numOfComicIDs = 0;
+        
+        var comicIDArr = new Array<String>();
+        for (var i = 0; i < comicObjs.length; i++) { // get all comicIDs of published comics
+            if (comicObjs[i].toPublish == "true") {
+                comicIDArr.push(comicObjs[i]._id); 
+                numOfComicIDs++;
+            }
+        }
 
-        comicModel.aggregate([
-            { $sort: { publicationDate: 1 } }
-        ], function (err, docs) {
-            return docs
-        });
+        callback(comicIDArr);
     }
 }
