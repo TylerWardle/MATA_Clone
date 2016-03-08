@@ -56,7 +56,7 @@ var Webcomic = (function () {
             c.insert(title, authorUsername, publicationDate, description, genre, toPublish, function (comicID) {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
-                    //console.log(img);
+                    console.log(req.file);
                     var cc = new ComicCell.ComicCell(req.mongoose);
                     cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, function (imgName) {
                         // If there's an error

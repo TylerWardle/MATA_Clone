@@ -17,7 +17,7 @@ block content
           | this will be the user's about me
     br
   div(id="profilePicture")
-    img(src="#{user.profilePicture}")
+    img(src="http://#{user.profilePicture}")
 
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
