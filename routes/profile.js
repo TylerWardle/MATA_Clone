@@ -35,22 +35,23 @@ router.post('/edit', function (req, res) {
     // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
-            if (req.body.profilePicture !== undefined) {
-                fs.readFile(req.file.path, function (err, img) {
-                    var newPath = "./profilepictures/" + user.username;
-                    // write image file to uploads/fullsize folder
-                    fs.writeFile(newPath, img, function (err) {
-                        if (err)
-                            return console.error(err);
-                    });
+            console.log(req.file);
+            fs.readFile(req.file.path, function (err, img) {
+                console.log("Reached here");
+                var newPath = "./uploads/profilepictures/" + user.username;
+                console.log(img);
+                // write image file to uploads/fullsize folder
+                fs.writeFile(newPath, img, function (err) {
+                    if (err)
+                        return console.error(err);
                 });
-                // the profile data (picture and about me section).
-                registeredUsers.update({ _id: req.cookies._id }, {
-                    $set: {
-                        "profilePicture": req.headers['host'] + "/profilepictures/" + user.username
-                    }
-                });
-            }
+            });
+            // the profile data (picture and about me section).
+            registeredUsers.update({ _id: req.cookies._id }, {
+                $set: {
+                    "profilePicture": req.headers['host'] + "/profilepictures/" + user.username
+                }
+            });
             if (req.body.aboutMe !== undefined) {
                 // the profile data (picture and about me section).
                 registeredUsers.update({ _id: req.cookies._id }, {
@@ -66,10 +67,10 @@ router.post('/edit', function (req, res) {
         }
     });
 });
-// get an image stored in uploads/fullsize/    
-router.get('/image/:file', function (req, res) {
-    var file = req.params.file;
-    var img = fs.readFileSync("./uploads/fullsize/" + file);
+// get an image stored in profilepictures    
+router.get('/profilepictures/:username', function (req, res) {
+    var file = req.params.username;
+    var img = fs.readFileSync("./uploads/profilepictures/" + file);
     res.writeHead(200, { 'Content-Type': 'image/jpg' });
     res.end(img, 'binary');
 });
