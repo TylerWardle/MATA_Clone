@@ -150,7 +150,7 @@ export class Comic {
         });
     }
 
-    getComicsSortedByTitle(callback: Function): any {
+    getComicsSortedByTitle(callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
@@ -158,7 +158,7 @@ export class Comic {
         comicModel.aggregate([
             { $sort: { normalized_title: 1 } }
         ], function (err, docs) {
-            return docs
+            callback(docs);
         });
     }
 
@@ -168,9 +168,9 @@ export class Comic {
 
         // use normalized_author field of comic model to get alphabetically sorted authors 
         comicModel.aggregate([
-            { $sort: { normalized_author: 1 } }
+            { $sort: { normalized_authorUsername: 1 } }
         ], function (err, docs) {
-            return docs
+            callback(docs);
         });
     }
 
