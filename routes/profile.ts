@@ -3,6 +3,9 @@
 //<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
+import Comic = require('../models/Comic');
+import ComicCell = require('../models/ComicCell');
+import RegisteredUser = require('../models/RegisteredUser');
 import Contributor = require('../models/Contributor');
 
 var express = require('express');
@@ -15,6 +18,7 @@ router.get('/', function(req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
     var contributors = db.get("contributors");
+    var comicID = req.params.id;
 	
 	 // Fetch the document
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
@@ -23,8 +27,16 @@ router.get('/', function(req, res) {
 			var ObjectId = require('mongodb').ObjectID;
 			contributors.findOne({ guid: ObjectId(user._id) }, function(error, contributor) {
 				contributor.getComicIds();
+				if (req.cookies._id != null) {
+					var c = new Comic.Comic(req.mongoose);
+					c.get(comicID, (doc: any): void => {
+						//var cc = new ComicCell.ComicCell(req.mongoose);
+						//cc.getAll(comicID, (docs: any): void => {
+						res.render('profile', { "webcomic": doc, "header": req.headers['host'] + "/webcomic/image/", "user": user });
+						//});
+					});
+				}
 			});
-			res.render('profile', { "user": user });
 		}
 		else
 		{

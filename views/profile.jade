@@ -22,3 +22,8 @@ block content
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
         button#btnEdit(type="submit") Edit Profile
+  br
+  div(id="images")
+    - for (var i = 0; i < webcomic.length; i++)
+      a(href="http://#{header}#{webcomic[i]._id}")
+  br

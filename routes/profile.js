@@ -2,6 +2,7 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 //<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
+var Comic = require('../models/Comic');
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
@@ -10,14 +11,23 @@ router.get('/', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
     var contributors = db.get("contributors");
+    var comicID = req.params.id;
     // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
             var ObjectId = require('mongodb').ObjectID;
             contributors.findOne({ guid: ObjectId(user._id) }, function (error, contributor) {
                 contributor.getComicIds();
+                if (req.cookies._id != null) {
+                    var c = new Comic.Comic(req.mongoose);
+                    c.get(comicID, function (doc) {
+                        //var cc = new ComicCell.ComicCell(req.mongoose);
+                        //cc.getAll(comicID, (docs: any): void => {
+                        res.render('profile', { "webcomic": doc, "header": req.headers['host'] + "/webcomic/image/", "user": user });
+                        //});
+                    });
+                }
             });
-            res.render('profile', { "user": user });
         }
         else {
             res.send("ACCESS DENIED");
