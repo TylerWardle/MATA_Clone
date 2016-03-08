@@ -4,15 +4,20 @@ block content
   div(id="form")
     h1.
       #{user.username}
-  form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
-      textarea#inputAboutme(type="text",name="aboutMe",rows=5, cols=50).form-control
-      | #{user.aboutMe}
-      br
-      input#firstImage(type="file", name="image", required="")
-      br
+  form#formEditProfile(name="profile",method="post",action="/profile/edit")
+    div(id="aboutmeEdit")
+      textarea(type="text", name="aboutMe",rows=5, cols=50)
+        | #{user.aboutMe}
+    div(id="editProfilePicture")
+      input#firstImage(type="file",name="image")
+    br
+    div(id="profilePicture")
       img(src="#{user.profilePicture}")
+    div(id="editProfilePictureMessage")
       p Change Your Picture 
       br
+    div(id="submitEditProfile")
       button#btnUpdateProfile(type="submit") Save Changes
-  form#cancelEdit(type="cancelEdit", method="get", action="/profile")
-      button#btnCancelUpdateProfile(type="submit") Cancel Edit
+  div(id="cancelEditProfile")
+    form#cancelEdit(type="cancelEdit", method="get", action="/profile")
+        button#btnCancelUpdateProfile(type="submit") Cancel Edit

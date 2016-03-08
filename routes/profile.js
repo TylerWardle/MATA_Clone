@@ -35,24 +35,24 @@ router.post('/edit', function (req, res) {
     // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
-            console.log(req.file);
-            fs.readFile(req.file.path, function (err, img) {
-                console.log(req.file);
-                var newPath = "./uploads/profilepictures/" + user.username;
-                console.log(img);
-                // write image file to uploads/fullsize folder
-                fs.writeFile(newPath, img, function (err) {
-                    if (err)
-                        return console.error(err);
+            if (req.file !== undefined) {
+                fs.readFile(req.file.path, function (err, img) {
+                    var newPath = "./uploads/profilepictures/" + user.username;
+                    // write image file to uploads/fullsize folder
+                    fs.writeFile(newPath, img, function (err) {
+                        if (err)
+                            return console.error(err);
+                    });
                 });
-            });
-            // the profile data (picture and about me section).
-            registeredUsers.update({ _id: req.cookies._id }, {
-                $set: {
-                    "profilePicture": req.headers['host'] + "/profile/profilepictures/" + user.username
-                }
-            });
+                // the profile data (picture and about me section).
+                registeredUsers.update({ _id: req.cookies._id }, {
+                    $set: {
+                        "profilePicture": "http://" + req.headers['host'] + "/profile/profilepictures/" + user.username
+                    }
+                });
+            }
             if (req.body.aboutMe !== undefined) {
+                console.log(req);
                 // the profile data (picture and about me section).
                 registeredUsers.update({ _id: req.cookies._id }, {
                     $set: {

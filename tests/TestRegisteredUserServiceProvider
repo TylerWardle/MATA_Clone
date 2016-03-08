@@ -1,0 +1,3 @@
+class TestRegisteredUserServiceProvider implements IRegisteredUserService 
+{
+} 
