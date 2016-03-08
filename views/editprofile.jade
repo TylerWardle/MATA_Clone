@@ -6,11 +6,11 @@ block content
       #{user.username}
   form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
     div(id="aboutmeEdit")
-      textarea#inputAboutme(type="text",name="aboutMe",rows=5, cols=50).form-control
+      textarea(type="text", name="aboutMe",rows=5, cols=50, id="aboutMe")
         | #{user.aboutMe}
       br
     div(id="editProfilePicture")
-      input#firstImage(type="file",name="image", required="")
+      input#firstImage(type="file",name="image")
     br
     div(id="profilePicture")
       img(src="#{user.profilePicture}")
