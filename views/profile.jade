@@ -14,7 +14,10 @@ block content
     form(action="").form-inline
       .form-group.col-md-4
         textarea(readonly="", rows=5, cols=50).form-control
-          | this will be the user's about me
+          | #{user.aboutMe}
+    br
+  div(id="lastLogin")
+    p Last Online: #{user.lastLogin}
     br
   div(id="profilePicture")
     img(src="#{user.profilePicture}")
