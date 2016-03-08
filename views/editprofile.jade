@@ -6,9 +6,8 @@ block content
       #{user.username}
   form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
     div(id="aboutmeEdit")
-      textarea(type="text", name="aboutMe",rows=5, cols=50, id="aboutMe")
+      textarea#inputAboutme(type="text",name="aboutMe",rows=5, cols=50).form-control
         | #{user.aboutMe}
-      br
     div(id="editProfilePicture")
       input#firstImage(type="file",name="image")
     br
