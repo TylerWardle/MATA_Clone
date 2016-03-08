@@ -38,7 +38,6 @@ router.post('/edit', function (req, res) {
             if (req.file !== undefined) {
                 fs.readFile(req.file.path, function (err, img) {
                     var newPath = "./uploads/profilepictures/" + user.username;
-                    // add check\\
                     // write image file to uploads/fullsize folder
                     fs.writeFile(newPath, img, function (err) {
                         if (err)
@@ -52,16 +51,15 @@ router.post('/edit', function (req, res) {
                     }
                 });
             }
-            //if (req.body.aboutMe !== undefined) 
-            //{
-            console.log(req);
-            // the profile data (picture and about me section).
-            registeredUsers.update({ _id: req.cookies._id }, {
-                $set: {
-                    "aboutMe": req.body.aboutMe
-                }
-            });
-            //}
+            if (req.body.aboutMe !== undefined) {
+                console.log(req);
+                // the profile data (picture and about me section).
+                registeredUsers.update({ _id: req.cookies._id }, {
+                    $set: {
+                        "aboutMe": req.body.aboutMe
+                    }
+                });
+            }
             res.render('profile', { "user": user });
         }
         else {

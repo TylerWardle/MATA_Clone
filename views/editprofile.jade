@@ -4,9 +4,9 @@ block content
   div(id="form")
     h1.
       #{user.username}
-  form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
+  form#formEditProfile(name="profile",method="post",action="/profile/edit")
     div(id="aboutmeEdit")
-      textarea#inputAboutme(type="text",name="aboutMe",rows=5, cols=50).form-control
+      textarea(type="text", name="aboutMe",rows=5, cols=50)
         | #{user.aboutMe}
     div(id="editProfilePicture")
       input#firstImage(type="file",name="image")
