@@ -32,6 +32,7 @@ var Application = (function () {
         app.use(cookieParser());
         app.use(express.static(path.join(__dirname, 'public')));
         app.use(multer({ dest: './uploads/fullsize/' }).single('image'));
+        app.use(multer({ dest: './uploads/profilepictures/' }).single('image'));
         // Make our db accessible to our router
         app.use(function (req, res, next) {
             req.db = db;
