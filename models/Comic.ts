@@ -185,6 +185,51 @@ export class Comic {
         });
     }
 
+    getZombiesComics(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.find({'genre': "Zombies"}, function (err, docs) {
+            callback(docs)
+        });
+    }
+
+    getPostApocalypticComics(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.find({ 'genre': "Post Apocalyptic" }, function (err, docs) {
+            callback(docs)
+        });
+    }
+
+    getActionAdventureComics(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.find({ 'genre': "Action/Adventure" }, function (err, docs) {
+            callback(docs)
+        });
+    }
+
+    getHumorComics(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.find({ 'genre': "Humor" }, function (err, docs) {
+            callback(docs)
+        });
+    }
+
+    getSuperheroComics(callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicModel = Comic.comic;
+
+        comicModel.find({ 'genre': "Superhero" }, function (err, docs) {
+            callback(docs)
+        });
+    }
+
     // given a list of comic objects, return a list of comic links to published comics
     extractPublishedComicIDs(comicObjs: any, callback: Function): any {
         var numOfComicIDs = 0;
