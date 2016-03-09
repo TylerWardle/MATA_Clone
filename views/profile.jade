@@ -25,7 +25,8 @@ block content
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
         button#btnEdit(type="submit") Edit Profile
-  br
-  div(id="images")
-      img(src="http://localhost:3000/webcomic/id/56e083119163c46e02b5a5b4")
+  div(id="contributorComics")
+    - for comic in webcomic
+        li
+          a(href="#{comic}") #{comic}
   br

@@ -16,7 +16,15 @@ router.get('/', function (req, res) {
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
             var ObjectId = require('mongodb').ObjectID;
-            res.render('profile', { "user": user });
+            contributors.findOne({ guid: ObjectID(user._id) }, function (error, contributor) {
+                var comicIDLinks = new Array();
+                var i;
+                console.log(contributor.comicIDs.length);
+                for (i = 0; i < contributor.comicIDs.length; i++) {
+                    comicIDLinks.push("http://" + req.headers['host'] + "/webcomic/id/" + contributor.comicIDs[i]);
+                }
+                res.render('profile', { "webcomic": comicIDLinks, "user": user });
+            });
         }
         else {
             res.send("ACCESS DENIED");
