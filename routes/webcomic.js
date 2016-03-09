@@ -25,9 +25,8 @@ var Webcomic = (function () {
                     if (req.cookies._id == doc.authorUsername) {
                         isAuthor = true;
                     }
-                    console.log(req.body.submit);
                     cc.getAll(comicID, function (docs) {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType, "viewMode": req.body.submit });
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType });
                     });
                 });
             }
@@ -45,6 +44,7 @@ var Webcomic = (function () {
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
+            var openToContribution = req.body.openToContribution;
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "draft") {
                 toPublish = false;
@@ -54,7 +54,7 @@ var Webcomic = (function () {
             }
             var collaboratorUsername = req.body.collaboratorUsername;
             var c = new Comic.Comic(req.mongoose);
-            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, function (comicID) {
+            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function (comicID) {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
                     console.log(req.file);
@@ -67,7 +67,6 @@ var Webcomic = (function () {
                             res.end();
                         }
                         else {
-                            //var newPath = "./uploads/fullsize/" + imgName;
                             var newPath = "./uploads/fullsize/" + imgName;
                             var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                             // write image file to uploads/fullsize folder
@@ -148,13 +147,21 @@ var Webcomic = (function () {
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
+            var openToContribution;
+            if (req.body.openToContribution == "on") {
+                openToContribution = true;
+            }
+            else {
+                openToContribution = false;
+            }
+            console.log(req.body);
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "publish") {
                 toPublish = true;
             }
             // update the comic
             var c = new Comic.Comic(req.mongoose);
-            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, function () {
+            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function () {
                 // redirect client to updated comic web page
                 res.redirect('/webcomic/id/' + comicID);
             });

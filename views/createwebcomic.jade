@@ -6,19 +6,23 @@ block content
             New Comic!
     div(id="belowform")
         form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
+            |Title:
             input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
             br
+            |Description:
             input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
             br
-            //input#genre(type="text", placeholder="Genre", name="genre", required="")
-           
-            p Genre 
-                select(name="genre")
-                    option(value="Zombies") Zombies
-                    option(value="Post Apocalyptic") Post Apocalyptic
-                    option(value="Action/Adventure") Action/Adventure
-                    option(value="Humor") Humor
-                    option(value="Superhero") Superhero
+            |Open to Contribution?:
+            input#openToContribution(type="checkbox", name="openToContribution")
+            br
+            |Genre: 
+            select(name="genre")
+                option(value="Zombies") Zombies
+                option(value="Post Apocalyptic") Post Apocalyptic
+                option(value="Action/Adventure") Action/Adventure
+                option(value="Humor") Humor
+                option(value="Superhero") Superhero
+            br    
             input#toPublish(type="hidden", name="toPublish", value="false")
             input#firstImage(type="file",name="image", required="")
             br

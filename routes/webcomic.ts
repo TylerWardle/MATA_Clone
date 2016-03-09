@@ -32,9 +32,8 @@ class Webcomic {
                     if (req.cookies._id == doc.authorUsername){
                         isAuthor = true
                     }
-                    console.log(req.body.submit);
                     cc.getAll(comicID, (docs: any): void => {
-                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType, "viewMode": req.body.submit});
+                        res.render('webcomic', { "webcomic": doc, "cells": docs, "header": req.headers['host'] + "/webcomic/image/", "isAuthor": isAuthor, "accountType": req.cookies.accountType});
                     });
                 });
             }else{
@@ -55,6 +54,7 @@ class Webcomic {
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
+            var openToContribution = req.body.openToContribution
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "draft"){
                 toPublish = false;
@@ -64,7 +64,7 @@ class Webcomic {
             var collaboratorUsername = req.body.collaboratorUsername;
             
             var c = new Comic.Comic(req.mongoose);
-            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, (comicID: String): void => {
+            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, (comicID: String): void => {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
                     console.log(req.file);
@@ -77,7 +77,6 @@ class Webcomic {
                             res.redirect("./create");
                             res.end();
                         } else {
-                            //var newPath = "./uploads/fullsize/" + imgName;
                             var newPath = "./uploads/fullsize/" + imgName;
                             var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                     
@@ -170,6 +169,13 @@ class Webcomic {
             var description = req.body.description; 
             var genre = req.body.genre;
             var toPublish;
+            var openToContribution;
+            if (req.body.openToContribution == "on"){
+                openToContribution = true;
+            } else {
+                openToContribution = false;
+            }
+            console.log(req.body);
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "publish"){
                 toPublish = true;
@@ -177,7 +183,7 @@ class Webcomic {
 
             // update the comic
             var c = new Comic.Comic(req.mongoose);
-            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, (): void => {
+            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, (): void => {
                 // redirect client to updated comic web page
                 res.redirect('/webcomic/id/' + comicID);
             });

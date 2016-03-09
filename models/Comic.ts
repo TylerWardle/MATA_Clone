@@ -21,7 +21,8 @@ export class Comic {
             publicationDate: String,
             description: String,
             genre: String,
-            toPublish: Boolean
+            toPublish: Boolean,
+            openToContribution: Boolean
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -32,7 +33,7 @@ export class Comic {
     // INSERT **WORKS**
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB
     // we pass this id back to the client
-    insert(_title: String, _authorUsername: String, _publicationDate: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): any {
+    insert(_title: String, _authorUsername: String, _publicationDate: String, _description: String, _genre: String, _toPublish: Boolean, _openToContribution: Boolean, callback: Function): any {
         var db = this.mongoose.connection;
 
         // create a new comic object with the client given data fields
@@ -42,7 +43,8 @@ export class Comic {
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
-            toPublish: _toPublish
+            toPublish: _toPublish,
+            openToContribution: _openToContribution
         });
         
         // insert the new comic obj into the DB
@@ -83,7 +85,7 @@ export class Comic {
     }
 
     // UPDATE **WORKS**
-    update(_comicID: String, _title: String, _authorUsername: String, _publicationDate: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): void {
+    update(_comicID: String, _title: String, _authorUsername: String, _publicationDate: String, _description: String, _genre: String, _toPublish: Boolean, _openToContribution: Boolean, callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
@@ -93,7 +95,8 @@ export class Comic {
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
-            toPublish: _toPublish
+            toPublish: _toPublish,
+            openToContribution: _openToContribution
         });
 
         var comicData = a_comic.toObject();
