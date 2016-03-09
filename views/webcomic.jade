@@ -19,7 +19,7 @@ block content
 			br
 
 	br
-	-var authorUsername=webcomic.authorID
+	-var authorUsername=webcomic.username
 	-var username=user.username
 	-var accountType=user.accountType
 	unless accountType=="viewer"
@@ -42,7 +42,9 @@ block content
 			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 				div(id="belowimage")
 					button#btnEditComic(type="submit", style=hiddenEdit) Edit
-	br
+			form#formGoToDelete(name="deleteWebcomic",method="delete", action="/webcomic/delete/#{webcomic._id}")
+				div(id="deleteWebcomic")
+					button#btnDeleteComic(type="submit", style=hiddenEdit) Delete
 	br
 	br
 	div(id="newCell" class="newCellDialog")

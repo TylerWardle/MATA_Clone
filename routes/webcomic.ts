@@ -87,8 +87,10 @@ class Webcomic {
                         var db = req.db;
                         var contributors = db.get('contributors');
                         var ObjectId = require('mongodb').ObjectID;
-                        contributors.findOne({ guid: ObjectId(req.cookies._id) }, function(error, user){
-                            user.addComicID(comicID);
+                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
+                            $addToSet: {
+                                comicIDs: [comicID]
+                            }
                         });
                         
                     });
@@ -139,7 +141,9 @@ class Webcomic {
         });
 
         // Delete Comic: Delete one comic and all associated cells ** NEED TO BE TESTED**
-        router.delete('./:id', function(req, res) {
+        router.delete('/delete/:id', function(req, res) {
+            res.redirect('webcomic/id/56e07fbb36adba2502ac89d0');
+            /*
             // get comicID identifying which comic to delete from reqest parameter in the URL
             var comicID = req.params.id;
             var authorUsername = req.cookies._id;
@@ -149,8 +153,12 @@ class Webcomic {
             c.delete(comicID, authorUsername, (): void => {
                 // remove associated comic cell documents
                 var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorUsername, (): void => { });
+                cc.deleteAll(comicID, authorUsername, (): void => { 
+                    res.redirect('/webcomic/id/56e07fbb36adba2502ac89d0');
+                    //res.redirect(req.headers['host'] + 'contributor');
+                });
             });
+*/
         });
 
         // create a webcomic route

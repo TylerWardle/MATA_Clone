@@ -20,24 +20,24 @@ router.get('/', function(req, res) {
     var registeredUsers = db.get('registeredUsers');
     var contributors = db.get("contributors");
     var comicID = req.params.id;
+
 	
 	 // Fetch the document
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
 		if(user)
 		{
 			var ObjectId = require('mongodb').ObjectID;
-			contributors.findOne({ guid: ObjectId(user._id) }, function(error, contributor) {
-				contributor.getComicIds();
-				if (req.cookies._id != null) {
-					var c = new Comic.Comic(req.mongoose);
-					c.get(comicID, (doc: any): void => {
-						//var cc = new ComicCell.ComicCell(req.mongoose);
-						//cc.getAll(comicID, (docs: any): void => {
-						res.render('profile', { "webcomic": doc, "header": req.headers['host'] + "/webcomic/image/", "user": user });
-						//});
-					});
+			res.render('profile', {"user": user });
+			/*
+			contributors.findOne({ guid: ObjectID(user._id) }, function(error, contributor) {
+				var comicIDLinks = new Array<String>();
+				var i;
+				for (i = 0; i < contributor.comicIDs.length; i++) {
+					comicIDLinks.push(req.headers['host'] + "/webcomic/id" + contributor.comicIDs[i]);
 				}
+				res.render('profile', { "webcomic": comicIDLinks, "user": user });
 			});
+*/
 		}
 		else
 		{
