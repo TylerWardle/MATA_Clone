@@ -9,7 +9,7 @@ export class Comic {
     static comic: any = null; // static class variable
 
     // intializing a comic object establishes a DB connection
-    constructor(mongoose:any) {
+    constructor(mongoose: any) {
         this.mongoose = mongoose;
         this.schema = this.mongoose.Schema;
         
@@ -20,7 +20,7 @@ export class Comic {
             authorID: String,
             authorUsername: String,
             normalized_authorUsername: String,
-            publicationDate: Date,
+            publicationDate: { type: Date, default: Date.now },
             description: String,
             genre: String,
             toPublish: Boolean
@@ -37,10 +37,7 @@ export class Comic {
     insert(_title: String, _authorID: String, _authorUsername: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): any {
         var db = this.mongoose.connection;
 
-        var _publicationDate = null;
-
-        if (_toPublish == true)
-                _publicationDate = new Date();
+        var _publicationDate = new Date();
        
         // create a new comic object with the client given data fields
         var c = new Comic.comic({
@@ -69,7 +66,7 @@ export class Comic {
     get(_comicID: String, callback: Function): any {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
-       
+
         comicModel.findById({ _id: _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
@@ -93,13 +90,11 @@ export class Comic {
     }
 
     // UPDATE 
-    update(_comicID: String, _title: String, _authorID: String, _authorUsername: String, _publicationDate: Date, _description: String, _genre: String, _toPublish: Boolean, callback: Function): void {
+    update(_comicID: String, _title: String, _authorID: String, _authorUsername: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        var usablePublicationDate = _publicationDate;
-        if (_toPublish == true) // set publication date to the date of now if comic is edited and set to be published
-            usablePublicationDate = new Date();
+        var _publicationDate = new Date();
 
         var a_comic = new Comic.comic({
             title: _title,
@@ -107,7 +102,7 @@ export class Comic {
             authorID: _authorID,
             authorUsername: _authorUsername,
             normalized_authorUsername: _authorUsername.toLowerCase(),
-            publicationDate: usablePublicationDate,
+            publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
             toPublish: _toPublish
@@ -200,7 +195,7 @@ export class Comic {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({'genre': "Zombies"}, function (err, docs) {
+        comicModel.find({ 'genre': "Zombies" }, function (err, docs) {
             callback(docs)
         });
     }
@@ -244,11 +239,11 @@ export class Comic {
     // given a list of comic objects, return a list of comic links to published comics
     extractPublishedComicIDs(comicObjs: any, callback: Function): any {
         var numOfComicIDs = 0;
-        
+
         var comicIDArr = new Array<String>();
         for (var i = 0; i < comicObjs.length; i++) { // get all comicIDs of published comics
-            if (comicObjs[i].toPublish == "true") {
-                comicIDArr.push(comicObjs[i]._id); 
+            if (comicObjs[i].toPublish) {
+                comicIDArr.push(comicObjs[i]._id);
                 numOfComicIDs++;
             }
         }

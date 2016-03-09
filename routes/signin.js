@@ -8,6 +8,12 @@ router.post('/', function (req, res) {
         if (user) {
             //res.set('_id', user._id);
             if (user.password === req.body.password) {
+                // Update the login time
+                registeredUsers.update({ username: req.cookies._username }, {
+                    $set: {
+                        "lastLogin": (new Date()).toDateString()
+                    }
+                });
                 res.cookie('_id', user._id);
                 if (user.accountType === "contributor") {
                     res.redirect("contributor");

@@ -4,27 +4,20 @@ block content
   div(id="form")
     h1.
       #{user.username}
-  div(id="profiledata")
-    form#formProfile(name="profile",method="post",action="/profile/edit")
-    p My name is #{user.firstName} #{user.lastName}!
+  form#formEditProfile(name="profile",method="post",action="/profile/edit")
+    div(id="aboutmeEdit")
+      textarea(type="text", name="aboutMe",rows=5, cols=50)
+        | #{user.aboutMe}
+    div(id="editProfilePicture")
+      input#firstImage(type="file",name="image")
     br
-    p I am a #{user.accountType}.
-  div(id="aboutme")
-    label About me:
-    form(action="").form-inline
-      .form-group.col-md-4
-        textarea(readonly="", rows=5, cols=50).form-control
-          | this will be the user's about me
-    br
-  div(id="profilePicture")
-    img(src="#{user.profilePicture}")
-
-  div(id=cancel)
-    form#Edit(type="cancelEdit", method="get", action="/profile")
-        button#btnEdit(type="submit") Cancel Edit
-  div(id=updateProfile)
-    form#Edit(type="updateEdit", method="post", action="/profile/edit")
-        button#btnEdit(type="submit") Save Changes
-  div(id=editprofilepicture)
-    form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
-            input#firstImage(type="file",name="image", required="")
+    div(id="profilePicture")
+      img(src="#{user.profilePicture}")
+    div(id="editProfilePictureMessage")
+      p Change Your Picture 
+      br
+    div(id="submitEditProfile")
+      button#btnUpdateProfile(type="submit") Save Changes
+  div(id="cancelEditProfile")
+    form#cancelEdit(type="cancelEdit", method="get", action="/profile")
+        button#btnCancelUpdateProfile(type="submit") Cancel Edit

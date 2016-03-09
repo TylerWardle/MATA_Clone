@@ -64,6 +64,20 @@ export class ComicCell {
 
     }
 
+    // GET ONE comicCell by quering by cell's ID 
+    getRepresentative(_comicID: String, callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicCellModel = ComicCell.comicCell;
+
+        // find all the comicCells associated with a single comicID
+        comicCellModel.findOne({ comicID: _comicID.toString() }, function (err, doc) {
+            if (err)
+                return console.error(err);
+            // pass back the retrieved comic cell object to the client
+            callback(doc);
+        });
+    }
+
     // GET all comicCells associated with a comic 
     getAll(_comicID: String, callback: Function): any {
         var db = this.mongoose.connection;
@@ -87,8 +101,8 @@ export class ComicCell {
         comicCellModel.findById({ _id: _comicCellID }, function (err, doc) {
             if (err)
                 return console.error(err);
-            var ownerID= doc.ownerID;
-            var collaboratorID= doc.collaboratorID;
+            var ownerID = doc.ownerID;
+            var collaboratorID = doc.collaboratorID;
         
             // can delete only if the contributor is either the OWNER of the COMIC or a COLLABORATOR who owns the COMICCELL
             if (_contributorID == ownerID || _contributorID == collaboratorID) {
@@ -109,14 +123,14 @@ export class ComicCell {
         var comicCellModel = ComicCell.comicCell;
 
         // get one comic cell to retrieve the ownerID of that cell. Assume same ownerID for the same ComicID
-        comicCellModel.findOne({ 'comicID' : _comicID }, function (err, doc) {
+        comicCellModel.findOne({ 'comicID': _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
-            var ownerID= doc.ownerID;
+            var ownerID = doc.ownerID;
                    
             // can delete only if the contributor is the OWNER of the COMIC
             if (_contributorID == ownerID) {
-                comicCellModel.remove({ 'comicID' : _comicID }, function (err, doc) {
+                comicCellModel.remove({ 'comicID': _comicID }, function (err, doc) {
                     if (err)
                         return console.error(err);
                     callback();
@@ -127,7 +141,7 @@ export class ComicCell {
         });
     }
 
-    getRepresentativeImagesBody(comicIDs: any, index: any, imageHeader: any, comicCellIDArr: any, callback: Function) : void{
+    getRepresentativeImagesBody(comicIDs: any, index: any, imageHeader: any, comicCellIDArr: any, callback: Function): void {
         this.getRepresentative(comicIDs[index], (doc: any): void => {
             comicCellIDArr.push(imageHeader + doc._id);
             if (index == comicIDs.length - 1)

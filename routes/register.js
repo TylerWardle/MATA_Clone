@@ -22,7 +22,9 @@ router.post('/', function (req, res) {
                 "password": req.body.password,
                 "securityQuestion": req.body.securityQuestion,
                 "securityAnswer": req.body.securityAnswer,
-                "profilePicture": "www.openshot.org/images/blank_profile.png"
+                "profilePicture": "http://www.openshot.org/images/blank_profile.png",
+                "aboutMe": "Nothing has been added to this section yet..",
+                "lastLogin": (new Date()).toDateString()
             }, function (err, doc) {
                 if (err) {
 <<<<<<< HEAD

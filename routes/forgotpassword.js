@@ -40,13 +40,12 @@ router.post('/reset', function (req, res) {
     var registeredUsers = db.get('registeredUsers');
     registeredUsers.findOne({ username: req.cookies._username }, function (err, user) {
         if (user) {
-            console.log(req.body.password);
             registeredUsers.update({ username: req.cookies._username }, {
                 $set: {
                     password: req.body.password
                 }
             });
-            res.render('signin', { title: 'Your password was successfully reset!' });
+            res.render('signin', { title: 'Your password was successfully reset! Sign in!' });
         }
         else {
             res.render("error", { message: "Secret Answer Incorrect" });
