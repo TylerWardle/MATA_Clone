@@ -22,6 +22,13 @@ export class SearchBrowseService{
         SearchBrowseService.cellModel = this.mongoose.model('ComicCell',this.schema);
     }
     
+    getComicsForViewer(request:any, callback: Function): any{
+        SearchBrowseService.comicModel.find({'toPublish':true}, function (err, comics) {
+            if (err) return err;
+                callback(comics);
+            })
+    }
+    
     getComics(request:any, callback: Function): any{
         var searchField = "";
         var searchType = "";

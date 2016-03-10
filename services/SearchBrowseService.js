@@ -9,6 +9,13 @@ var SearchBrowseService = (function () {
         SearchBrowseService.comicModel = this.mongoose.model('Comic', this.schema);
         SearchBrowseService.cellModel = this.mongoose.model('ComicCell', this.schema);
     }
+    SearchBrowseService.prototype.getComicsForViewer = function (request, callback) {
+        SearchBrowseService.comicModel.find({ 'toPublish': true }, function (err, comics) {
+            if (err)
+                return err;
+            callback(comics);
+        });
+    };
     SearchBrowseService.prototype.getComics = function (request, callback) {
         var searchField = "";
         var searchType = "";
