@@ -3,25 +3,46 @@ extends layoutLoggedIn
 block script
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 	script.
-
+		function toggleView(){
+			var editBtn = document.getElementsByName("editWebcomic")[0];
+			var newCellBtn = document.getElementsByName("newCellBtn")[0];
+			if( newCellBtn.style.visibility == "visible" || newCellBtn.style.visibility == ""){
+				newCellBtn.style.visibility = "hidden";
+				editBtn.style.visibility = "hidden";
+			}else{
+				newCellBtn.style.visibility = "visible";
+				editBtn.style.visibility = "visible";
+			}	
+		}	
 block content
 	div(id="form")
 		h1.
 			#{webcomic.title}
 	div(id="belowform")
-		p Description: #{webcomic.description}
-	div(id="belowbelowform")
-		p Genre: #{webcomic.genre}
+		|Description: #{webcomic.description}
+		br
+		|Genre: #{webcomic.genre}
+		br
+		|Author: #{webcomic.authorUsername}
+		br
+		div(class="switch")
+			input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
+			label(for="cmn-toggle-1")
+			|View Mode
+		//if the user viewing the comic is also the author of the comic then display the edit button
+		br
+		-if(isAuthor)
+			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
+				button#btnEditComic(type="submit", name="submit", value= "editMode") Edit
 	br
 	div(id="images")
 		- for (var i = 0; i < cells.length; i++)
 			img(id="images", src="http://#{header}#{cells[i]._id}")
 			br
-			a(href="#newCell" title="AddCell" class="AddCell") +
-	br
-	div(id="belowimage")
-		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
-			button#btnEditComic(type="submit") Edit
+		//If user is a contributor show the add cell button
+		p #{viewMode}
+		-if(accountType == "contributor" && webcomic.openToContribution)
+			a(href="#newCell", name="newCellBtn", title="AddCell", class="AddCell", id="contributor") +
 	br
 	br
 	br
@@ -32,7 +53,7 @@ block content
 			h2.
 				Add a new Cell!
 			div
-				form#formComicCell(name="newComicCell", method="post", action="/webcomic/submit", enctype='multipart/form-data')
+				form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
 					input#firstImage(type="file",name="image", required="")
 					br
 					button#btnSubmit(type="submit") Submit

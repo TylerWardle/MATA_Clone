@@ -7,6 +7,8 @@ var router = express.Router();
 
 router.get('/', function(req, res, db) {
     res.clearCookie('_id');
+    res.clearCookie('accountType');
+    res.clearCookie('userName');
     res.redirect('/');
 	
 });

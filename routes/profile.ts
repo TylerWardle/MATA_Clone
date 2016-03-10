@@ -42,6 +42,7 @@ router.get('/edit',function(req, res) {
 
 /* Updates users profile in the DB and redirect user to their newly updated profile*/
 router.post('/edit',function(req, res) {
+
 	var db = req.db;
     var registeredUsers = db.get('registeredUsers');
 

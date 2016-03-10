@@ -28,6 +28,8 @@ router.post('/', function(req, res) {
 								   });
 								   
                 res.cookie('_id',user._id);
+                res.cookie('accountType',user.accountType);
+                res.cookie('userName',user.username);
 				if(user.accountType === "contributor"){
                     res.redirect("contributor");
 				} else {
