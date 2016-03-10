@@ -3,10 +3,11 @@
 import RegisteredUser = require('../models/RegisteredUser');
 import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
+import RSProvider = require('../services/RegisteredUserServiceProvider');
 
 var express = require('express');
 var router = express.Router();
-var registeredUserServiceProvider = new RegisteredUserServiceProvider();
+var registeredUserServiceProvider = new RSProvider.RegisteredUserServiceProvider();
 
 /* POST register (adds a new user to the system). */
 router.post('/', function(req, res) {
