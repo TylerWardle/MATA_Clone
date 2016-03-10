@@ -1,7 +1,6 @@
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
 
 export class Comic{
-
     // class variables
     mongoose: any;
     schema: any;

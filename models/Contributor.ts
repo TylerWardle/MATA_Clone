@@ -20,3 +20,4 @@ class Contributor extends RegisteredUser
 		this.comicIDs.push(comicId);
     }
 }
+

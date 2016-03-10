@@ -22,10 +22,23 @@ export class SearchBrowseService{
         SearchBrowseService.cellModel = this.mongoose.model('ComicCell',this.schema);
     }
     
+    getComicsForViewer(request:any, callback: Function): any{
+        SearchBrowseService.comicModel.find({'toPublish':true}, function (err, comics) {
+            if (err) return err;
+                callback(comics);
+            })
+    }
+    
     getComics(request:any, callback: Function): any{
-        var searchField = request.url.match(/=\w*/g)[0].substring(1);
-        var searchType = request.url.match(/=\w*/g)[1].substring(1);
+        var searchField = "";
+        var searchType = "";
         var userName = request.cookies.userName;
+        
+        if (request.url.match(/=\w*/g) != null){
+            searchField = request.url.match(/=\w*/g)[0].substring(1);
+            searchType = request.url.match(/=\w*/g)[1].substring(1);
+        }
+        
         
         
         switch(searchType){
@@ -77,9 +90,13 @@ export class SearchBrowseService{
                 if (err) return err;
                     callback(comics);
                 })
-                break;        
-                  
+                break;              
             default:   
+                SearchBrowseService.comicModel.find({'authorUsername':userName}, function (err, comics) {
+                if (err) return err;
+                    callback(comics);
+                })
+                break;
         }      
     }
         

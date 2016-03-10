@@ -1,26 +1,29 @@
 extends layoutLoggedIn
 
-block script
-
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
-    script.
-        
-        function makeList(){
-        
-            //var comicString = "#{comicsList}"
-            var comicString = "http://localhost:3000/webcomic/id/56bd82bc037e740c16896949,test"
-            var comicsList = comicString.split(",")    
-            for(i=0; i<comicsList.length;i++){
-                $('<li><a href=' + comicsList[i] + '>' + comicsList[i] + '</a></li>').appendTo('ul.comicsList')
-            }
-
 block content
-    body(onLoad="makeList()")
-        
-        h1.
-            Welcome to your Homepage, #{viewer.username}!
-
-        br
-        br        
-        |Published comics
-        ul(class="comicsList")
+	div(id="form")
+		h1.
+			Have a look at these published comics #{viewer.username} !		
+	div(id="search-results-container")
+		div(class="search-results")
+			- for (var i = 0; i < comics.length; i++)
+				div(class="divider")
+				br
+				div(class="comicSummary")
+					|Title: #{comics[i].title}
+					br
+					|Author: #{comics[i].authorUsername}
+					br
+					|Description: #{comics[i].description}
+					br
+					|Genre: #{comics[i].genre}
+					br
+					-if(!comics[i].toPublish)
+						|unpublished
+					-else
+						|published
+					br
+				div(class="thumbnailContainer")
+					a(href="http://#{header}id/#{comics[i]._id}")
+						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
+				br			
