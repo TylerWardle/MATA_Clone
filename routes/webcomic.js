@@ -22,7 +22,7 @@ var Webcomic = (function () {
                     var cc = new ComicCell.ComicCell(req.mongoose);
                     //used to inform the client if the user is the author of a webcomic they are viewing
                     var isAuthor = false;
-                    if (req.cookies._id == doc.authorUsername) {
+                    if (req.cookies._id == doc.authorID) {
                         isAuthor = true;
                     }
                     cc.getAll(comicID, function (docs) {
@@ -36,12 +36,11 @@ var Webcomic = (function () {
         });
         // Create new comic with associated images (one image/comic for now) **WORKS**
         router.post('/submit', function (req, res) {
-            //console.log(req.body);
             // extract user id of creator/owner of comic from request header
-            var authorUsername = req.cookies._id;
+            var authorID = req.cookies._id;
+            var authorUsername = req.cookies.userName;
             // get values of comic data fields
             var title = req.body.title;
-            var publicationDate = req.body.publicationDate;
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
@@ -59,14 +58,13 @@ var Webcomic = (function () {
             else if (req.body.submit == "publish") {
                 toPublish = true;
             }
-            var collaboratorUsername = authorUsername;
             var c = new Comic.Comic(req.mongoose);
-            c.insert(title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function (comicID) {
+            c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, function (comicID) {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
-                    //console.log(req.file);
+                    console.log(req.file);
                     var cc = new ComicCell.ComicCell(req.mongoose);
-                    cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, function (imgName) {
+                    cc.insert(comicID, authorID, authorID, toPublish, function (imgName) {
                         // If there's an error
                         if (!imgName) {
                             console.log("There was an error");
@@ -74,6 +72,7 @@ var Webcomic = (function () {
                             res.end();
                         }
                         else {
+                            //var newPath = "./uploads/fullsize/" + imgName;
                             var newPath = "./uploads/fullsize/" + imgName;
                             var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                             // write image file to uploads/fullsize folder
@@ -84,18 +83,6 @@ var Webcomic = (function () {
                                 res.redirect('./id/' + comicID);
                             });
                         }
-                        // TODO: need to change below code to reflect mongoose operations instead of mongodb
-                        // add comicID to Contributors Model
-                        /*
-                        var db = req.db;
-                        var contributors = db.get('contributors');
-                        var ObjectId = require('mongodb').ObjectID;
-                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
-                            $addToSet: {
-                                "comics": [comicID]
-                            }
-                        });
-                        */
                     });
                 });
             });
@@ -147,10 +134,11 @@ var Webcomic = (function () {
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
             // extract username of owner of comic from the request header
-            var authorUsername = req.cookies._id;
+            var authorID = req.cookies._id;
+            var authorUsername = req.cookies.userName;
             // extract values of all the comic data fields 
             var title = req.body.title;
-            var publicationDate = req.body.publicationDate;
+            var publicationDate = req.body.publicationdate;
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
@@ -161,14 +149,13 @@ var Webcomic = (function () {
             else {
                 openToContribution = false;
             }
-            console.log(req.body);
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "publish") {
                 toPublish = true;
             }
             // update the comic
             var c = new Comic.Comic(req.mongoose);
-            c.update(comicID, title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function () {
+            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function () {
                 // redirect client to updated comic web page
                 res.redirect('/webcomic/id/' + comicID);
             });

@@ -53,17 +53,17 @@ export class SearchBrowseService{
                 if (err) return err;
                     callback(comics);
                 })
-                break;    
+                break;
+            case "author":
+                SearchBrowseService.comicModel.find({'toPublish':true,'normalized_authorUsername':searchField.toLowerCase()}, function (err, comics) {
+                if (err) return err;
+                    callback(comics);
+                })
+                break;        
+                  
             default:   
         }
         
-    }
-    
-    public getAllComicsPublished(callback: Function): any{
-        SearchBrowseService.comicModel.find({'toPublish': "true" }, function (err, comics) {
-            if (err) return err;
-            callback(comics);
-        })
     }
     
     public getComicsPublishedByAuthor(authorUsername:string, callback: Function): any{
@@ -72,24 +72,5 @@ export class SearchBrowseService{
             callback(comics);
         })
     }
-    
-    public getAllComics(callback: Function): any{
-        SearchBrowseService.comicModel.find({}, function (err, comics) {
-            if (err) return err;
-            callback(comics);
-        })
-    }
-    
-    public getAllComicsSortAuthor(callback: Function): any{
-       SearchBrowseService.comicModel.aggregate([{ $sort: { normalized_authorUsername: 1 } },{ $match:{'toPublish':true}}], function (err, comics) {
-            callback(comics);
-       });
-    } 
-    
-    public getAllComicsSortGenre(callback: Function): any{
-       SearchBrowseService.comicModel.aggregate([{ $sort: { normalized_authorUsername: 1 } },{ $match:{'toPublish':true}}], function (err, comics) {
-            callback(comics);
-       });
-    } 
         
 }

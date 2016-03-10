@@ -11,7 +11,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 /* GET registered users homepage. */
 router.get('/', function(req, res, db) {
-    console.log("Reached");
+    //console.log("Reached");
 	var db = req.db;
 	var registeredUsers = db.get('registeredUsers');
 	registeredUsers.findOne({_id: ObjectID(req.cookies._id)}, function(error, user)

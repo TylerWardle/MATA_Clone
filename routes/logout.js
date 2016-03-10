@@ -6,7 +6,6 @@ router.get('/', function (req, res, db) {
     res.clearCookie('_id');
     res.clearCookie('accountType');
     res.clearCookie('userName');
-    res.clearCookie('_username');
     res.redirect('/');
 });
 module.exports = router;

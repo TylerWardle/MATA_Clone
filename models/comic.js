@@ -7,8 +7,11 @@ var Comic = (function () {
         // define Comic Object schema for storing Comic data fields
         this.comicSchema = new this.schema({
             title: String,
+            normalized_title: String,
+            authorID: String,
             authorUsername: String,
-            publicationDate: String,
+            normalized_authorUsername: String,
+            publicationDate: Date,
             description: String,
             genre: String,
             toPublish: Boolean,
@@ -18,15 +21,21 @@ var Comic = (function () {
             Comic.comic = this.mongoose.model('Comic', this.comicSchema);
         }
     }
-    // INSERT **WORKS**
-    // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB
-    // we pass this id back to the client
-    Comic.prototype.insert = function (_title, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, callback) {
+    // INSERT 
+    // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB.
+    // NOTE: "un" stands for unnormalized
+    Comic.prototype.insert = function (_title, _authorID, _authorUsername, _description, _genre, _toPublish, _openToContribution, callback) {
         var db = this.mongoose.connection;
+        var _publicationDate = null;
+        if (_toPublish == true)
+            _publicationDate = new Date();
         // create a new comic object with the client given data fields
         var c = new Comic.comic({
             title: _title,
+            normalized_title: _title.toLowerCase(),
+            authorID: _authorID,
             authorUsername: _authorUsername,
+            normalized_authorUsername: _authorUsername.toLowerCase(),
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
@@ -41,7 +50,7 @@ var Comic = (function () {
             callback(doc._id.toString());
         });
     };
-    // GET **WORKS**
+    // GET 
     // we use the comicID to retrieve a comic from the DB
     Comic.prototype.get = function (_comicID, callback) {
         var db = this.mongoose.connection;
@@ -53,7 +62,7 @@ var Comic = (function () {
             callback(doc);
         });
     };
-    // GETALL **WORKS**
+    // GETALL 
     // we get every comic record in the collection
     Comic.prototype.getAll = function (callback) {
         var db = this.mongoose.connection;
@@ -64,14 +73,20 @@ var Comic = (function () {
             callback(docs);
         });
     };
-    // UPDATE **WORKS**
-    Comic.prototype.update = function (_comicID, _title, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, callback) {
+    // UPDATE 
+    Comic.prototype.update = function (_comicID, _title, _authorID, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, callback) {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
+        var usablePublicationDate = _publicationDate;
+        if (_toPublish == true)
+            usablePublicationDate = new Date();
         var a_comic = new Comic.comic({
             title: _title,
+            normalized_title: _title.toLowerCase(),
+            authorID: _authorID,
             authorUsername: _authorUsername,
-            publicationDate: _publicationDate,
+            normalized_authorUsername: _authorUsername.toLowerCase(),
+            publicationDate: usablePublicationDate,
             description: _description,
             genre: _genre,
             toPublish: _toPublish,
@@ -85,17 +100,17 @@ var Comic = (function () {
             callback();
         });
     };
-    // DELETE **NEED TO BE TESTED **
-    Comic.prototype.delete = function (_comicID, _contributorUsername, callback) {
+    // DELETE 
+    Comic.prototype.delete = function (_comicID, _contributorID, callback) {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
-        // retrieve the authorUsername of the comic.
+        // retrieve the authorID of the comic.
         comicModel.findById({ _id: _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
-            var authorUsername = doc.authorUsername;
+            var authorID = doc.authorID;
             // can delete only if the contributor is the OWNER of the COMIC
-            if (_contributorUsername == authorUsername) {
+            if (_contributorID == authorID) {
                 comicModel.remove({ _id: _comicID }, function (err, doc) {
                     if (err)
                         return console.error(err);

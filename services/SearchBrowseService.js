@@ -48,37 +48,20 @@ var SearchBrowseService = (function () {
                     callback(comics);
                 });
                 break;
+            case "author":
+                SearchBrowseService.comicModel.find({ 'toPublish': true, 'normalized_authorUsername': searchField.toLowerCase() }, function (err, comics) {
+                    if (err)
+                        return err;
+                    callback(comics);
+                });
+                break;
             default:
         }
-    };
-    SearchBrowseService.prototype.getAllComicsPublished = function (callback) {
-        SearchBrowseService.comicModel.find({ 'toPublish': "true" }, function (err, comics) {
-            if (err)
-                return err;
-            callback(comics);
-        });
     };
     SearchBrowseService.prototype.getComicsPublishedByAuthor = function (authorUsername, callback) {
         SearchBrowseService.comicModel.find({ 'toPublish': true, 'authorUsername': authorUsername }, function (err, comics) {
             if (err)
                 return err;
-            callback(comics);
-        });
-    };
-    SearchBrowseService.prototype.getAllComics = function (callback) {
-        SearchBrowseService.comicModel.find({}, function (err, comics) {
-            if (err)
-                return err;
-            callback(comics);
-        });
-    };
-    SearchBrowseService.prototype.getAllComicsSortAuthor = function (callback) {
-        SearchBrowseService.comicModel.aggregate([{ $sort: { normalized_authorUsername: 1 } }, { $match: { 'toPublish': true } }], function (err, comics) {
-            callback(comics);
-        });
-    };
-    SearchBrowseService.prototype.getAllComicsSortGenre = function (callback) {
-        SearchBrowseService.comicModel.aggregate([{ $sort: { normalized_authorUsername: 1 } }, { $match: { 'toPublish': true } }], function (err, comics) {
             callback(comics);
         });
     };
