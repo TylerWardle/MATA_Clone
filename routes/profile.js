@@ -15,16 +15,26 @@ router.get('/', function (req, res) {
     // Fetch the document
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
-            var ObjectId = require('mongodb').ObjectID;
-            contributors.findOne({ guid: ObjectID(user._id) }, function (error, contributor) {
-                var comicIDLinks = new Array();
-                var i;
-                console.log(contributor.comicIDs.length);
-                for (i = 0; i < contributor.comicIDs.length; i++) {
-                    comicIDLinks.push("http://" + req.headers['host'] + "/webcomic/id/" + contributor.comicIDs[i]);
-                }
-                res.render('profile', { "webcomic": comicIDLinks, "user": user });
-            });
+            if (user.accountType == "contributor") {
+                var ObjectId = require('mongodb').ObjectID;
+                contributors.findOne({ guid: ObjectID(user._id) }, function (error, contributor) {
+                    var comicIDLinks = new Array();
+                    var i;
+                    if (contributor.comicIDs != null) {
+                        console.log(contributor.comicIDs.length);
+                        for (i = 0; i < contributor.comicIDs.length; i++) {
+                            comicIDLinks.push("http://" + req.headers['host'] + "/webcomic/id/" + contributor.comicIDs[i]);
+                        }
+                        res.render('profile', { "webcomic": comicIDLinks, "user": user, "contributor": contributor });
+                    }
+                    else {
+                        res.render('profile', { "user": user, "contributor": contributor });
+                    }
+                });
+            }
+            else {
+                res.render('profile', { "user": user });
+            }
         }
         else {
             res.send("ACCESS DENIED");

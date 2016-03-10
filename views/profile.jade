@@ -25,8 +25,11 @@ block content
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
         button#btnEdit(type="submit") Edit Profile
-  div(id="contributorComics")
-    - for comic in webcomic
-        li
-          a(href="#{comic}") #{comic}
-  br
+  -var accountType=user.accountType
+  if accountType=="contributor"
+    -var notnull=contributor.comicIDs
+    unless notnull==null
+      div(id="contributorComics")
+        - for comic in webcomic
+            li
+              a(href="#{comic}") #{comic}
