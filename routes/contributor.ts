@@ -1,6 +1,10 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 
+import Comic = require('../models/Comic');
+import ComicCell = require('../models/ComicCell');
+import Service = require('../services/SearchBrowseService');
+
 class contributor{
     
     constructor(){};
@@ -15,12 +19,16 @@ class contributor{
         router.get('/', function(req, res) {
         	var db = req.db;
             var contributors = db.get('contributors');
+            var c = new Comic.Comic(req.mongoose);
+            var cc = new ComicCell.ComicCell(req.mongoose);
+            var s = new Service.SearchBrowseService(req.mongoose);
+            
         	contributors.findOne({guid: ObjectID(req.cookies._id)}, function(error, contributor)
         	{
-                if(contributor.comics != null){
-        			var link = req.headers['host'] + "/webcomic/id/" + contributor.comics[0];
-                }
-        		res.render('contributor',{"contributor": contributor, "link": link});		
+                s.getComics(req,(comics:any): void =>{
+                  console.log(comics);
+        		  res.render('contributor',{"contributor": contributor,"header": req.headers['host'] + "/webcomic/", "comics": comics});	
+                });	
         	});
         });
 
