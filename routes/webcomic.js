@@ -36,6 +36,7 @@ var Webcomic = (function () {
         });
         // Create new comic with associated images (one image/comic for now) **WORKS**
         router.post('/submit', function (req, res) {
+            //console.log(req.body);
             // extract user id of creator/owner of comic from request header
             var authorUsername = req.cookies._id;
             // get values of comic data fields
@@ -44,7 +45,13 @@ var Webcomic = (function () {
             var description = req.body.description;
             var genre = req.body.genre;
             var toPublish;
-            var openToContribution = req.body.openToContribution;
+            var openToContribution;
+            if (req.body.openToContribution == "on") {
+                openToContribution = true;
+            }
+            else {
+                openToContribution = false;
+            }
             //set the toPublish field relative to which submit button is pushed
             if (req.body.submit == "draft") {
                 toPublish = false;
@@ -52,12 +59,12 @@ var Webcomic = (function () {
             else if (req.body.submit == "publish") {
                 toPublish = true;
             }
-            var collaboratorUsername = req.body.collaboratorUsername;
+            var collaboratorUsername = authorUsername;
             var c = new Comic.Comic(req.mongoose);
             c.insert(title, authorUsername, publicationDate, description, genre, toPublish, openToContribution, function (comicID) {
                 // read the image file passed in the request and save it
                 fs.readFile(req.file.path, function (err, img) {
-                    console.log(req.file);
+                    //console.log(req.file);
                     var cc = new ComicCell.ComicCell(req.mongoose);
                     cc.insert(comicID, authorUsername, collaboratorUsername, toPublish, function (imgName) {
                         // If there's an error
