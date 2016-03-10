@@ -26,9 +26,39 @@ html
         div(id="profile")
             form#profile(type="profile", method="get", action="/profile")
                 button#btnProfile(type="submit", style='background-color: powderblue;') Public Profile
+        div(id="random")
+            form#random(name="random comic", method="get", action="/webcomic/random")
+                button#btnRandom(type="submit", style='background-color: powderblue;') Random Comic
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
                 button#btnHome(type="submit", style='background-color: powderblue;') Home  
+        div(id="browseTitle")        
+            form#browsetitle(name="title",method="get", action= "/webcomic/browse/title")
+                button#btnTitle(type="submit", style='background-color: powderblue;') Title
+        div(id="browseAuthor")        
+            form#browseauthor(name="author",method="get", action= "/webcomic/browse/author")
+                button#btnAuthor(type="submit", style='background-color: powderblue;') Author
+        div(id="browseLatest")        
+            form#browseLatest(name="latest",method="get", action= "/webcomic/browse/publication_date/newest")
+                button#btnNewest(type="submit", style='background-color: powderblue;') Latest 
+        div(id="browseOldest")        
+            form#browseOldest(name="oldest",method="get", action= "/webcomic/browse/publication_date/oldest")
+                button#btnOldest(type="submit", style='background-color: powderblue;') Oldest 
+        div(id="browseHumor")        
+            form#browseGenre(name="humor",method="get", action= "/webcomic/browse/humor")
+                button#btnHumor(type="submit", style='background-color: powderblue;') Humor 
+        div(id="browseActAdv")        
+            form#browseauthor(name="action/adventure",method="get", action= "/webcomic/browse/action_adventure")
+                button#btnActAdv(type="submit", style='background-color: powderblue;') Action/Adventure
+        div(id="browseSuperhero")        
+            form#browseLatest(name="superhero",method="get", action= "/webcomic/browse/superhero")
+                button#btnSuperhero(type="submit", style='background-color: powderblue;') Superhero 
+        div(id="browseZombies")        
+            form#browseOldest(name="zombies",method="get", action= "/webcomic/browse/zombies")
+                button#btnZombies(type="submit", style='background-color: powderblue;') Zombies 
+        div(id="browsePostApoc")        
+            form#browseGenre(name="post apocalyptic",method="get", action= "/webcomic/browse/post_apocalyptic")
+                button#btnPostApo(type="submit", style='background-color: powderblue;') PostApocalyptic 
     br
     br        
     |Published comics

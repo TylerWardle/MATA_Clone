@@ -22,6 +22,8 @@ block content
 	div(id="belowimage")
 		form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 			button#btnEditComic(type="submit") Edit
+		form#formGoToDelete(name="deleteWebcomic",method="post", action="/webcomic/delete/#{webcomic._id}") 
+			button#btnDeleteComic(type="submit") Delete
 	br
 	br
 	br
@@ -36,6 +38,3 @@ block content
 					input#firstImage(type="file",name="image", required="")
 					br
 					button#btnSubmit(type="submit") Submit
-		
-
-
