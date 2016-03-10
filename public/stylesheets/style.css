@@ -153,6 +153,20 @@ a {
     max-width: 75%;
     max-height: 700px
 }
+#thumbnails{
+	display: block;
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 30%;
+    max-height: 20%
+}
+#search-results-container .divider{
+	width:600px;
+	height:0;
+	border-top:4px groove steelblue;
+	font-size:0;
+}
+
 #title{
 	position: absolute;
 	left:100px;
@@ -328,7 +342,7 @@ a {
 
 #search-results-container{
 	position: absolute;
-    margin-left: 200px;
+    margin-left: 400px;
     top: 200px;
 
 }

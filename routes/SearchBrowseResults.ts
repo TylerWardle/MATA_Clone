@@ -17,10 +17,11 @@ class SearchBrowseResults {
     
     /* */
     router.get('/', function(req, res) {
-        /* I don't know why this line seems to be importtant even though we don't use c*/
+        /* I don't know why this line seems to be importtant even though we don't use c or cc*/
         var c = new Comic.Comic(req.mongoose);
+        var cc = new ComicCell.ComicCell(req.mongoose);
         var s = new Service.SearchBrowseService(req.mongoose);
-        s.getComics(req.url,(comics:any): void =>{
+        s.getComics(req,(comics:any): void =>{
                 res.render('searchResults', {"Comics": comics,"header": req.headers['host'] + "/webcomic/"});   
             });
         

@@ -7,11 +7,12 @@ var SearchBrowseService = (function () {
         this.mongoose = database;
         this.schema = database.Schema;
         SearchBrowseService.comicModel = this.mongoose.model('Comic', this.schema);
-        ;
+        SearchBrowseService.cellModel = this.mongoose.model('ComicCell', this.schema);
     }
     SearchBrowseService.prototype.getComics = function (request, callback) {
-        var searchField = request.match(/=\w*/g)[0].substring(1);
-        var searchType = request.match(/=\w*/g)[1].substring(1);
+        var searchField = request.url.match(/=\w*/g)[0].substring(1);
+        var searchType = request.url.match(/=\w*/g)[1].substring(1);
+        var userName = request.cookies.userName;
         switch (searchType) {
             case "all":
                 SearchBrowseService.comicModel.find({}, function (err, comics) {
@@ -21,21 +22,30 @@ var SearchBrowseService = (function () {
                 });
                 break;
             case "genre":
-                SearchBrowseService.comicModel.find({ 'genre': searchField }, function (err, comics) {
+                SearchBrowseService.comicModel.find({ $or: [
+                        { $and: [{ 'genre': searchField.toLowerCase() }, { 'toPublish': true }] },
+                        { $and: [{ 'genre': searchField.toLowerCase() }, { 'authorUsername': userName }] }
+                    ] }, function (err, comics) {
                     if (err)
                         return err;
                     callback(comics);
                 });
                 break;
             case "title":
-                SearchBrowseService.comicModel.find({ 'title': searchField }, function (err, comics) {
+                SearchBrowseService.comicModel.find({ $or: [
+                        { $and: [{ 'normalized_title': searchField.toLowerCase() }, { 'toPublish': true }] },
+                        { $and: [{ 'normalized_title': searchField.toLowerCase() }, { 'authorUsername': userName }] }
+                    ] }, function (err, comics) {
                     if (err)
                         return err;
                     callback(comics);
                 });
                 break;
             case "description":
-                SearchBrowseService.comicModel.find({ 'description': searchField }, function (err, comics) {
+                SearchBrowseService.comicModel.find({ $or: [
+                        { $and: [{ 'description': searchField }, { 'toPublish': true }] },
+                        { $and: [{ 'description': searchField }, { 'authorUsername': userName }] }
+                    ] }, function (err, comics) {
                     if (err)
                         return err;
                     callback(comics);
@@ -49,7 +59,10 @@ var SearchBrowseService = (function () {
                 });
                 break;
             case "author":
-                SearchBrowseService.comicModel.find({ 'toPublish': true, 'normalized_authorUsername': searchField.toLowerCase() }, function (err, comics) {
+                SearchBrowseService.comicModel.find({ $or: [
+                        { $and: [{ 'normalized_authorUsername': searchField.toLowerCase() }, { 'toPublish': true }] },
+                        { $and: [{ 'normalized_authorUsername': searchField.toLowerCase() }, { 'authorUsername': userName }] }
+                    ] }, function (err, comics) {
                     if (err)
                         return err;
                     callback(comics);
@@ -58,14 +71,8 @@ var SearchBrowseService = (function () {
             default:
         }
     };
-    SearchBrowseService.prototype.getComicsPublishedByAuthor = function (authorUsername, callback) {
-        SearchBrowseService.comicModel.find({ 'toPublish': true, 'authorUsername': authorUsername }, function (err, comics) {
-            if (err)
-                return err;
-            callback(comics);
-        });
-    };
     SearchBrowseService.comicModel = null;
+    SearchBrowseService.cellModel = null;
     return SearchBrowseService;
 })();
 exports.SearchBrowseService = SearchBrowseService;

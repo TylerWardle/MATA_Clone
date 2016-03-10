@@ -21,15 +21,14 @@ block content
 	div(id="belowform")
 		|Description: #{webcomic.description}
 		br
-		br
 		|Genre: #{webcomic.genre}
 		br
+		|Author: #{webcomic.authorUsername}
 		br
 		div(class="switch")
 			input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
 			label(for="cmn-toggle-1")
 		//if the user viewing the comic is also the author of the comic then display the edit button
-		br
 		br
 		-if(isAuthor)
 			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")

@@ -1,6 +1,7 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 var Comic = require('../models/Comic');
+var ComicCell = require('../models/ComicCell');
 var Service = require('../services/SearchBrowseService');
 var SearchBrowseResults = (function () {
     function SearchBrowseResults() {
@@ -11,10 +12,11 @@ var SearchBrowseResults = (function () {
         var ObjectID = require('mongodb').ObjectID;
         /* */
         router.get('/', function (req, res) {
-            /* I don't know why this line seems to be importtant even though we don't use c*/
+            /* I don't know why this line seems to be importtant even though we don't use c or cc*/
             var c = new Comic.Comic(req.mongoose);
+            var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);
-            s.getComics(req.url, function (comics) {
+            s.getComics(req, function (comics) {
                 res.render('searchResults', { "Comics": comics, "header": req.headers['host'] + "/webcomic/" });
             });
         });

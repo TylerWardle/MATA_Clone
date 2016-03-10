@@ -24,7 +24,8 @@ export class Comic{
             description: String,
             genre: String,
             toPublish: Boolean,
-            openToContribution: Boolean
+            openToContribution: Boolean,
+            thumbnailID: String
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -35,7 +36,14 @@ export class Comic{
     // INSERT 
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB.
     // NOTE: "un" stands for unnormalized
-    insert(_title: String, _authorID: String, _authorUsername: String, _description: String, _genre: String, _toPublish: Boolean, _openToContribution: Boolean, callback: Function): any {
+    insert(_title: String, _authorID: String,
+           _authorUsername: String, 
+           _description: String, 
+           _genre: String, 
+           _toPublish: Boolean, 
+           _openToContribution: Boolean, 
+           _thumbnailID: String, 
+           callback: Function): any {
         var db = this.mongoose.connection;
 
         var _publicationDate = null;
@@ -54,7 +62,8 @@ export class Comic{
             description: _description,
             genre: _genre,
             toPublish: _toPublish,
-            openToContribution: _openToContribution
+            openToContribution: _openToContribution,
+            thumbnailID: _thumbnailID
         });
         
         // insert the new comic obj into the DB
@@ -95,7 +104,17 @@ export class Comic{
     }
 
     // UPDATE 
-    update(_comicID: String, _title: String, _authorID: String, _authorUsername: String, _publicationDate: Date, _description: String, _genre: String, _toPublish: Boolean, _openToContribution, callback: Function): void {
+    update(_comicID: String, 
+           _title: String, 
+           _authorID: String, 
+           _authorUsername: String, 
+           _publicationDate: Date, 
+           _description: String, 
+           _genre: String, 
+           _toPublish: Boolean, 
+           _openToContribution,
+           _thumbnailID, 
+           callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
@@ -113,6 +132,7 @@ export class Comic{
             description: _description,
             genre: _genre,
             toPublish: _toPublish,
+            thumbnailID: _thumbnailID,
             openToContribution:_openToContribution
         });
 
