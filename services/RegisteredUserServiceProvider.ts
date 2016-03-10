@@ -46,7 +46,7 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 				{
 					if(accountType === "viewer")
 					{
-						var viewers = db.get('viewers');
+						var viewers = req.db.get('viewers');
 						//var newViewer = new Viewer(username, password, firstName, lastName, accountType);
 						
 						viewers.insert({
@@ -63,7 +63,7 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 					}
 					else
 					{
-						var contributors = db.get('contributors');
+						var contributors = req.db.get('contributors');
 						//var newContributor = new Contributor(username, password, firstName, lastName, accountType);
 					
 						contributors.insert({						

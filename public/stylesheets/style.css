@@ -6,6 +6,7 @@ body {
 }
 form {
 	display: block;
+	
 }
 
 
@@ -359,4 +360,11 @@ a {
    	overflow: hidden;
    	padding-left:10px;
    	padding-right:10px;
+}
+
+#createForm{
+	display:block;
+	position:absolute;
+	left:100px;
+	
 }

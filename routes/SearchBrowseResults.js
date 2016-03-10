@@ -6,7 +6,6 @@ var Service = require('../services/SearchBrowseService');
 var SearchBrowseResults = (function () {
     function SearchBrowseResults() {
     }
-    
     SearchBrowseResults.prototype.startSearchBrowseResults = function () {
         var express = require('express');
         var router = express.Router();
