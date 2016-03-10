@@ -10,3 +10,4 @@ class Contributor extends RegisteredUser
 		super(username, password, firstName, lastName, accountType);
     }
 }
+

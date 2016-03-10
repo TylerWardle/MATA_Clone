@@ -10,3 +10,4 @@ class Viewer extends RegisteredUser
 		super(username, password, firstName, lastName, accountType);
     }
 }
+

@@ -35,7 +35,7 @@ var RegisteredUserServiceProvider = (function () {
                     }
                     else {
                         if (accountType === "viewer") {
-                            var viewers = db.get('viewers');
+                            var viewers = req.db.get('viewers');
                             viewers.insert({
                                 "username": doc.username,
                                 "firstName": doc.firstName,
@@ -48,7 +48,8 @@ var RegisteredUserServiceProvider = (function () {
                             });
                         }
                         else {
-                            var contributors = db.get('contributors');
+                            var contributors = req.db.get('contributors');
+                            //var newContributor = new Contributor(username, password, firstName, lastName, accountType);
                             contributors.insert({
                                 "username": doc.username,
                                 "firstName": doc.firstName,

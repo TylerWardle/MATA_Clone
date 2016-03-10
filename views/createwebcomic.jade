@@ -1,19 +1,23 @@
 extends layoutLoggedIn 
 
 block content
+  div(id="createForm")
     div(id="form")
         h1.
             New Comic!
     div(id="belowform")
+      
         form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
-            |Title:
+            //|Title:
             input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
             br
-            |Description:
+            //|Description:
             input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
+            br
             br
             |Open to Contribution?:
             input#openToContribution(type="checkbox", name="openToContribution")
+            br
             br
             |Genre: 
             select(name="genre")
@@ -22,9 +26,11 @@ block content
                 option(value="action/adventure") Action/Adventure
                 option(value="humor") Humor
                 option(value="superhero") Superhero
+            br
             br    
             input#toPublish(type="hidden", name="toPublish", value="false")
             input#firstImage(type="file",name="image", required="")
+            br
             br
             br
             //Two submit buttons, which one is pressed is checked in the /submit route and the value of toPublish is set there
