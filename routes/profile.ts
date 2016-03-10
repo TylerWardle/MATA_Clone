@@ -79,6 +79,9 @@ router.post('/edit',function(req, res) {
 
 	var db = req.db;
     var registeredUsers = db.get('registeredUsers');
+    var contributors = db.get("contributors");
+    var comicID = req.params.id;
+
 
 	// Fetch the document
     registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
@@ -117,7 +120,34 @@ router.post('/edit',function(req, res) {
 						}
 				   });
 			}
-			res.render('profile', { "user": user });
+			if (user.accountType == "contributor") {
+				var ObjectId = require('mongodb').ObjectID;
+				contributors.findOne({ guid: ObjectID(user._id) }, function(error, contributor) {
+					var comicIDLinks = new Array<String>();
+					var i;
+					var cc = new ComicCell.ComicCell(req.mongoose);
+						if (contributor.comicIDs != null) {
+                    	var imageHeader = req.headers['host'] + "/webcomic/image/";
+						cc.getRepresentativeImages(contributor.comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+							var comicHeader = req.headers['host'] + "/webcomic/id/";
+							for (var i = 0; i < contributor.comicIDs.length; i++)  { // append header to raw comicIDs in comicIDs list
+								contributor.comicIDs[i] = comicHeader + contributor.comicIDs[i];
+							}
+							console.log(contributor.comicIDs.length);
+							for (i = 0; i < contributor.comicIDs.length; i++) {
+									comicIDLinks.push(contributor.comicIDs[i]);
+							}
+							res.render('profile', { "webcomic": comicIDLinks, "cells": comicCellIDs, "user": user, "contributor": contributor });
+						});
+					}
+					else{
+					res.render('profile', { "user": user,  "contributor": contributor });
+					}
+				});
+			}
+			else {
+			res.render ('profile', { "user": user }) ;
+			}
 		}
 		else
 		{
