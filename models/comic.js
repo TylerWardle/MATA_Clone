@@ -11,7 +11,7 @@ var Comic = (function () {
             authorID: String,
             authorUsername: String,
             normalized_authorUsername: String,
-            publicationDate: Date,
+            publicationDate: { type: Date, default: Date.now },
             description: String,
             genre: String,
             toPublish: Boolean,
@@ -27,9 +27,7 @@ var Comic = (function () {
     // NOTE: "un" stands for unnormalized
     Comic.prototype.insert = function (_title, _authorID, _authorUsername, _description, _genre, _toPublish, _openToContribution, _thumbnailID, callback) {
         var db = this.mongoose.connection;
-        var _publicationDate = null;
-        if (_toPublish == true)
-            _publicationDate = new Date();
+        var _publicationDate = new Date();
         // create a new comic object with the client given data fields
         var c = new Comic.comic({
             title: _title,
@@ -79,16 +77,14 @@ var Comic = (function () {
     Comic.prototype.update = function (_comicID, _title, _authorID, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, _thumbnailID, callback) {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
-        var usablePublicationDate = _publicationDate;
-        if (_toPublish == true)
-            usablePublicationDate = new Date();
+        var _publicationDate = new Date();
         var a_comic = new Comic.comic({
             title: _title,
             normalized_title: _title.toLowerCase(),
             authorID: _authorID,
             authorUsername: _authorUsername,
             normalized_authorUsername: _authorUsername.toLowerCase(),
-            publicationDate: usablePublicationDate,
+            publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
             toPublish: _toPublish,

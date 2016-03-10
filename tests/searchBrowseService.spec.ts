@@ -12,7 +12,6 @@ describe("A suite", () =>{
 describe("test getPublishedComics", () =>{
   beforeAll( () =>{  
         
-    
   });
      
   it("contains spec with an expectation", () => {

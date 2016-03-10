@@ -7,6 +7,7 @@ import ComicCell = require('../models/ComicCell');
 var express = require('express');
 var router = express.Router();
 
+
 export class SearchBrowseService{
     
     mongoose: any;

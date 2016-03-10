@@ -9,7 +9,7 @@ export class Comic{
     static comic: any = null; // static class variable
 
     // intializing a comic object establishes a DB connection
-    constructor(mongoose:any) {
+    constructor(mongoose: any) {
         this.mongoose = mongoose;
         this.schema = this.mongoose.Schema;
         
@@ -20,7 +20,7 @@ export class Comic{
             authorID: String,
             authorUsername: String,
             normalized_authorUsername: String,
-            publicationDate: Date,
+            publicationDate: { type: Date, default: Date.now },
             description: String,
             genre: String,
             toPublish: Boolean,
@@ -45,11 +45,7 @@ export class Comic{
            _thumbnailID: String, 
            callback: Function): any {
         var db = this.mongoose.connection;
-
-        var _publicationDate = null;
-
-        if (_toPublish == true)
-                _publicationDate = new Date();
+        var _publicationDate = new Date();
        
         // create a new comic object with the client given data fields
         var c = new Comic.comic({
@@ -80,7 +76,7 @@ export class Comic{
     get(_comicID: String, callback: Function): any {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
-       
+
         comicModel.findById({ _id: _comicID }, function (err, doc) {
             if (err)
                 return console.error(err);
@@ -117,18 +113,15 @@ export class Comic{
            callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
-
-        var usablePublicationDate = _publicationDate;
-        if (_toPublish == true) // set publication date to the date of now if comic is edited and set to be published
-            usablePublicationDate = new Date();
-
+        var _publicationDate = new Date();
+        
         var a_comic = new Comic.comic({
             title: _title,
             normalized_title: _title.toLowerCase(),
             authorID: _authorID,
             authorUsername: _authorUsername,
             normalized_authorUsername: _authorUsername.toLowerCase(),
-            publicationDate: usablePublicationDate,
+            publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
             toPublish: _toPublish,
@@ -173,3 +166,4 @@ export class Comic{
         });
     }
 }
+

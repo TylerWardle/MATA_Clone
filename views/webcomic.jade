@@ -6,12 +6,12 @@ block script
 		function toggleView(){
 			var editBtn = document.getElementsByName("editWebcomic")[0];
 			var newCellBtn = document.getElementsByName("newCellBtn")[0];
-			if( editBtn.style.visibility == "visible"){
-				editBtn.style.visibility = "hidden";
+			if( newCellBtn.style.visibility == "visible" || newCellBtn.style.visibility == ""){
 				newCellBtn.style.visibility = "hidden";
+				editBtn.style.visibility = "hidden";
 			}else{
-				editBtn.style.visibility = "visible";
 				newCellBtn.style.visibility = "visible";
+				editBtn.style.visibility = "visible";
 			}	
 		}	
 block content
@@ -28,6 +28,7 @@ block content
 		div(class="switch")
 			input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
 			label(for="cmn-toggle-1")
+			|View Mode
 		//if the user viewing the comic is also the author of the comic then display the edit button
 		br
 		-if(isAuthor)

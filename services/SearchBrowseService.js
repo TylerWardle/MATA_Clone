@@ -2,6 +2,7 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 var express = require('express');
 var router = express.Router();
+
 var SearchBrowseService = (function () {
     function SearchBrowseService(database) {
         this.mongoose = database;

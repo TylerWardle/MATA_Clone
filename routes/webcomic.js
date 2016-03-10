@@ -10,7 +10,7 @@ var Webcomic = (function () {
         var router = express.Router();
         var fs = require('fs');
         var ObjectId = require('mongodb').ObjectID;
-        // View comic with associated images (one image/comic for now) **WORKS** 
+        // View comic with associated images (one image/comic for now)
         // TODO: image does not display correctly!!
         router.get('/id/:id', function (req, res) {
             // get web comic id from reqest parameter in the URL
@@ -69,8 +69,6 @@ var Webcomic = (function () {
             fs.readFile(req.file.path, function (err, img) {
                 c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, thumbnailID, function (comicID) {
                     // read the image file passed in the request and save it
-                    //fs.readFile(req.file.path, function (err, img) {
-                    //console.log(req.file);
                     cc.insert(comicID, authorID, authorID, toPublish, function (imgName) {
                         // If there's an error
                         if (!imgName) {
@@ -137,7 +135,7 @@ var Webcomic = (function () {
             res.writeHead(200, { 'Content-Type': 'image/jpg' });
             res.end(img, 'binary');
         });
-        // Edit Comic (for now cannot edit associated images) **WORKS**
+        // Edit Comic (for now cannot edit associated images) 
         router.post('/update/:id', function (req, res) {
             // get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
@@ -169,7 +167,7 @@ var Webcomic = (function () {
                 res.redirect('/webcomic/id/' + comicID);
             });
         });
-        // Retrieve old comic fields to edit on **WORKS**
+        // Retrieve old comic fields to edit on 
         router.get('/edit/:id', function (req, res) {
             var comicID = req.params.id;
             var c = new Comic.Comic(req.mongoose);
@@ -177,23 +175,244 @@ var Webcomic = (function () {
                 res.render('webcomicedit', { "webcomic": doc });
             });
         });
-        // Delete Comic: Delete one comic and all associated cells ** NEED TO BE TESTED**
+        // Delete Comic: Delete one comic and all associated cells 
         router.delete('./:id', function (req, res) {
             // get comicID identifying which comic to delete from reqest parameter in the URL
             var comicID = req.params.id;
-            var authorUsername = req.cookies._id;
+            var authorID = req.cookies._id;
             // Remove this comic document
             var c = new Comic.Comic(req.mongoose);
-            c.delete(comicID, authorUsername, function () {
+            c.delete(comicID, authorID, function () {
                 // remove associated comic cell documents
                 var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorUsername, function () { });
+                cc.deleteAll(comicID, authorID, function () { });
             });
         });
         // create a webcomic route
         router.get('/create', function (req, res) {
             res.render('createwebcomic', { title: 'Create a Comic!' });
         });
+        // make a route for get random webcomic ID 
+        router.get('/random', function (req, res) {
+            var c = new Comic.Comic(req.mongoose);
+            c.getAll(function (docs) {
+                var numOfComicIDs = 0;
+                var comicIDArr = new Array();
+                for (var i = 0; i < docs.length; i++) {
+                    if (docs[i].toPublish) {
+                        comicIDArr.push(docs[i]._id);
+                        numOfComicIDs++;
+                    }
+                }
+                var min = 0;
+                var max = numOfComicIDs;
+                var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
+                if (randomArrIndex < 0) {
+                    res.render("error", { message: "No webcomics found." });
+                }
+                else {
+                    res.redirect('/webcomic/id/' + comicIDArr[randomArrIndex].toString());
+                }
+            });
+        });
+        //        // sends client a list of comicID links to published web comics and a list of its representative images
+        //        router.get('/browse/title', function (req, res) { // sort by alphabetical order
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getComicsSortedByTitle((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/author', function (req, res) { // sort by alphabetical order
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getComicsSortedByAuthor((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/publication_date/oldest', function (req, res) {  // sort by oldest to newest 
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getComicsSortedByLeastRecentlyPublished((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/publication_date/newest', function (req, res) {  // sort by newest to oldest
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getComicsSortedByMostRecentlyPublished((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/genre/zombies', function (req, res) { // get all comics of comedy genre
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getZombiesComics((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/genre/post_apocalyptic', function (req, res) { // get all comics of drama genre
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getPostApocalypticComics((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/genre/action_adventure', function (req, res) { // get all comics of drama genre
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getActionAdventureComics((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/genre/humor', function (req, res) { // get all comics of drama genre
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getHumorComics((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
+        //
+        //        router.get('/browse/genre/superhero', function (req, res) { // get all comics of drama genre
+        //            var c = new Comic.Comic(req.mongoose);
+        //            var cc = new ComicCell.ComicCell(req.mongoose);
+        //
+        //            c.getSuperheroComics((comicObjs: any): void => {
+        //                if (comicObjs.length == 0) {
+        //                    res.render('webcomic', { "webcomic": new Array<String>(), "cells": new Array<String>() });
+        //                    return;
+        //                }
+        //                c.extractPublishedComicIDs(comicObjs, (comicIDs): void => { // list of raw comicIDs without headers
+        //                    var imageHeader = req.headers['host'] + "/webcomic/image/";
+        //                    cc.getRepresentativeImages(comicIDs, imageHeader, (comicCellIDs): void => { // list of comicCellIDs with headers
+        //                        var comicHeader = req.headers['host'] + "/webcomic/id/";
+        //                        for (var i = 0; i < comicIDs.length; i++) { // append header to raw comicIDs in comicIDs list
+        //                            comicIDs[i] = comicHeader + comicIDs[i];
+        //                        }
+        //                        res.render('webcomic', { "webcomic": comicIDs, "cells": comicCellIDs });
+        //                    });
+        //                });
+        //            });
+        //        });
         module.exports = router;
     };
     return Webcomic;
