@@ -19,8 +19,7 @@ block content
 			br
 
 	br
-	-var authorUsername=webcomic.username
-	-var username=user.username
+	-var isAuthor=isAuthor
 	-var accountType=user.accountType
 	unless accountType=="viewer"
 		hide
@@ -38,6 +37,7 @@ block content
 		hide
 			div(id="belowbelowimage")
 				button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
+		if isAuthor == true
 		hide
 			form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 				div(id="belowimage")
