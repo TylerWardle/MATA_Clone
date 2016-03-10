@@ -3,6 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block script
   body
     div(id="background")
     div(id="banner")
@@ -17,5 +18,15 @@ html
                 button#btnProfile(type="submit") Public Profile
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
-                button#btnHome(type="submit") #{username}Home               
+                button#btnHome(type="submit") #{username}Home  
+        div(class="search-container")
+            Form#searchForm(class="search-form", method="get", action="/SearchBrowseResults", enctype='multipart/form-data')
+                input(autocomplete="off", type="text", class="search", name="seachField", placeholder="Search" value="")
+                select(class="search-selector", name="searchType")
+                    option(value="all", selected) Search By
+                    option(value="title") Title
+                    option(value="author") Author
+                    option(value="description") Description
+                    option(value="genre") Genre
+                    option(value="toPublish") Published                    
     block content

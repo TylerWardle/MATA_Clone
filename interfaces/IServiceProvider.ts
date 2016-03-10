@@ -3,11 +3,11 @@
 
 export interface IServiceProvider
 {
-	create(db:any, req:any, res:any): Boolean;
+	create(req:any, res:any): Boolean;
 	
-	read(db:any, req:any, res:any): Boolean;
+	read(req:any, res:any): Boolean;
 	
-	update(db:any, req:any, res:any): Boolean;
+	update(req:any, res:any): Boolean;
 	
-	remove(db:any, req:any, res:any): Boolean;
+	remove(req:any, res:any): Boolean;
 }	

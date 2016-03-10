@@ -1,6 +1,6 @@
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
 
-export class Comic {
+export class Comic{
 
     // class variables
     mongoose: any;
@@ -23,7 +23,9 @@ export class Comic {
             publicationDate: { type: Date, default: Date.now },
             description: String,
             genre: String,
-            toPublish: Boolean
+            toPublish: Boolean,
+            openToContribution: Boolean,
+            thumbnailID: String
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -34,9 +36,15 @@ export class Comic {
     // INSERT 
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB.
     // NOTE: "un" stands for unnormalized
-    insert(_title: String, _authorID: String, _authorUsername: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): any {
+    insert(_title: String, _authorID: String,
+           _authorUsername: String, 
+           _description: String, 
+           _genre: String, 
+           _toPublish: Boolean, 
+           _openToContribution: Boolean, 
+           _thumbnailID: String, 
+           callback: Function): any {
         var db = this.mongoose.connection;
-
         var _publicationDate = new Date();
        
         // create a new comic object with the client given data fields
@@ -49,7 +57,9 @@ export class Comic {
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
-            toPublish: _toPublish
+            toPublish: _toPublish,
+            openToContribution: _openToContribution,
+            thumbnailID: _thumbnailID
         });
         
         // insert the new comic obj into the DB
@@ -90,12 +100,21 @@ export class Comic {
     }
 
     // UPDATE 
-    update(_comicID: String, _title: String, _authorID: String, _authorUsername: String, _description: String, _genre: String, _toPublish: Boolean, callback: Function): void {
+    update(_comicID: String, 
+           _title: String, 
+           _authorID: String, 
+           _authorUsername: String, 
+           _publicationDate: Date, 
+           _description: String, 
+           _genre: String, 
+           _toPublish: Boolean, 
+           _openToContribution,
+           _thumbnailID, 
+           callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
         var _publicationDate = new Date();
-
         var a_comic = new Comic.comic({
             title: _title,
             normalized_title: _title.toLowerCase(),
@@ -105,7 +124,9 @@ export class Comic {
             publicationDate: _publicationDate,
             description: _description,
             genre: _genre,
-            toPublish: _toPublish
+            toPublish: _toPublish,
+            thumbnailID: _thumbnailID,
+            openToContribution:_openToContribution
         });
 
         var comicData = a_comic.toObject();

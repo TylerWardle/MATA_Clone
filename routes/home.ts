@@ -11,6 +11,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 /* GET registered users homepage. */
 router.get('/', function(req, res, db) {
+    //console.log("Reached");
 	var db = req.db;
 	var registeredUsers = db.get('registeredUsers');
     

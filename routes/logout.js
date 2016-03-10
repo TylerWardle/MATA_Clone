@@ -5,6 +5,8 @@ var router = express.Router();
 /* GET Viewers homepage. */
 router.get('/', function (req, res, db) {
     res.clearCookie('_id');
+    res.clearCookie('accountType');
+    res.clearCookie('userName');
     res.redirect('/');
 });
 module.exports = router;

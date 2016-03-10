@@ -76,6 +76,7 @@ router.get('/edit',function(req, res) {
 
 /* Updates users profile in the DB and redirect user to their newly updated profile*/
 router.post('/edit',function(req, res) {
+
 	var db = req.db;
     var registeredUsers = db.get('registeredUsers');
 
@@ -86,6 +87,7 @@ router.post('/edit',function(req, res) {
 		{	
 			if(req.file !== undefined)
 			{
+				console.log(req.file);
 				fs.readFile(req.file.path, function (err, img) {
 				var newPath = "./uploads/profilepictures/" + user.username;
 						// write image file to uploads/fullsize folder

@@ -33,8 +33,9 @@ router.post('/', function(req, res) {
 								   });
 								   
                 res.cookie('_id',user._id);
-				if(user.accountType === "contributor")
-				{
+                res.cookie('accountType',user.accountType);
+                res.cookie('userName',user.username);
+				if(user.accountType === "contributor"){
                     res.redirect("contributor");
 					//res.redirect("contributor/"+user._id);
 					//res.render('contributor', { title: 'Welcome back!'});	
