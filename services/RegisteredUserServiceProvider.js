@@ -1,12 +1,14 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
-///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 var express = require('express');
 var router = express.Router();
 var RegisteredUserServiceProvider = (function () {
     function RegisteredUserServiceProvider() {
     }
-    RegisteredUserServiceProvider.prototype.create = function (db, req, res) {
-        db.findOne({ username: req.body.username }, function (err, item) {
+    RegisteredUserServiceProvider.prototype.create = function (req, res) {
+        var db = req.db;
+        var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ username: req.body.username }, function (err, item) {
             if (item) {
                 res.render("error", { message: "username " + item.username + " is already taken!" });
             }
@@ -16,7 +18,7 @@ var RegisteredUserServiceProvider = (function () {
                 var lastName = req.body.lastName;
                 var accountType = req.body.accountType;
                 var password = req.body.password;
-                db.insert({
+                registeredUsers.insert({
                     "username": req.body.username,
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
@@ -34,7 +36,6 @@ var RegisteredUserServiceProvider = (function () {
                     else {
                         if (accountType === "viewer") {
                             var viewers = db.get('viewers');
-                            //var newViewer = new Viewer(username, password, firstName, lastName, accountType);
                             viewers.insert({
                                 "username": doc.username,
                                 "firstName": doc.firstName,
@@ -48,7 +49,6 @@ var RegisteredUserServiceProvider = (function () {
                         }
                         else {
                             var contributors = db.get('contributors');
-                            //var newContributor = new Contributor(username, password, firstName, lastName, accountType);
                             contributors.insert({
                                 "username": doc.username,
                                 "firstName": doc.firstName,
@@ -66,13 +66,13 @@ var RegisteredUserServiceProvider = (function () {
         });
         return true;
     };
-    RegisteredUserServiceProvider.prototype.read = function (db, req, res) {
+    RegisteredUserServiceProvider.prototype.read = function (req, res) {
         return false;
     };
-    RegisteredUserServiceProvider.prototype.update = function (db, req, res) {
+    RegisteredUserServiceProvider.prototype.update = function (req, res) {
         return false;
     };
-    RegisteredUserServiceProvider.prototype.remove = function (db, req, res) {
+    RegisteredUserServiceProvider.prototype.remove = function (req, res) {
         return false;
     };
     return RegisteredUserServiceProvider;

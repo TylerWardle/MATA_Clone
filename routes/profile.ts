@@ -53,6 +53,7 @@ router.post('/edit',function(req, res) {
 		{	
 			if(req.file !== undefined)
 			{
+				console.log(req.file);
 				fs.readFile(req.file.path, function (err, img) {
 				var newPath = "./uploads/profilepictures/" + user.username;
 						// write image file to uploads/fullsize folder

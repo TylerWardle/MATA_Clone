@@ -20,7 +20,8 @@ block content
     p Last Online: #{user.lastLogin}
     br
   div(id="profilePicture")
-    img(src="http://#{user.profilePicture}")
+        p
+            |<img align="left" src="#{user.profilePicture}" alt="" border="0" width="170" height="190" />
 
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
