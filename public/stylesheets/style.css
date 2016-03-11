@@ -73,7 +73,8 @@ a {
 }
 #profilePicture{
 	position: absolute;
-	left: 40px;
+	left: 80px;
+	left: 80px;
 	top: 147px;
 	width: 100px;
 }
@@ -329,7 +330,7 @@ a {
 }
 
 #banner .search{
-	background-color: transparent;
+	background-color: white;
 	color: black;
     font-size: .9em;
     width: 390px;
@@ -350,11 +351,11 @@ a {
 	position: absolute;
 	right: 0px;
 	top: 0px;
-	width: 80px;
+	width: 90px;
 	background: grey;
 	border: 0;
    	border-radius: 0;
-   	height: 20px;
+   	height: 23px;
    	-webkit-appearance: none;
    	overflow: hidden;
    	padding-left:10px;
