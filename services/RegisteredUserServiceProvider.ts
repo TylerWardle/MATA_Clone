@@ -1,5 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
-///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 
 import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
@@ -13,21 +13,24 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 {
 	constructor() { }
 	
-	create(db:any, req:any, res:any): Boolean
+	create(req:any, res:any): Boolean
 	{
-		db.findOne({username:req.body.username}, function(err, item) {
+	    var db = req.db;
+		var registeredUsers = db.get('registeredUsers');
+		
+		registeredUsers.findOne({username:req.body.username}, function(err, item) {
+		
 		if(item){
 			res.render("error", { message: "username " + item.username + " is already taken!" });
-			//send back a signal
-		} else{
-			
+		} 
+		else{
 			var username = req.body.username;
 			var firstName = req.body.firstName;
 			var lastName = req.body.lastName;
 			var accountType = req.body.accountType;
 			var password = req.body.password;
 			
-			db.insert({
+			registeredUsers.insert({
 				"username": req.body.username,
 				"firstName": req.body.firstName,
 				"lastName": req.body.lastName,
@@ -38,16 +41,15 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 				"profilePicture": "http://www.openshot.org/images/blank_profile.png",
 				"aboutMe": "Nothing has been added to this section yet..",
 				"lastLogin": (new Date()).toDateString()
-				
+
 			}, function(err, doc) {
-				if (err) {
-					res.render("error", { message: "There was a problem adding the information to the database.1"});
-				} else 
-				{
+				if (err){
+					res.render("error", { message: "There was a problem adding the information to the database.1" });
+				} 
+				else {
 					if(accountType === "viewer")
 					{
 						var viewers = db.get('viewers');
-						//var newViewer = new Viewer(username, password, firstName, lastName, accountType);
 						
 						viewers.insert({
 						"username": doc.username,
@@ -61,11 +63,9 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 							}
 						})
 					}
-					else
-					{
+					else {
 						var contributors = db.get('contributors');
-						//var newContributor = new Contributor(username, password, firstName, lastName, accountType);
-					
+						
 						contributors.insert({						
 							"username": doc.username,
 							"firstName": doc.firstName,
@@ -74,7 +74,7 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 							
 						}, function(err, doc) {
 							if (err) {
-								res.render("error", { message: "There was a problem adding the information to the database.3"});
+								res.render("error", { message: "There was a problem adding the information to the database.3" });
 							} 
 						})
 					}
@@ -85,17 +85,17 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 	return true;
 	}
 	
-	read(db:any, req:any, res:any): Boolean
+	read(req:any, res:any): Boolean
 	{
 		return false;
 	}
 	
-	update(db:any, req:any, res:any): Boolean
+	update(req:any, res:any): Boolean
 	{
 		return false;
 	}
 	
-	remove(db:any, req:any, res:any): Boolean
+	remove(req:any, res:any): Boolean
 	{
 		return false;
 	}
