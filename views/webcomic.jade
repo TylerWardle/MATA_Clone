@@ -62,10 +62,10 @@ block content
 			hide
 				form#formGoToEdit(name="editWebcomic",method="get", action="/webcomic/edit/#{webcomic._id}")
 					div(id="belowimage")
-						button#btnEditComic(type="submit", style=hiddenEdit) Edit
-				form#formGoToDelete(name="deleteWebcomic",method="delete", action="/webcomic/delete/#{webcomic._id}")
+						button#btnEditComic(type="submit") Edit
+				form#formGoToDelete(name="deleteWebcomic",method="post", action="/webcomic/delete/#{webcomic._id}")
 					div(id="deleteWebcomic")
-						button#btnDeleteComic(type="submit", style=hiddenEdit) Delete
+						button#btnDeleteComic(type="submit") Delete
 	br
 	br
 	div(id="newCell" class="newCellDialog")

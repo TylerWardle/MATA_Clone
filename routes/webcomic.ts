@@ -234,7 +234,10 @@ class Webcomic {
             c.delete(comicID, authorID, (): void => {
                 // remove associated comic cell documents
                 var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, (): void => { });
+                cc.deleteAll(comicID, authorID, (): void => { 
+					var header = req.headers['host'];
+					res.redirect("http://"+header+"/contributor");
+				});
             });
         });
 
