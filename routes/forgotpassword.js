@@ -31,7 +31,7 @@ router.post('/recover', function (req, res) {
             res.render('resetpassword', { title: 'Access Granted! Reset Your Password' });
         }
         else {
-            res.render("recoveraccount", { message: "Secret Answer Incorrect" });
+            res.render("recoveraccount", { title: "Secret Answer Incorrect" });
         }
     });
 });

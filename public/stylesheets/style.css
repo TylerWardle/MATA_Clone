@@ -75,7 +75,6 @@ a {
 #profilePicture{
 	position: absolute;
 	left: 80px;
-	left: 80px;
 	top: 147px;
 	width: 100px;
 }
@@ -218,7 +217,7 @@ a {
 {
 	position: absolute;
     left: 100px;
-    top: 80px;
+    top: 100px;
 }
 
 #titleS{
