@@ -1,0 +1,23 @@
+extends layoutLoggedIn
+
+block content
+  div(id="form")
+    h1.
+      #{user.username}
+  form#formEditProfile(name="profile",method="post",action="/profile/edit")
+    div(id="aboutmeEdit")
+      textarea(type="text", name="aboutMe",rows=5, cols=50)
+        | #{user.aboutMe}
+    div(id="editProfilePicture")
+      input#firstImage(type="file",name="image")
+    br
+    div(id="profilePicture")
+      img(src="#{user.profilePicture}")
+    div(id="editProfilePictureMessage")
+      p Change Your Picture 
+      br
+    div(id="submitEditProfile")
+      button#btnUpdateProfile(type="submit") Save Changes
+  div(id="cancelEditProfile")
+    form#cancelEdit(type="cancelEdit", method="get", action="/profile")
+        button#btnCancelUpdateProfile(type="submit") Cancel Edit

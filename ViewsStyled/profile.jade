@@ -1,0 +1,27 @@
+extends layoutLoggedIn
+
+block content
+  div(id="form")
+    h1.
+      #{user.username}
+  div(id="profiledata")
+    form#formProfile(name="profile",method="post",action="/profile")
+    p My name is #{user.firstName} #{user.lastName}!
+    br
+    p I am a #{user.accountType}.
+  div(id="aboutme")
+    label About me:
+    form(action="").form-inline
+      .form-group.col-md-4
+        textarea(readonly="", rows=5, cols=50).form-control
+          | #{user.aboutMe}
+    br
+  div(id="lastLogin")
+    p Last Online: #{user.lastLogin}
+    br
+  div(id="profilePicture")
+    img(src="http://#{user.profilePicture}")
+
+  div(id="editProfile")
+    form#EditProfile(type="editProfile", method="get", action="/profile/edit")
+        button#btnEdit(type="submit") Edit Profile
