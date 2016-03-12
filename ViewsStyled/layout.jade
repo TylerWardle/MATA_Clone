@@ -1,10 +1,14 @@
 doctype html
 html
 	head
+		title= title
 		link(rel='stylesheet', href='/stylesheets/MataStyle.css')
 	body
-		div(id="banner")
+		div(id="o-wrapper", class="o-wrapper")
+			div(id="banner")
 				div(class="home-button")
 					a(href="/")
-						img(src="/assets/mataLogo.png") 				
-		block content
+						img(src="/assets/mataLogo.png") 	
+				block banner					
+			div(id="content")		
+				block content
