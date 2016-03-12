@@ -1,0 +1,467 @@
+body {
+	background-color: #D3D3D3;	
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	margin:0;
+	width:100%;
+}
+
+img{
+	width:100%;
+	padding:0;
+}
+
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+}
+
+a{
+	text-decoration: none;
+}
+
+#banner{
+	position: fixed;
+	width: 100%;
+	top:0;
+	background-color: #AAF0D1;
+  	border: none;
+  	box-shadow: none;
+  	border-radius: none;
+  	height: 100px;
+  	z-index: 50;
+}
+
+#content{
+	position:relative;
+	width:80%;
+	margin :auto;
+	top:100px;
+	white-space: nowrap;
+}
+
+.image-container{
+    position:relative;
+    margin-left: 0px;
+    margin-right: 0px;
+   	width: 100%;
+}
+
+.search-results{
+	width:80%;
+}
+
+.home-button{
+	position: absolute;
+  	left: 0;
+  	top: 0;
+  	padding: 10px;
+  	width: 130px;
+  	background: transparent;
+  	border: none;
+  	background-image: none;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.newComicBtn{
+	position: relative;
+  	left: 0;
+  	top: 0;
+  	padding: 10px;
+  	width: 100px;
+  	background: transparent;
+  	border: none;
+  	background-image: none;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#homepage-header{
+}
+
+/*
+*Pop out Menu
+*/
+
+.c-button{
+  	position: absolute;
+  	right: 0;
+  	top: 0;
+  	width: 105px;
+  	background: transparent;
+  	border: none;
+  	background-image: none;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.c-button:hover{
+	background: #92e0bd;
+}
+
+.o-wrapper {
+  position: absolute; 
+  width:100%;
+  margin:0;
+  border: 0;
+  transition: transform 0.5s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+/**
+ * Menu overview.
+ */
+.c-menu {
+  position: fixed;
+  z-index: 200;
+  background-color: #767676;
+  transition: transform 0.5s;
+}
+
+.c-menu__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c-menu__link{
+	text-decoration: none;
+}
+
+/**
+ * Close button resets.
+ */
+.c-menu__close {
+  	color: #000;
+  	background-color: #AAF0D1;
+  	text-align:left;
+  	border: none;
+  	box-shadow: none;
+  	border-radius: none;
+  	height: 100px;
+  	font-size: 40px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+ 
+}
+
+/**
+ * Close button resets.
+ */
+.c-menu__close:focus {
+  outline: none;
+}
+
+/**
+ * Body states.
+ *
+ * When a menu is active, we want to hide the overflows on the body to prevent
+ * awkward document scrolling.
+ */
+body.has-active-menu {
+  overflow: hidden;
+}
+
+/**
+ * Mask component
+ */
+
+.c-mask {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  background-color: #000;
+  opacity: 0;
+  transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
+}
+
+.c-mask.is-active {
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.c-menu--push-right {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+@media all and (min-width: 320px) {
+  .c-menu--push-right {
+    width: 300px;
+  }
+}
+
+.c-menu--push-right .c-menu__item {
+  display: block;
+  text-align: left;
+  border-top: none;
+  border-bottom: none;
+}
+
+.c-menu--push-right .c-menu__item:first-child {
+  border-top: none;
+}
+
+.c-menu--push-right .c-menu__item:last-child {
+  border-bottom: none;
+}
+
+.c-menu--push-right .c-menu__link {
+  display: block;
+  padding: 12px 24px;
+  color: #fff;
+}
+
+.c-menu--push-right .c-menu__close {
+  display: block;
+  padding: 12px 24px;
+  width: 100%;
+}
+
+.c-menu--push-right {
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+}
+
+@media all and (min-width: 320px) {
+  .c-menu--push-right {
+    transform: translateX(300px);
+  }
+}
+
+.c-menu--push-right.is-active {
+  transform: translateX(0);
+}
+
+.o-wrapper.has-push-right {
+  transform: translateX(-100%);
+}
+
+@media all and (min-width: 320px) {
+  .o-wrapper.has-push-right {
+    transform: translateX(-300px);
+  }
+}
+
+
+/**
+ *new Cell Dialog css
+ */
+ 
+.newCellDialog {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 200ms ease-in-out;
+	-moz-transition: opacity 200ms ease-in-out;
+	transition: opacity 200ms ease-in-out;
+	pointer-events: none;
+}
+.newCellDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.newCellDialog > div {
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #AAF0D1;
+}
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.close:hover { background: #AAF0D1; }
+
+.AddCell {
+	background: transparent;
+	position: fixed;
+	right: 50px;
+	bottom: 10%;
+	width: 60px;
+	padding: 0px;
+	transition: width 0.3s;
+	
+}
+.AddCell:hover { 
+	width: 70px;
+	transition: width .3s;
+}
+
+.search-container{
+    height: 100px;
+    position: absolute;
+    width: 500px;
+    top: 0px;
+    left: 150px;
+}
+
+.search-selector{
+	width:100px;
+	position: absolute;
+	left:0px;
+	height: 100%;
+	width: 147px;
+	padding:10px;
+	background: #AAF0D1;
+   	border:0;
+   	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	-webkit-appearance: none;
+    -moz-appearance: none;
+   	appearance: none;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+}
+
+select:focus, input:focus{
+    outline: none;
+    background: #92e0bd;
+}
+
+.search-field{
+	position: absolute;
+	background: #AAF0D1;
+	left:147px;
+	width:353px;
+	border:0px;
+	padding:10px;
+	height: 80px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	
+}
+
+.thumbnail-container{
+	display: block;
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 30%;
+    max-height: 20%
+}
+
+.comic-info-container{
+	position: relative;
+	top: 0px;
+	width:80%;
+	word-wrap: normal;
+	white-space: normal;
+	padding: 0;
+	color: white;
+	
+}
+
+.edit-Btn{
+	background: transparent;
+	position: fixed;
+	left: 50px;
+	bottom: 10%;
+	width: 60px;
+	heigh: 60px;
+	padding: 0px;
+	z-index:50;
+	transition: width .3s;
+}
+
+.edit-Btn:hover{
+	width:70px;
+}
+
+#index-banner-btns{
+	position: absolute;
+	background: #AAF0D1;
+	width: 500px;
+	right:0px;
+	border:0px;
+	height: 100px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 80px;
+	z-index: 100;
+}
+
+.signin-container, .register-container, .forgot-Password-container{
+	position:inherit;
+	height: 80%;
+	padding: 10px;
+	top: 0;
+}
+
+.signin-container:hover, .register-container:hover, .forgot-Password-container:hover{
+	background: #92e0bd;
+}
+
+.register-container{
+    width: 100px;
+    right:230px;
+}
+
+.signin-container{
+    width: 90px;
+    right: 350px;
+    
+}
+.forgot-Password-container{
+	width:210px;
+    right: 0px;
+    
+}
