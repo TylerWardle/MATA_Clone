@@ -26,7 +26,6 @@ a {
 	width: 100px;
 }
 
-
 #profile{
 	position: absolute;
 	right: 125px;
@@ -46,6 +45,14 @@ a {
 	top: 20px;
 	width: 120px;
 }
+
+#random{
+	position: absolute;
+	left: 335px;
+	top: 20px;
+	width: 200px;
+}
+
 #home{
 	position: absolute;
 	left:4%;
@@ -74,7 +81,6 @@ a {
 }
 #profilePicture{
 	position: absolute;
-	left: 80px;
 	left: 80px;
 	top: 147px;
 	width: 100px;
@@ -218,7 +224,7 @@ a {
 {
 	position: absolute;
     left: 100px;
-    top: 80px;
+    top: 100px;
 }
 
 #titleS{

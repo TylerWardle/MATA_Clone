@@ -224,9 +224,9 @@ class Webcomic {
 
 
         // Delete Comic: Delete one comic and all associated cells 
-        router.delete('./:id', function (req, res) {
-            // get comicID identifying which comic to delete from reqest parameter in the URL
-            var comicID = req.params.id;
+        router.post('/delete/:id', function (req, res) {
+			// get comicID identifying which comic to delete from reqest parameter in the URL
+            var comicID = req.params.id; 
             var authorID = req.cookies._id;
         
             // Remove this comic document
@@ -234,7 +234,10 @@ class Webcomic {
             c.delete(comicID, authorID, (): void => {
                 // remove associated comic cell documents
                 var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, (): void => { });
+                cc.deleteAll(comicID, authorID, (): void => { 
+					var header = req.headers['host'];
+					res.redirect("http://"+header+"/contributor");
+				});
             });
         });
 

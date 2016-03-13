@@ -48,7 +48,7 @@ router.post('/recover', function(req, res) {
 		}		
 		else
 		{
-			res.render("resetpassword", { message: "Secret Answer Incorrect" });
+			res.render("recoveraccount", { title: "Secret Answer Incorrect" });
 		}
 	});
 });

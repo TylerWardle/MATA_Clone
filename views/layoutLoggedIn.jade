@@ -16,6 +16,9 @@ html
         div(id="profile")
             form#profile(type="profile", method="get", action="/profile")
                 button#btnProfile(type="submit") Public Profile
+        div(id="random")
+            form#profile(name="random", method="get", action="/webcomic/random")
+                button#btnRandom(type="submit") Random
         div(id="home")        
             form#home(name="home",method="get", action= "/home")
                 button#btnHome(type="submit") #{username}Home  
