@@ -5,7 +5,7 @@ import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
 import RegisteredUser = require('../models/RegisteredUser');
 import providers = require('../interfaces/IServiceProvider');
-
+import dbAccessor = require('../data_accessors/RegisteredUserDbAccessor');
 var express = require('express');
 var router = express.Router();
 
