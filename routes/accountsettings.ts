@@ -35,11 +35,15 @@ router.post('/', function (req, res) {
 		if(user)
 		{
             registeredUsers.update({_id:ObjectID(req.cookies._id)},{
-                            username: user.username,
+                
+                $set:
+                        {
+                     
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            accountType: user.accountType,
-                            password: req.body.password
+                        
+                            
+                            }
                             }); 
 			if (user.accountType === "viewer") {
 				var viewers = db.get('viewers');

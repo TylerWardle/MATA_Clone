@@ -1,0 +1,42 @@
+extends layoutLoggedIn 
+
+block content
+	div(id="form")
+		h1.
+			Edit WebComic
+	div(id="belowform")
+		form#formEditWebcomic(name="editWebcomic", method="post", action="/webcomic/update/#{webcomic._id}")
+			br
+			|Title:
+			input#comicTitle(type="text", value="#{webcomic.title}" ,name="title", required="", autocomplete="off")
+			br
+			br
+			|Description:
+			input#description(type="text", value="#{webcomic.description}",name="description", required="", autocomplete="off")
+			br
+			br
+			|Genre:
+			//input#genre(type="text", value="#{webcomic.genre}", name="genre", required="")
+			select(name="genre")
+				option(value="zombies") Zombies
+				option(value="post Apocalyptic") Post Apocalyptic
+				option(value="action/Adventure") Action/Adventure
+				option(value="humor") Humor
+				option(value="superhero") Superhero
+			br
+			br
+			|Open to Contribution:
+			-if (webcomic.openToContribution)
+				input#contribution(type="checkbox", name ="openToContribution", checked)
+			-else
+				input#contribution(type="checkbox", name ="openToContribution")
+			br
+			br
+			br
+			button#btnSubmit(type="submit", name= "submit", value ="draft") Update
+			//If the webcomic is not yet published a "submit and publish" button is shown. The submit button pressed is checked in the /update route
+			-if (!webcomic.toPublish)
+				button#btnSubmit(type="submit", name="submit", value ="publish") Update and Publish
+		form#cancelEditWebcomic(name="cancelEditWebcomic", method="get", action="/webcomic/id/#{webcomic._id}")
+			br
+			button#btnCancel(type="submit") Cancel
