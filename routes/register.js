@@ -6,8 +6,12 @@ var router = express.Router();
 var registeredUserServiceProvider = new RSProvider.RegisteredUserServiceProvider();
 /* POST register (adds a new user to the system). */
 router.post('/', function (req, res) {
-    if (registeredUserServiceProvider.create(req, res))
+    if (registeredUserServiceProvider.create(req, res)) {
         res.redirect("signin");
+    }
+    else {
+        res.render("error", { message: "username " + req.body.username + " is already taken!" });
+    }
 });
 /* GET register page. */
 router.get('/', function (req, res) {

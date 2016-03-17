@@ -15,8 +15,13 @@ var registeredUserServiceProvider = new RSProvider.RegisteredUserServiceProvider
 router.post('/', function(req, res) {
 
 	if(registeredUserServiceProvider.create(req, res))
+	{
 		res.redirect("signin");
-
+	}
+	else
+	{
+		res.render("error", { message: "username " + req.body.username+ " is already taken!" });
+	}
 });
 
 /* GET register page. */
