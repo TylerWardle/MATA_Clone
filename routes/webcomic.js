@@ -191,7 +191,7 @@ var Webcomic = (function () {
             });
         });
         // Delete Comic: Delete one comic and all associated cells 
-        router.delete('./:id', function (req, res) {
+        router.post('/delete/:id', function (req, res) {
             // get comicID identifying which comic to delete from reqest parameter in the URL
             var comicID = req.params.id;
             var authorID = req.cookies._id;
@@ -200,7 +200,10 @@ var Webcomic = (function () {
             c.delete(comicID, authorID, function () {
                 // remove associated comic cell documents
                 var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, function () { });
+                cc.deleteAll(comicID, authorID, function () {
+                    var header = req.headers['host'];
+                    res.redirect("http://" + header + "/contributor");
+                });
             });
         });
         // create a webcomic route
