@@ -1,0 +1,38 @@
+extends layoutLoggedIn
+
+block content
+  div(id="form")
+    h1.
+      #{user.username}
+  div(id="profiledata")
+    form#formProfile(name="profile",method="post",action="/profile")
+    p My name is #{user.firstName} #{user.lastName}!
+    br
+    p I am a #{user.accountType}.
+  div(id="aboutme")
+    label About me:
+    
+          | #{user.aboutMe}
+    br
+  div(id="lastLogin")
+    p Last Online: #{user.lastLogin}
+    br
+  div(id="profilePicture")
+        p
+            img(src="#{user.profilePicture}")
+
+  div(id="editProfile")
+    form#EditProfile(type="editProfile", method="get", action="/profile/edit")
+        button#btnEdit(type="submit") Edit Profile
+  -var accountType=user.accountType
+  if accountType=="contributor"
+    -var notnull=contributor.comicIDs
+    unless notnull==null
+      div(id="contributorComics")
+        - for cell in cells
+            p
+              | <a href=""><img align="left" src="http://#{cell}" alt="" border="0" width="100" height="80" /></a>
+      div(id="contributorComics")
+        - for comic in webcomic
+            p
+              | <a href="http://#{comic}"><img align="left" src="" alt="" border="0" width="100" height="80" /></a>

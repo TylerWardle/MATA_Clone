@@ -26,11 +26,10 @@ router.post('/', function (req, res) {
     registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
         if (user) {
             registeredUsers.update({ _id: ObjectID(req.cookies._id) }, {
-                username: user.username,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                accountType: user.accountType,
-                password: req.body.password
+                $set: {
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName
+                }
             });
             if (user.accountType === "viewer") {
                 var viewers = db.get('viewers');
