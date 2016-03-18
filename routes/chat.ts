@@ -1,4 +1,4 @@
-///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
+ ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
@@ -7,16 +7,21 @@ var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 
 
-/* POST Subscribe to a contributor. */
+/* POST a new chat message */
 router.post('/', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
 });
 
+/* GET chat history */
+router.get('/', function (req, res) {
+    var db = req.db;
+    var registeredUsers = db.get('registeredUsers');
+});
 
 
-/* Delete unsubscribe to a contributor. */
-router.delete('/', function (req, res) {
+/* GET flag check for new chats */
+router.get('/status', function (req, res) {
     var db = req.db;
     var registeredUsers = db.get('registeredUsers');
 
