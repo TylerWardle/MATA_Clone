@@ -14,5 +14,5 @@ var router = express.Router();
 export class ChatServiceProvider 
 {
 	constructor() { }
-	
-} 
+	 
+}   
