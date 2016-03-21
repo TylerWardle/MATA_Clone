@@ -2,16 +2,26 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 
 
-var express = require('express');
-var router = express.Router();
+class Logout {
 
-/* GET Viewers homepage. */
-router.get('/', function(req, res, db) {
-    res.clearCookie('_id');
-    res.clearCookie('accountType');
-    res.clearCookie('userName');
-    res.redirect('/');
+    constructor() { }
+
+    startLogout() {
+
+		var express = require('express');
+		var router = express.Router();
+		/* GET Viewers homepage. */
+		router.get('/', function (req, res, db) {
+			res.clearCookie('_id');
+			res.clearCookie('accountType');
+			res.clearCookie('userName');
+			res.redirect('/');
+		});
+		module.exports = router;
+		
+		}
+	}
 	
-});
+var logout = new Logout();
+logout.startLogout();
 
-module.exports = router;
