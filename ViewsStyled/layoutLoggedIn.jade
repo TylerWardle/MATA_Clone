@@ -1,0 +1,53 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/MataStyle.css')
+	body
+		div(id="o-wrapper", class="o-wrapper")
+			div(id="banner")
+				div(class="home-button")
+					a(href="/home")
+						img(src="/assets/mataLogo.png") 
+				div(class="c-buttons")
+					button(id="c-button--push-right", class="c-button")
+						img(src="/assets/menu_icon.svg")
+				div(class="search-container")
+					Form#searchForm(class="search-form", method="get", action="/SearchBrowseResults", enctype='multipart/form-data')
+						input(autocomplete="off", type="text", class="search-field", name="seachField", placeholder="Search" value="")
+						select(class="search-selector", name="searchType")
+							option(value="genre", selected) Genre
+							option(value="title") Title
+							option(value="author") Author
+							option(value="description") Description
+							option(value="all") Search By		
+			div(id="content")
+				block content
+		
+		nav(id="c-menu--push-right" class="c-menu c-menu--push-right")
+			button(class="c-menu__close") Menu
+			ul( class="c-menu__items")
+				li( class="c-menu__item")
+					a( href="/home" class="c-menu__link") Home
+				li( class="c-menu__item")
+					a( href="/profile" class="c-menu__link") Profile
+				li( class="c-menu__item")
+					a( href="/accountsettings" class="c-menu__link") Account Settings
+				li( class="c-menu__item")
+					a( href="/logout" class="c-menu__link") Logout
+		div( id="c-mask" class="c-mask")				
+		script(src="/scripts/menu.js")
+		script.
+			
+			var pushRight = new Menu({
+				wrapper: '#o-wrapper',
+				type: 'push-right',
+				menuOpenerClass: '.c-button',
+				maskId: '#c-mask'
+			});
+			
+			var pushRightBtn = document.querySelector('#c-button--push-right');
+			pushRightBtn.addEventListener('click', function(e) {
+				e.preventDefault;
+				pushRight.open();
+			});

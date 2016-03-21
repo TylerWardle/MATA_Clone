@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div(id="header")
+		h1= title
+	form#formRegisterUser(name="signin",method="post",action="/signin")
+		div(id="signInUsername")
+			input#inputUsername(type="text", placeholder="username", name="username", , required="", autocomplete="off")
+		div(id="signInPassword")
+			input#inputUserPassword(type="password", placeholder="password", name="password", required="", autocomplete="off")
+		div(id="signInSubmit")
+			button#btnSubmit(type="submit") Submit
+		div(id="forgotPasswordLink")
+			p: #[a(href="/forgotpassword") Forgot password?]
