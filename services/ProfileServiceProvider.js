@@ -8,6 +8,8 @@ var ProfileServiceProvider = (function () {
     ProfileServiceProvider.prototype.create = function (req, res) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
+        var contributors = db.get("contributors");
+        var comicID = req.params.id;
         return true;
     };
     ProfileServiceProvider.prototype.read = function (req, res) {

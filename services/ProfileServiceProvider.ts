@@ -17,9 +17,11 @@ export class ProfileServiceProvider implements providers.IServiceProvider
 	{
 	    var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
+		var contributors = db.get("contributors");
+		var comicID = req.params.id;
 		
 		return true;
-	}
+}
 	
 	read(req:any, res:any): Boolean
 	{
