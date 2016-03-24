@@ -18,16 +18,30 @@ export class HistoryServiceProvider
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
 		
+		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
+			// check for duplicate and update.
+			registeredUsers.update({username:req.cookies._username},
+			   {
+					$set:
+					{
+						webComicViewingHistory: user.webComicViewingHistory + "," + webcomicId
+					}
+			   });
+		});
+		
 		return true;
 	}
 	
-	checkForDuplicateEntry(req:any, res:any): Boolean
+	/* Returns the history of viewed webcomic  for a user. */
+	getViewingHistory(req:any, res:any): any
 	{
-		return false;
-	}
-	
-	getViewingHistory(req:any, res:any): Boolean
-	{
-		return false;
+		var db = req.db;
+		var registeredUsers = db.get('registeredUsers');
+		
+		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
+			return user.viewingHistory;
+		});
+		
+		return true;
 	}
 } 

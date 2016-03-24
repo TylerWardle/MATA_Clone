@@ -9,13 +9,24 @@ var HistoryServiceProvider = (function () {
     HistoryServiceProvider.prototype.addWebComicLinkToList = function (req, res, webcomicId) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ username: req.cookies._username }, function (err, user) {
+            // check for duplicate and update.
+            registeredUsers.update({ username: req.cookies._username }, {
+                $set: {
+                    viewedHistory: user.viewedHistory + "," + webcomicId
+                }
+            });
+        });
         return true;
     };
-    HistoryServiceProvider.prototype.checkForDuplicateEntry = function (req, res) {
-        return false;
-    };
+    /* Returns the history of viewed webcomic  for a user. */
     HistoryServiceProvider.prototype.getViewingHistory = function (req, res) {
-        return false;
+        var db = req.db;
+        var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ username: req.cookies._username }, function (err, user) {
+            return user.viewingHistory;
+        });
+        return true;
     };
     return HistoryServiceProvider;
 })();

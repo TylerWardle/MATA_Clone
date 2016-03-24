@@ -36,7 +36,8 @@ export class RegisteredUserDbAccessor
 				"securityAnswer": req.body.securityAnswer,
 				"profilePicture": "http://www.openshot.org/images/blank_profile.png",
 				"aboutMe": "Nothing has been added to this section yet..",
-				"lastLogin": (new Date()).toDateString()
+				"lastLogin": (new Date()).toDateString(),
+				"webComicViewingHistory": ""
 
 			}, function(err, doc) {
 				if (err){

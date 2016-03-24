@@ -19,8 +19,8 @@ class ViewingHistory {
 		router.post('/', function (req, res) {
 			
 			// get the link in the url for the webcomic
-			var comicId = "";
-			historyServiceProvider.addWebComicLinkToList(req, res, comicId);
+			var comicID = req.params.id;
+			historyServiceProvider.addWebComicLinkToList(req, res, comicID);
 			
 		});
 
@@ -31,8 +31,7 @@ class ViewingHistory {
 		
 			var historyLinks = historyServiceProvider.getViewingHistory(req, res);
 			
-			//grab the links for the users list.
-			//pass them back down to the client to render the links
+			// render the links here. waiting for new ui.
 
 		});
 		module.exports = router;
