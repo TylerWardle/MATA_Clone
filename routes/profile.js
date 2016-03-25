@@ -1,6 +1,12 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-var ComicCell = require('../models/ComicCell');
+var ProfileServiceProvider = require('../services/ProfileServiceProvider');
+var express = require('express');
+var router = express.Router();
+var ObjectID = require('mongodb').ObjectID;
+var fs = require('fs');
+var ProfileSP = new ProfileServiceProvider.ProfileServiceProvider();
+/* GET a specific users profile*/
 var Profile = (function () {
     function Profile() {
     }
@@ -9,43 +15,20 @@ var Profile = (function () {
         var router = express.Router();
         var ObjectID = require('mongodb').ObjectID;
         var fs = require('fs');
+        /* GET  a specific Profile settings. */
+        router.get('/user/:userName', function (req, res) {
+            ProfileSP.read(req, res);
+        });
         /* GET  Profile settings. */
         router.get('/', function (req, res) {
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
-            var contributors = db.get("contributors");
-            var comicID = req.params.id;
+            //var contributors = db.get("contributors");
+            //var comicID = req.params.id;
             // Fetch the document
             registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
                 if (user) {
-                    if (user.accountType == "contributor") {
-                        var ObjectId = require('mongodb').ObjectID;
-                        contributors.findOne({ guid: ObjectID(user._id) }, function (error, contributor) {
-                            var comicIDLinks = new Array();
-                            var i;
-                            var cc = new ComicCell.ComicCell(req.mongoose);
-                            if (contributor.comicIDs != null) {
-                                var imageHeader = req.headers['host'] + "/webcomic/image/";
-                                cc.getRepresentativeImages(contributor.comicIDs, imageHeader, function (comicCellIDs) {
-                                    var comicHeader = req.headers['host'] + "/webcomic/id/";
-                                    for (var i = 0; i < contributor.comicIDs.length; i++) {
-                                        contributor.comicIDs[i] = comicHeader + contributor.comicIDs[i];
-                                    }
-                                    console.log(contributor.comicIDs.length);
-                                    for (i = 0; i < contributor.comicIDs.length; i++) {
-                                        comicIDLinks.push(contributor.comicIDs[i]);
-                                    }
-                                    res.render('profile', { "webcomic": comicIDLinks, "cells": comicCellIDs, "user": user, "contributor": contributor });
-                                });
-                            }
-                            else {
-                                res.render('profile', { "user": user, "contributor": contributor });
-                            }
-                        });
-                    }
-                    else {
-                        res.render('profile', { "user": user });
-                    }
+                    res.redirect('./profile/user/' + user.username);
                 }
                 else {
                     res.send("ACCESS DENIED");
@@ -64,8 +47,8 @@ var Profile = (function () {
         router.post('/edit', function (req, res) {
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
-            var contributors = db.get("contributors");
-            var comicID = req.params.id;
+            //			var contributors = db.get("contributors");
+            //			var comicID = req.params.id;
             // Fetch the document
             registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
                 if (user) {
@@ -95,34 +78,7 @@ var Profile = (function () {
                             }
                         });
                     }
-                    if (user.accountType == "contributor") {
-                        var ObjectId = require('mongodb').ObjectID;
-                        contributors.findOne({ guid: ObjectID(user._id) }, function (error, contributor) {
-                            var comicIDLinks = new Array();
-                            var i;
-                            var cc = new ComicCell.ComicCell(req.mongoose);
-                            if (contributor.comicIDs != null) {
-                                var imageHeader = req.headers['host'] + "/webcomic/image/";
-                                cc.getRepresentativeImages(contributor.comicIDs, imageHeader, function (comicCellIDs) {
-                                    var comicHeader = req.headers['host'] + "/webcomic/id/";
-                                    for (var i = 0; i < contributor.comicIDs.length; i++) {
-                                        contributor.comicIDs[i] = comicHeader + contributor.comicIDs[i];
-                                    }
-                                    console.log(contributor.comicIDs.length);
-                                    for (i = 0; i < contributor.comicIDs.length; i++) {
-                                        comicIDLinks.push(contributor.comicIDs[i]);
-                                    }
-                                    res.render('profile', { "webcomic": comicIDLinks, "cells": comicCellIDs, "user": user, "contributor": contributor });
-                                });
-                            }
-                            else {
-                                res.render('profile', { "user": user, "contributor": contributor });
-                            }
-                        });
-                    }
-                    else {
-                        res.render('profile', { "user": user });
-                    }
+                    res.redirect('./profile/user/' + user.username);
                 }
                 else {
                     res.send("ACCESS DENIED");
@@ -136,59 +92,61 @@ var Profile = (function () {
             res.writeHead(200, { 'Content-Type': 'image/jpg' });
             res.end(img, 'binary');
         });
-        /* Update profile page settings. */
-        router.put('/edit', function (req, res) {
-            var db = req.db;
-            var registeredUsers = db.get('registeredUsers');
-            registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
-                if (user) {
-                    registeredUsers.update({ _id: ObjectID(req.cookies._id) }, {
-                        username: user.username,
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        accountType: user.accountType,
-                        password: req.body.password
-                    });
-                    if (user.accountType === "viewer") {
-                        var viewers = db.get('viewers');
-                        viewers.findOne({ guid: ObjectID(req.cookies._id) }, function (err, viewer) {
-                            if (err) {
-                                res.send("ACCESS DENIED" + err);
-                            }
-                            else {
-                                viewers.update({ guid: ObjectID(req.cookies._id) }, {
-                                    username: viewer.username,
-                                    firstName: req.body.firstName,
-                                    lastName: req.body.lastName,
-                                    guid: viewer.guid
-                                });
-                            }
-                        });
-                        res.redirect("viewer");
-                    }
-                    else {
-                        var contributors = db.get('contributors');
-                        contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (err, contributor) {
-                            if (err) {
-                                res.send("ACCESS DENIED");
-                            }
-                            else {
-                                contributors.update({ guid: ObjectID(req.cookies._id) }, {
-                                    username: contributor.username,
-                                    firstName: req.body.firstName,
-                                    lastName: req.body.lastName,
-                                    guid: contributor.guid
-                                });
-                            }
-                        });
-                        res.redirect("contributor");
-                    }
-                }
-                else {
-                    res.send("ACCESS DENIED");
-                }
-            });
-        });
+        //		/* Update profile page settings. */
+        //		router.put('/edit', function(req,res)
+        //		{
+        //			var db = req.db;
+        //			var registeredUsers = db.get('registeredUsers');
+        //			
+        //			registeredUsers.findOne({_id:ObjectID(req.cookies._id)}, function(err, user) {
+        //				if(user){
+        //					registeredUsers.update({_id:ObjectID(req.cookies._id)},{
+        //									username: user.username,
+        //									firstName: req.body.firstName,
+        //									lastName: req.body.lastName,
+        //									accountType: user.accountType,
+        //									password: req.body.password
+        //								}); 
+        //					if (user.accountType === "viewer") {
+        //						var viewers = db.get('viewers');
+        //						viewers.findOne({guid:ObjectID(req.cookies._id)}, function(err, viewer) {
+        //							if (err) {
+        //								res.send("ACCESS DENIED" + err);
+        //							} else {
+        //								viewers.update({guid:ObjectID(req.cookies._id)},{
+        //									username: viewer.username,
+        //									firstName: req.body.firstName,
+        //									lastName: req.body.lastName,
+        //									guid: viewer.guid
+        //								})
+        //							}
+        //						});
+        //						res.redirect("viewer");
+        //					} else {
+        //						var contributors = db.get('contributors');
+        //						contributors.findOne({guid:ObjectID(req.cookies._id)}, function(err, contributor) {
+        //							
+        //							if (err) {
+        //								res.send("ACCESS DENIED");
+        //							} else {
+        //								contributors.update({guid:ObjectID(req.cookies._id)},{
+        //									username: contributor.username,
+        //									firstName: req.body.firstName,
+        //									lastName: req.body.lastName,
+        //									guid: contributor.guid
+        //								})
+        //							}
+        //						});
+        //						
+        //						res.redirect("contributor");
+        //					}
+        //				}
+        //				else
+        //				{
+        //					res.send("ACCESS DENIED");
+        //				}
+        //			}); 
+        //		});
         module.exports = router;
     };
     return Profile;
