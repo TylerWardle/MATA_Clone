@@ -11,18 +11,18 @@ export class SubscriptionServiceProvider
 	constructor() { }
 	
 	/*  */
-	subscribeToUser(req:any, res:any, contributorId:any): Boolean
+	subscribeToUser(req:any, res:any, _username:any): Boolean
 	{
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
 		
-		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
+		registeredUsers.findOne({username:_username}, function(err, user) {
 			
-			registeredUsers.update({username:req.cookies._username},
+			registeredUsers.update({username:_username},
 			   {
 					$set:
 					{
-						subscriptions: user.subscriptions + "," + contributorId
+						subscriptions: user.subscriptions + "," + _username
 					}
 			   });
 		});
@@ -31,23 +31,22 @@ export class SubscriptionServiceProvider
 	}
 	
 	/* Returns the history of viewed webcomic  for a user. */
-	unsubscribeFromUser(req:any, res:any, contributorId:any): any
+	unsubscribeFromUser(req:any, res:any, _username:any): any
 	{
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
 		
-		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
+		// TO DO find the username, and rmeove it from the string, then update the string.
+		registeredUsers.findOne({username:_username}, function(err, user) {
 			
-			// find the username, and rmeove it from the string, then update the string.
-			registeredUsers.update({username:req.cookies._username},
+			registeredUsers.update({username:_username},
 			   {
 					$set:
 					{
-						subscriptions: user.subscriptions + "," + contributorId
+						subscriptions: user.subscriptions + "," + _username
 					}
 			   });
 		});
-		
 		return true;
 	}
 } 
