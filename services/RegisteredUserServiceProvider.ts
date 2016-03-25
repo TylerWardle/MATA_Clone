@@ -4,7 +4,6 @@
 import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
 import RegisteredUser = require('../models/RegisteredUser');
-import providers = require('../interfaces/IServiceProvider');
 import dbAccessor = require('../data_accessors/RegisteredUserDbAccessor');
 
 
@@ -13,7 +12,7 @@ var router = express.Router();
 
 var registeredUserDataAccessor = new dbAccessor.RegisteredUserDbAccessor();
 
-export class RegisteredUserServiceProvider implements providers.IServiceProvider 
+export class RegisteredUserServiceProvider 
 {
 	constructor() { }
 	
@@ -23,20 +22,5 @@ export class RegisteredUserServiceProvider implements providers.IServiceProvider
 		var registeredUsers = db.get('registeredUsers');
 		
 		return registeredUserDataAccessor.insertUser(req, res);		
-	}
-	
-	read(req:any, res:any): Boolean
-	{
-		return false;
-	}
-	
-	update(req:any, res:any): Boolean
-	{
-		return false;
-	}
-	
-	remove(req:any, res:any): Boolean
-	{
-		return false;
 	}
 } 

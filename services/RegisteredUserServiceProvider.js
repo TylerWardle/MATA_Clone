@@ -12,15 +12,6 @@ var RegisteredUserServiceProvider = (function () {
         var registeredUsers = db.get('registeredUsers');
         return registeredUserDataAccessor.insertUser(req, res);
     };
-    RegisteredUserServiceProvider.prototype.read = function (req, res) {
-        return false;
-    };
-    RegisteredUserServiceProvider.prototype.update = function (req, res) {
-        return false;
-    };
-    RegisteredUserServiceProvider.prototype.remove = function (req, res) {
-        return false;
-    };
     return RegisteredUserServiceProvider;
 })();
 exports.RegisteredUserServiceProvider = RegisteredUserServiceProvider;
