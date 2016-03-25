@@ -10,11 +10,11 @@ export class ChatMessage
 	private sentTime: string;
 	private username: string;
 
-    constructor(message: string, _username:string) 
+    constructor(_message: string, _username:string) 
 	{
         this.username = _username;
 		var date = new Date();
-		var time = date.toUTCString(); 
+		var time = date.toUTCString(); // storing server time as the sent time.
 		this.sentTime = time;
 		this.message = _message;
     }
