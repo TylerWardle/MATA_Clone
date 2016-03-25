@@ -13,8 +13,8 @@ var ViewingHistory = (function () {
         /* POST add a webcomic id to the users history list */
         router.post('/', function (req, res) {
             // get the link in the url for the webcomic
-            var comicID = req.params.id;
-            historyServiceProvider.addWebComicLinkToList(req, res, comicID);
+            var userName = req.params.userName;
+            historyServiceProvider.addWebComicLinkToList(req, res, userName);
         });
         /* GET the history of webcomics a user has  */
         router.get('/', function (req, res) {
