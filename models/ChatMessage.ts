@@ -1,16 +1,21 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 
+/* This class models a chat message. These message object are used to 
+	create a global chat where the messages will be shared among all online
+	registered users. */
 export class ChatMessage 
 {
 	private message: string;
-	private date: Data;
+	private sentTime: string;
 	private username: string;
 
-    constructor(message: string, date:Date, _username:string) 
+    constructor(message: string, _username:string) 
 	{
         this.username = _username;
-		this.date = _date;
+		var date = new Date();
+		var time = date.toUTCString(); 
+		this.sentTime = time;
 		this.message = _message;
     }
 
@@ -24,8 +29,8 @@ export class ChatMessage
         return this.message;
     }
 
-    getTime(): Date 
+    getMessageSentTime(): string 
 	{
-        return this.date;
+        return this.sentTime;
     }
 }
