@@ -5,15 +5,15 @@ var ChatUser = require('./ChatUser');
 var GlobalChat = (function () {
     /** Allocates space for the messages and online users.*/
     function GlobalChat() {
-        this._newMessagesFlag = false;
-        this._onlineUserUpdates = false;
+        this._currentMessageCount = 0;
+        this._onlineUserCount = 0;
         this._messages = [];
         this._messages[1024];
         this._onlineUsers = [];
         this._onlineUsers[256];
     }
     /* Returns a list of online users. */
-    GlobalChat.prototype.getOnlineUsers = function () {
+    GlobalChat.prototype.getOnlineUsersList = function () {
         return this._onlineUsers;
     };
     /* Returns all the chat messages sent by users .*/
@@ -37,12 +37,12 @@ var GlobalChat = (function () {
         delete this._onlineUsers[username];
     };
     /* Returns true if there are new messages to pull. */
-    GlobalChat.prototype.checkMessagesFlag = function () {
-        return this._newMessagesFlag;
+    GlobalChat.prototype.getCurrentMessageCount = function () {
+        return this._currentMessageCount;
     };
     /* Returns true if online user  */
-    GlobalChat.prototype.checkOnlineUsersFlag = function () {
-        return this._onlineUserUpdates;
+    GlobalChat.prototype.getOnlineUsers = function () {
+        return this._onlineUserCount;
     };
     return GlobalChat;
 })();

@@ -8,8 +8,8 @@ export class GlobalChat
 {
 	private _messages: ChatMessage.ChatMessage[];
 	private _onlineUsers: ChatUser.ChatUser[];
-	private _newMessagesFlag: Boolean = false;
-	private _onlineUserUpdates: Boolean = false;
+	private _currentMessageCount: number = 0;
+	private _onlineUserCount: number = 0;
 
 	/** Allocates space for the messages and online users.*/
     constructor() 
@@ -22,7 +22,7 @@ export class GlobalChat
 	}
 	
 	/* Returns a list of online users. */
-	getOnlineUsers(): ChatUser.ChatUser[] 
+	getOnlineUsersList(): ChatUser.ChatUser[] 
 	{
 		return this._onlineUsers;
 	}
@@ -56,15 +56,15 @@ export class GlobalChat
 	}
 	
 	/* Returns true if there are new messages to pull. */
-	checkMessagesFlag():Boolean
+	getCurrentMessageCount():number
 	{
-		return this._newMessagesFlag;
+		return this._currentMessageCount;
 	}
 	
 	/* Returns true if online user  */
-	checkOnlineUsersFlag():Boolean
+	getOnlineUsers():number
 	{
-		return this._onlineUserUpdates;
+		return this._onlineUserCount;
 	}
 }
 

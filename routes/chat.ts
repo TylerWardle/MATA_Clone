@@ -1,40 +1,60 @@
  ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
+ import globalChat = require('../models/GlobalChat');
 
 /* This router is responsible for updating the global chat.*/
 class Chat {
-
+	
     constructor() { }
 
     startChat() {
 		var express = require('express');
 		var router = express.Router();
-
-
+		var chatService = new globalChat.GlobalChat();
+		
 		/* POST a new chat message */
 		router.post('/', function (req, res) {
-			
+			var username = req.cookies.username;
+			var message = req.body.message;
+			chatService.addIncomingMessageToChatMessages(message, username);
 		});
 
 		/* GET chat history */
-		router.get('/', function (req, res) {
-		
+		router.get('/history', function (req, res) {
+			var history = chatService.getChatMessages();
+			res.json(history);
 		});
 
+		
+		/* GET chat history */
+		router.get('/onlineusers', function (req, res) {
+			var onlineUsers = chatService.getOnlineUsers();
+			res.json(onlineUsers);
+		});
 
 		/* GET flag check for new chats */
 		router.get('/status', function (req, res) {
-			// returns the current number of message in the chat .
-
+			// returns the current number of message in the chat
+			
 		});
 		
 		
 		/* GET the last n  entries?*/
-		router.get('/status', function (req, res) {
+		router.get('/status:n', function (req, res) {
 			// returns the current number of message in the chat .
-
+			var lastSeenCount = req.params.n;
+			var currentNumberOfMessage = chatService.getCurrentMessageCount();
+			
+			if(lastSeenCount < currentNumberOfMessage)
+			{
+				var chatHistory = chatService.getChatMessages(); 
+				res.json(chatHistory);
+				
+			}
 		});
+		
+		
 		module.exports = router;
 	}
 }

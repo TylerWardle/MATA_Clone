@@ -18,7 +18,7 @@ var RegisteredUserDbAccessor = (function () {
                 var accountType = req.body.accountType;
                 var password = req.body.password;
                 registeredUsers.insert({
-                    "username": req.body.username,
+                    "username": req.body.username.toLowerCase(),
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
                     "accountType": req.body.accountType,
