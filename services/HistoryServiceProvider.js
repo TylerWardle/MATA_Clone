@@ -13,7 +13,7 @@ var HistoryServiceProvider = (function () {
             // check for duplicate and update.
             registeredUsers.update({ username: req.cookies._username }, {
                 $set: {
-                    viewedHistory: user.viewedHistory + "," + webcomicId
+                    webComicViewingHistory: user.webComicViewingHistory + "," + webcomicId
                 }
             });
         });
