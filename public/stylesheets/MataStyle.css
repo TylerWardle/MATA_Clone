@@ -35,7 +35,7 @@ a{
 
 .profilePicture{
 	
-	max-width: 70%;
+	max-width: 50%;
 	
 }
 #columns{
@@ -49,7 +49,7 @@ a{
 
 #columnOne{
 	position: absolute;
-	width: 30%;
+	width: 48%;
 	left:0%;
 	word-wrap: normal;
 	white-space: normal;
@@ -60,13 +60,13 @@ a{
 
 #columnTwo{
 	position: absolute;
-	width: 30%;
-	left:33%;
+	width: 48%;
+	left:50%;
 }
 
 #columnThree{
 	position: absolute;
-	width: 30%;
+	width: 75%;
 	left:66%;
 }
 
