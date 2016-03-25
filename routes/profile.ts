@@ -140,7 +140,7 @@ class Profile {
 								}
 						   });
 					}
-                    res.redirect('./profile/user/' + user.username );
+                    res.redirect('./user/' + user.username );
 //					if (user.accountType == "contributor") {
 //						var ObjectId = require('mongodb').ObjectID;
 //						contributors.findOne({ guid: ObjectID(user._id) }, function(error, contributor) {

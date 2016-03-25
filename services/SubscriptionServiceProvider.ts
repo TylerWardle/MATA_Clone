@@ -40,6 +40,8 @@ export class SubscriptionServiceProvider
 			
 			return user;
 		});
+		
+		return true;
 	}
 	
 	

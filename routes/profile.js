@@ -78,7 +78,7 @@ var Profile = (function () {
                             }
                         });
                     }
-                    res.redirect('./profile/user/' + user.username);
+                    res.redirect('./user/' + user.username);
                 }
                 else {
                     res.send("ACCESS DENIED");

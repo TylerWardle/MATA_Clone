@@ -18,7 +18,16 @@ var SubscriptionServiceProvider = (function () {
         });
         return true;
     };
-    /* Unsubscribes */
+    /*  Returns the list of subscription for a given user. */
+    SubscriptionServiceProvider.prototype.getSubscriptionListForUser = function (req, res, _username) {
+        var db = req.db;
+        var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ username: _username }, function (err, user) {
+            return user;
+        });
+        return true;
+    };
+    /* Unsubcribe from a  user. */
     SubscriptionServiceProvider.prototype.unsubscribeFromUser = function (req, res, _username) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
