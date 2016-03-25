@@ -15,6 +15,8 @@ var Subscription = (function () {
         });
         /* Delete unsubscribe to a contributor. */
         router.delete('/', function (req, res) {
+            var contributorId = req.params.id;
+            subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
         });
         module.exports = router;
     };

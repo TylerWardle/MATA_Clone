@@ -30,7 +30,21 @@ export class SubscriptionServiceProvider
 		return true;
 	}
 	
-	/* Returns the history of viewed webcomic  for a user. */
+	/*  Returns the list of subscription for a given user. */
+	getSubscriptionListForUser(req:any, res:any, _username:any): Boolean
+	{
+		var db = req.db;
+		var registeredUsers = db.get('registeredUsers');
+		
+		registeredUsers.findOne({username:_username}, function(err, user) {
+			
+			return user;
+		});
+	}
+	
+	
+	
+	/* Unsubcribe from a  user. */
 	unsubscribeFromUser(req:any, res:any, _username:any): any
 	{
 		var db = req.db;
@@ -47,6 +61,7 @@ export class SubscriptionServiceProvider
 					}
 			   });
 		});
+		
 		return true;
 	}
 } 

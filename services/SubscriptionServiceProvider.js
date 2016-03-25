@@ -18,7 +18,7 @@ var SubscriptionServiceProvider = (function () {
         });
         return true;
     };
-    /* Returns the history of viewed webcomic  for a user. */
+    /* Unsubscribes */
     SubscriptionServiceProvider.prototype.unsubscribeFromUser = function (req, res, _username) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
