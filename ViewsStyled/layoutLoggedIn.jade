@@ -3,6 +3,7 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/MataStyle.css')
+		
 	body
 		div(id="o-wrapper", class="o-wrapper")
 			div(id="banner")
@@ -12,6 +13,7 @@ html
 				div(class="c-buttons")
 					button(id="c-button--push-right", class="c-button")
 						img(src="/assets/menu_icon.svg")
+					button(id="c-button--slide-bottom", class="c-button") chat	
 				div(class="search-container")
 					Form#searchForm(class="search-form", method="get", action="/SearchBrowseResults", enctype='multipart/form-data')
 						input(autocomplete="off", type="text", class="search-field", name="seachField", placeholder="Search" value="")
@@ -20,7 +22,7 @@ html
 							option(value="title") Title
 							option(value="author") Author
 							option(value="description") Description
-							option(value="all") Search By		
+							option(value="all") Search By
 			div(id="content")
 				block content
 		
@@ -35,10 +37,35 @@ html
 					a( href="/accountsettings" class="c-menu__link") Account Settings
 				li( class="c-menu__item")
 					a( href="/logout" class="c-menu__link") Logout
-		
-		div( id="c-mask" class="c-mask")				
+					
+		nav(id="c-menu--slide-bottom" class="c-menu c-menu--slide-bottom")
+			button(class="c-menu__close") Chat
+			ul( class="c-chat__items")
+				li( class="c-menu__item")
+					p chat 1
+				li( class="c-menu__item")
+					p chat 2
+				li( class="c-menu__item")
+					p chat 3
+				li( class="c-menu__item")
+					p chat 4
+			//div(class="chat-input-text", action="")
+			//	form(name="chat-input")
+			//		input(type="text, name="chat-text")
+			//		input(type="submit", value="Submit", name="chat-submit")
+
+		div( id="c-mask" class="c-mask")
+		div( id="c-mask-2" class="c-mask-2")				
 		script(src="/scripts/menu.js")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 		script.
+			
+			$.get("/chat/status", function(data){
+				if(data){
+					alert("Data: " + data);
+					$('<li />', {html: data}).appendTo('ul.c-chat__items')
+				}	
+			});
 			
 			var pushRight = new Menu({
 				wrapper: '#o-wrapper',
@@ -51,4 +78,17 @@ html
 			pushRightBtn.addEventListener('click', function(e) {
 				e.preventDefault;
 				pushRight.open();
+			});
+			
+			var slidebottom = new Menu({
+				wrapper: '#o-wrapper',
+				type: 'slide-bottom',
+				menuOpenerClass: '.c-button',
+				maskId: '#c-mask'
+			});
+			
+			var slideBottomBtn = document.querySelector('#c-button--slide-bottom');
+			slideBottomBtn.addEventListener('click', function(e) {
+				e.preventDefault;
+				slidebottom.open();
 			});

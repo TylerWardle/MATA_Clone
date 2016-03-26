@@ -36,7 +36,7 @@ class Chat {
 		/* GET flag check for new chats */
 		router.get('/status', function (req, res) {
 			// returns the current number of message in the chat
-			
+			res.json(true);
 		});
 		
 		
