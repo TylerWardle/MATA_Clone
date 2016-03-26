@@ -18,7 +18,7 @@ var RegisteredUserDbAccessor = (function () {
                 var accountType = req.body.accountType;
                 var password = req.body.password;
                 registeredUsers.insert({
-                    "username": req.body.username,
+                    "username": req.body.username.toLowerCase(),
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
                     "accountType": req.body.accountType,
@@ -27,7 +27,9 @@ var RegisteredUserDbAccessor = (function () {
                     "securityAnswer": req.body.securityAnswer,
                     "profilePicture": "http://www.openshot.org/images/blank_profile.png",
                     "aboutMe": "Nothing has been added to this section yet..",
-                    "lastLogin": (new Date()).toDateString()
+                    "lastLogin": (new Date()).toDateString(),
+                    "webComicViewingHistory": "",
+                    "subscriptions": ""
                 }, function (err, doc) {
                     if (err) {
                         res.render("error", { message: "There was a problem adding the information to the database.1" });

@@ -27,7 +27,7 @@ export class RegisteredUserDbAccessor
 			var password = req.body.password;
 			
 			registeredUsers.insert({
-				"username": req.body.username,
+				"username": req.body.username.toLowerCase(),
 				"firstName": req.body.firstName,
 				"lastName": req.body.lastName,
 				"accountType": req.body.accountType,
@@ -36,7 +36,9 @@ export class RegisteredUserDbAccessor
 				"securityAnswer": req.body.securityAnswer,
 				"profilePicture": "http://www.openshot.org/images/blank_profile.png",
 				"aboutMe": "Nothing has been added to this section yet..",
-				"lastLogin": (new Date()).toDateString()
+				"lastLogin": (new Date()).toDateString(),
+				"webComicViewingHistory": "",
+				"subscriptions": ""
 
 			}, function(err, doc) {
 				if (err){
