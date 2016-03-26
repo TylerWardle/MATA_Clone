@@ -1,22 +1,22 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
+var SubscriptionService = require('../services/SubscriptionServiceProvider');
 var Subscription = (function () {
     function Subscription() {
     }
     Subscription.prototype.startSubscription = function () {
         var express = require('express');
         var router = express.Router();
-        var ObjectID = require('mongodb').ObjectID;
+        var subscriptionServiceProvider = new SubscriptionService.SubscriptionServiceProvider();
         /* POST Subscribe to a contributor. */
         router.post('/', function (req, res) {
-            var db = req.db;
-            var registeredUsers = db.get('registeredUsers');
+            var contributorId = req.params.id;
+            subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
         });
         /* Delete unsubscribe to a contributor. */
         router.delete('/', function (req, res) {
-            var db = req.db;
-            var registeredUsers = db.get('registeredUsers');
+            var contributorId = req.params.id;
+            subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
         });
         module.exports = router;
     };

@@ -10,6 +10,10 @@ body {
 	width:100%;
 }
 
+h1{
+	line-height: 100%;
+}
+
 img{
 	width:100%;
 	padding:0;
@@ -28,6 +32,45 @@ a:visited {
 a{
 	text-decoration: none;
 }
+
+.profilePicture{
+	
+	max-width: 50%;
+	
+}
+#columns{
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	word-wrap: normal;
+	white-space: normal;
+	padding: 0;
+}
+
+#columnOne{
+	position: absolute;
+	width: 48%;
+	left:0%;
+	word-wrap: normal;
+	white-space: normal;
+	padding: 0;
+	font-size: 24px;
+	
+}
+
+#columnTwo{
+	position: absolute;
+	width: 48%;
+	left:50%;
+}
+
+#columnThree{
+	position: absolute;
+	width: 75%;
+	left:66%;
+}
+
+
 
 #banner{
 	position: fixed;
@@ -75,11 +118,11 @@ a{
 }
 
 .newComicBtn{
-	position: relative;
-  	left: 0;
+	position: absolute;
+  	right: 110px;
   	top: 0;
+  	width: 76px;
   	padding: 10px;
-  	width: 100px;
   	background: transparent;
   	border: none;
   	background-image: none;
@@ -88,7 +131,47 @@ a{
     box-shadow: none;
 }
 
+.newComicBtn:hover{
+	background: #92e0bd;
+}
+
 #header{
+}
+
+#action-buttons{
+	position: fixed;
+	border: none;
+  	background: transparent;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+	right: 0;
+	bottom:0;
+	width: 10%;
+	padding: 0px;
+	display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: flex;
+    align-items: center;
+	
+}
+
+.edit-Btn{
+	position: relative;
+	border: none;
+  	background: transparent;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+	margin: auto;
+    width: 60%;
+	bottom:220px;
+	padding: 0px;
+	transition: width 0.3s;
+}
+
+.edit-Btn:hover{
+	width:70%;
 }
 
 /*
@@ -106,6 +189,24 @@ a{
   	outline: 0;
   	-webkit-box-shadow: none;
     box-shadow: none;
+}
+
+.c-button-chat{
+	position: relative;
+  	border: none;
+  	background: transparent;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+	margin: auto;
+    width: 60%;
+	bottom:0px;
+	padding: 0px;
+	transition: width 0.3s;
+}
+
+.c-button-chat:hover{
+	width: 70%;
 }
 
 .c-button:hover{
@@ -134,13 +235,31 @@ a{
   transition: transform 0.5s;
 }
 
+.c-chat {
+  position: fixed;
+  z-index: 200;
+  background-color: #767676;
+  transition: transform 0.5s;
+}
+
 .c-menu__items {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.c-chat__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
 .c-menu__link{
+	text-decoration: none;
+}
+
+.c-chat__link{
 	text-decoration: none;
 }
 
@@ -162,10 +281,29 @@ a{
  
 }
 
+.c-chat__close {
+  	color: #000;
+  	background-color: #AAF0D1;
+  	text-align:left;
+  	border: none;
+  	box-shadow: none;
+  	border-radius: none;
+  	height: 100px;
+  	font-size: 40px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+ 
+}
+
 /**
  * Close button resets.
  */
 .c-menu__close:focus {
+  outline: none;
+}
+
+.c-chat__close:focus {
   outline: none;
 }
 
@@ -199,7 +337,7 @@ body.has-active-menu {
 .c-mask.is-active {
   width: 100%;
   height: 100%;
-  opacity: 0.7;
+  opacity: 0.1;
   transition: opacity 0.3s;
 }
 
@@ -267,6 +405,80 @@ body.has-active-menu {
     transform: translateX(-300px);
   }
 }
+/*
+* slide bottom menu
+*/
+
+.c-chat--slide-bottom{
+  position: relatve;
+  width: 300px;
+  height: 600px;
+  text-align: left;
+  overflow-x: scroll;
+  right: 0px;s
+}
+
+.c-chat--slide-bottom .c-chat__items{
+  list-style: none;
+  margin: 0;
+  margin-right: 12px;
+  padding: 0 24px;
+  color: #fff;
+}
+
+.c-chat--slide-bottom .c-chat__item{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c-chat--slide-bottom .c-chat__link {
+  display: block;
+  padding: 0 4px;
+  color: #fff;
+}
+
+.c-chat--slide-bottom .c-chat__close{
+  display: inline-block;
+  width: 100%;
+  margin-right: 12px;
+  padding: 0 24px;
+  height: 60px;
+  line-height: 60px;
+}
+
+.c-chat--slide-bottom{
+  bottom: 0;
+  right: 0;
+  transform: translateY(600px);
+}
+
+.c-chat--slide-bottom.is-active {
+  transform: translateY(0);
+}
+
+.chat-message-text{
+	position: absolute;
+	background: white;
+	bottom: 0px;
+	right:0px;
+	width:280px;
+	border:0px;
+	padding:10px;
+	height: 80px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	
+}
+
+.chat-message-text:focus{
+	outline: none;
+    background: white;
+}
 
 
 /**
@@ -321,18 +533,21 @@ body.has-active-menu {
 .close:hover { background: #AAF0D1; }
 
 .AddCell {
-	background: transparent;
-	position: fixed;
-	right: 50px;
-	bottom: 10%;
-	width: 60px;
+	position: relative;
+	border: none;
+  	background: transparent;
+  	outline: 0;
+  	-webkit-box-shadow: none;
+    box-shadow: none;
+	margin: auto;
+    width: 60%;
+	bottom:100px;
 	padding: 0px;
 	transition: width 0.3s;
 	
 }
 .AddCell:hover { 
-	width: 70px;
-	transition: width .3s;
+	width: 70%;
 }
 
 .search-container{
@@ -392,7 +607,7 @@ select:focus, input:focus{
 	display: block;
     margin-left: 0px;
     margin-right: 0px;
-    max-width: 30%;
+    max-width: 100%;
     max-height: 20%
 }
 
@@ -407,21 +622,7 @@ select:focus, input:focus{
 	
 }
 
-.edit-Btn{
-	background: transparent;
-	position: fixed;
-	left: 50px;
-	bottom: 10%;
-	width: 60px;
-	heigh: 60px;
-	padding: 0px;
-	z-index:50;
-	transition: width .3s;
-}
 
-.edit-Btn:hover{
-	width:70px;
-}
 
 #index-banner-btns{
 	position: absolute;
