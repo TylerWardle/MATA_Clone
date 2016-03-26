@@ -13,8 +13,10 @@ var Chat = (function () {
         /* POST a new chat message */
         router.post('/', function (req, res) {
             var username = req.cookies.username;
-            var message = req.body.message;
-            chatService.addIncomingMessageToChatMessages(message, username);
+            var message = req.body.chatMessage;
+            //console.log(req.body.chatMessage);
+            res.json(message);
+            //chatService.addIncomingMessageToChatMessages(message, username);
         });
         /* GET chat history */
         router.get('/history', function (req, res) {

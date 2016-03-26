@@ -16,7 +16,8 @@ class Chat {
 		/* POST a new chat message */
 		router.post('/', function (req, res) {
 			var username = req.cookies.username;
-			var message = req.body.message;
+			var message = req.body.chatMessage;
+            //res.json(message);
 			chatService.addIncomingMessageToChatMessages(message, username);
 		});
 

@@ -11,9 +11,14 @@ html
 					a(href="/home")
 						img(src="/assets/mataLogo.png") 
 				div(class="c-buttons")
+					div(class="newComicBtn")
+						a(href="/webcomic/create")
+							img(src="/assets/new.svg")
 					button(id="c-button--push-right", class="c-button")
 						img(src="/assets/menu_icon.svg")
-					button(id="c-button--slide-bottom", class="c-button") chat	
+					div(id="action-buttons")
+						button(id="c-button--slide-bottom", class="c-button-chat")
+							img(src="/assets/chat.svg")
 				div(class="search-container")
 					Form#searchForm(class="search-form", method="get", action="/SearchBrowseResults", enctype='multipart/form-data')
 						input(autocomplete="off", type="text", class="search-field", name="seachField", placeholder="Search" value="")
@@ -32,41 +37,48 @@ html
 				li( class="c-menu__item")
 					a( href="/home" class="c-menu__link") Home
 				li( class="c-menu__item")
+					a( href="/webcomic/random" class="c-menu__link") Random Comic	
+				li( class="c-menu__item")
 					a( href="/profile" class="c-menu__link") Profile
 				li( class="c-menu__item")
 					a( href="/accountsettings" class="c-menu__link") Account Settings
 				li( class="c-menu__item")
 					a( href="/logout" class="c-menu__link") Logout
 					
-		nav(id="c-menu--slide-bottom" class="c-menu c-menu--slide-bottom")
-			button(class="c-menu__close") Chat
+		nav(id="c-chat--slide-bottom" class="c-chat c-chat--slide-bottom")
+			button(class="c-chat__close") Chat
 			ul( class="c-chat__items")
-				li( class="c-menu__item")
-					p chat 1
-				li( class="c-menu__item")
-					p chat 2
-				li( class="c-menu__item")
-					p chat 3
-				li( class="c-menu__item")
-					p chat 4
-			//div(class="chat-input-text", action="")
-			//	form(name="chat-input")
-			//		input(type="text, name="chat-text")
-			//		input(type="submit", value="Submit", name="chat-submit")
-
+				li( class="c-chat__item")
+					p User 1: Message ya ya yayayayyayayay
+			form#formChat( name="chat", method="",action="", class="chat-message-box")
+				input#inputChatMessage(type="text", name="chatMessage", placeholder="Message", class="chat-message-text")
+					
 		div( id="c-mask" class="c-mask")
-		div( id="c-mask-2" class="c-mask-2")				
+		div( id="c-mask2" class="c-mask2")			
 		script(src="/scripts/menu.js")
+		script(src="/scripts/chat.js")
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 		script.
-			
+
+			//This script will eventiually get the new chat objects from the server
 			$.get("/chat/status", function(data){
 				if(data){
-					alert("Data: " + data);
+					//alert("Data: " + data);
 					$('<li />', {html: data}).appendTo('ul.c-chat__items')
 				}	
 			});
 			
+			
+			//This script interupts the usual refresh when a new chat message is submitted and instead 
+			//sends a post request to the /chat router with the new chat message. then it clears the input field
+			$('#formChat').on('submit', function(e) {
+				e.preventDefault();
+				$.post("/chat", $(this).serialize(), function(data){
+					$("#inputChatMessage").val("");
+				},'json');
+			});
+			
+			//This script creates a new menu object of type push-right
 			var pushRight = new Menu({
 				wrapper: '#o-wrapper',
 				type: 'push-right',
@@ -74,19 +86,22 @@ html
 				maskId: '#c-mask'
 			});
 			
+			//this script assigns an event listener to the menu button so that the menu is opened when clicked
 			var pushRightBtn = document.querySelector('#c-button--push-right');
 			pushRightBtn.addEventListener('click', function(e) {
 				e.preventDefault;
 				pushRight.open();
 			});
 			
-			var slidebottom = new Menu({
+			//this script creates a new chat window object
+			var slidebottom = new Chat({
 				wrapper: '#o-wrapper',
 				type: 'slide-bottom',
 				menuOpenerClass: '.c-button',
 				maskId: '#c-mask'
 			});
 			
+			//this script adds an event listener to the chat button so the chat window opens when clicked
 			var slideBottomBtn = document.querySelector('#c-button--slide-bottom');
 			slideBottomBtn.addEventListener('click', function(e) {
 				e.preventDefault;
