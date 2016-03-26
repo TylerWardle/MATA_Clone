@@ -25,6 +25,14 @@ block content
 			br
 			|Author: #{webcomic.authorUsername}
 			br
+			|Upvotes: #{webcomic.upvotes}
+			br
+			div
+				form#formUpvotes(name="ud", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+						button#btnUpvote(type='submit', name='op_u',value='op_u') upvote	
+						br
+						button#btnDownvote(type='submit', name='op_d',value='opd') downvote		
+			br		
 			div(class="switch")
 				input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
 				label(for="cmn-toggle-1")

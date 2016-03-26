@@ -16,7 +16,8 @@ var Comic = (function () {
             genre: String,
             toPublish: Boolean,
             openToContribution: Boolean,
-            thumbnailID: String
+            thumbnailID: String,
+            upvotes: Number
         });
         if (Comic.comic == null) {
             Comic.comic = this.mongoose.model('Comic', this.comicSchema);
@@ -25,7 +26,7 @@ var Comic = (function () {
     // INSERT 
     // an _id that we use as ComicID is auto-generated when we insert a new comic object into the DB.
     // NOTE: "un" stands for unnormalized
-    Comic.prototype.insert = function (_title, _authorID, _authorUsername, _description, _genre, _toPublish, _openToContribution, _thumbnailID, callback) {
+    Comic.prototype.insert = function (_title, _authorID, _authorUsername, _description, _genre, _toPublish, _openToContribution, _thumbnailID, _upvotes, callback) {
         var db = this.mongoose.connection;
         var _publicationDate = new Date();
         // create a new comic object with the client given data fields
@@ -40,7 +41,8 @@ var Comic = (function () {
             genre: _genre,
             toPublish: _toPublish,
             openToContribution: _openToContribution,
-            thumbnailID: _thumbnailID
+            thumbnailID: _thumbnailID,
+            upvotes: _upvotes
         });
         // insert the new comic obj into the DB
         c.save(function (err, doc) {
@@ -74,7 +76,7 @@ var Comic = (function () {
         });
     };
     // UPDATE 
-    Comic.prototype.update = function (_comicID, _title, _authorID, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, _thumbnailID, callback) {
+    Comic.prototype.update = function (_comicID, _title, _authorID, _authorUsername, _publicationDate, _description, _genre, _toPublish, _openToContribution, _thumbnailID, _upvotes, callback) {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
         var _publicationDate = new Date();
@@ -89,7 +91,8 @@ var Comic = (function () {
             genre: _genre,
             toPublish: _toPublish,
             thumbnailID: _thumbnailID,
-            openToContribution: _openToContribution
+            openToContribution: _openToContribution,
+            upvotes: _upvotes
         });
         var comicData = a_comic.toObject();
         delete comicData._id; // rid of mongoose error of updating id
