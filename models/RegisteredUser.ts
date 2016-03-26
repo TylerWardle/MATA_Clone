@@ -14,6 +14,8 @@ export class RegisteredUser
 	private guid: string;
 	private secretQuestion: string;
 	private secretAnswer: string;
+	private favorites: string[];
+
 
     constructor(username: string, password: string, firstName: string,
 		lastName: string, accountType: string /*,Question: string, sAnswer:string*/ ) 
@@ -24,6 +26,8 @@ export class RegisteredUser
 		this.lastName = lastName;
 		this.accountType = accountType;
 		this.guid = Guid.newGuid();
+		this.favorites = new Array<string>();
+
 		//this.secretQuestion = sQuestion;
 		//this.secretAnswer = secretAnswer;
     }
@@ -67,6 +71,14 @@ export class RegisteredUser
 	{
 		 return this.secretAnswer;
 	}
+	
+    getFavorites() : string[]{
+        return this.favorites;
+    }
+
+    addFavorite(favorite:string){
+        this.favorites.push(favorite);
+    }
 }
 
 class Guid {
