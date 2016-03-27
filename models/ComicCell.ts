@@ -2,6 +2,7 @@
 
 export class ComicCell {
 
+    
     // class variables
     mongoose: any;
     schema: any;

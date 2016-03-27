@@ -20,8 +20,21 @@ block content
     p Last Online: #{user.lastLogin}
     br
   div(id="profilePicture")
-    img(src="#{user.profilePicture}")
+        p
+            |<img align="left" src="#{user.profilePicture}" alt="" border="0" width="170" height="190" />
 
   div(id="editProfile")
     form#EditProfile(type="editProfile", method="get", action="/profile/edit")
         button#btnEdit(type="submit") Edit Profile
+  -var accountType=user.accountType
+  if accountType=="contributor"
+    -var notnull=contributor.comicIDs
+    unless notnull==null
+      div(id="contributorComics")
+        - for cell in cells
+            p
+              | <a href=""><img align="left" src="http://#{cell}" alt="" border="0" width="100" height="80" /></a>
+      div(id="contributorComics")
+        - for comic in webcomic
+            p
+              | <a href="http://#{comic}"><img align="left" src="" alt="" border="0" width="100" height="80" /></a>

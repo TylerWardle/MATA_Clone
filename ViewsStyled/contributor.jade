@@ -1,0 +1,29 @@
+extends layoutLoggedIn
+
+block content
+	div(id="homepage-header")
+		h1.
+			Welcome to your Homepage , #{contributor.username}!
+	div(id="search-results-container")
+		div(class="search-results")
+			- for (var i = 0; i < comics.length; i++)
+				div(class="divider")
+				br
+				div(class="comic-info-container")
+					|Title: #{comics[i].title}
+					br
+					|Author: #{comics[i].authorUsername}
+					br
+					|Description: #{comics[i].description}
+					br
+					|Genre: #{comics[i].genre}
+					br
+					-if(!comics[i].toPublish)
+						|unpublished
+					-else
+						|published
+					br
+				div(class="thumbnail-container")
+					a(href="http://#{header}id/#{comics[i]._id}")
+						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
+				br				

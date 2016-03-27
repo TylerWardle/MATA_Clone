@@ -7,3 +7,26 @@ block content
 	div(id="createwebcomic")
 		form#submitNewWebcomic(name="submitComic", method="get",action="/webcomic/create")
 			button#btnNewWebcomic(type="submit") New Webcomic
+	div(id="search-results-container")
+		div(class="search-results")
+			- for (var i = 0; i < comics.length; i++)
+				div(class="divider")
+				br
+				div(class="comicSummary")
+					|Title: #{comics[i].title}
+					br
+					|Author: #{comics[i].authorUsername}
+					br
+					|Description: #{comics[i].description}
+					br
+					|Genre: #{comics[i].genre}
+					br
+					-if(!comics[i].toPublish)
+						|unpublished
+					-else
+						|published
+					br
+				div(class="thumbnailContainer")
+					a(href="http://#{header}id/#{comics[i]._id}")
+						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
+				br				

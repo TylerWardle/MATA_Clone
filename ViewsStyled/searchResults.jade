@@ -1,0 +1,34 @@
+extends layoutLoggedIn 
+
+block script
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+	script.
+		
+block content
+	div(id="form")
+		h1.
+			Search Results
+			
+	div(id="search-results-container")
+		div(class="search-results")
+			- for (var i = 0; i < Comics.length; i++)
+				div(class="divider")
+				br
+				div(class="comic-info-container")
+					|Title: #{Comics[i].title}
+					br
+					|Author: #{Comics[i].authorUsername}
+					br
+					|Description: #{Comics[i].description}
+					br
+					|Genre: #{Comics[i].genre}
+					br
+					-if(!Comics[i].toPublish)
+						|unpublished
+					-else
+						|published
+					br
+				div(class="thumbnail-container")
+					a(href="http://#{header}id/#{Comics[i]._id}")
+						img(id="thumbnails", src="http://#{header}image/#{Comics[i].thumbnailID}")
+				br		

@@ -15,17 +15,16 @@ var Application = (function () {
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        var db = monk('127.0.0.1:27017/MATA');
-        //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
-<<<<<<< HEAD
-=======
+        //var db = monk('127.0.0.1:27017/MATA');
+        var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
         var mongoose = require('mongoose'); // #al# : mongoose connection 
-        mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection 
->>>>>>> 0502efdad6d9debd9f4ebf8003e6a76ac970f5c9
+        //mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection
+        mongoose.connect('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl'); // #al# : mongoose connection 
         var routes = require('./routes');
         var app = express();
         // view engine setup
-        app.set('views', path.join(__dirname, 'views'));
+        //app.set('views', path.join(__dirname, 'views'));
+        app.set('views', path.join(__dirname, 'ViewsStyled'));
         app.set('view engine', 'jade');
         // uncomment after placing your favicon in /public
         //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -35,7 +34,7 @@ var Application = (function () {
         app.use(cookieParser());
         app.use(express.static(path.join(__dirname, 'public')));
         app.use(multer({ dest: './uploads/fullsize/' }).single('image'));
-        app.use(multer({ dest: './uploads/profilepictures/' }).single('image'));
+        //app.use(multer({dest:'./uploads/profilepictures/'}).single('image')); 
         // Make our db accessible to our router
         app.use(function (req, res, next) {
             req.db = db;
@@ -73,6 +72,6 @@ var Application = (function () {
         module.exports = app;
     };
     return Application;
-})();
+}());
 var application = new Application();
 application.startApp();

@@ -1,15 +1,23 @@
 body {
-  padding: 10px;
+  padding: 0px;
+  border: 0px;
+  Margin: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+form {
+	display: block;
+	
+}
+
 
 a {
   color: #00B7FF;
 }
 #banner {
 	background-color: steelblue;
+	
 	width:100%;
-    min-height:70px;
+    height:100px;
 }
 #logout{
 	position: absolute;
@@ -17,7 +25,6 @@ a {
 	top: 20px;
 	width: 100px;
 }
-
 
 #profile{
 	position: absolute;
@@ -118,6 +125,14 @@ a {
 	top: 20px;
 	width: 120px;
 }
+
+#random{
+	position: absolute;
+	left: 335px;
+	top: 20px;
+	width: 200px;
+}
+
 #home{
 	position: absolute;
 	left:4%;
@@ -146,7 +161,7 @@ a {
 }
 #profilePicture{
 	position: absolute;
-	left: 40px;
+	left: 80px;
 	top: 147px;
 	width: 100px;
 }
@@ -220,12 +235,31 @@ a {
 
 #images{
     display: block;
-    top:170px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 150px;
+    margin-right: 0px;
     max-width: 75%;
     max-height: 700px
 }
+#contributorComics{
+	display:block;
+	position: absolute;
+	top: 140px;
+	left: 730px;
+}
+#thumbnails{
+	display: block;
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 30%;
+    max-height: 20%
+}
+#search-results-container .divider{
+	width:600px;
+	height:0;
+	border-top:4px groove steelblue;
+	font-size:0;
+}
+
 #title{
 	position: absolute;
 	left:100px;
@@ -257,12 +291,12 @@ a {
 
 #formForgotPassword
 {
-	position: absolute;;
+	position: absolute;
 	left:100px;
 }
 
 #form{
-	position: absolute;;
+	position: absolute;
 	left:100px;
 }
 
@@ -270,7 +304,7 @@ a {
 {
 	position: absolute;
     left: 100px;
-    top: 80px;
+    top: 100px;
 }
 
 #titleS{
@@ -278,12 +312,16 @@ a {
 	left:100px;
 }
 #belowform{
-	position: absolute;
-	left: 100px;
-	top: 140px
+	position: relative;
+	left: 50px;
+	padding:0px;
+	top: 100px;
+	margin: 0px;
+	width: 400px;
+	word-wrap: normal;
 }
 #belowbelowform{
-	position: absolute;
+	position: relative;
 	left: 100px;
 	top: 160px
 }
@@ -354,7 +392,7 @@ a {
 .close:hover { background: steelblue; }
 
 .AddCell {
-	background: #FF0000;
+	background: steelblue;
 	color: #FFFFFF;
 	font-size: 30px;
 	line-height: 25px;
@@ -378,4 +416,58 @@ a {
 	-moz-box-shadow: 2px 2px 2px #000;
 	-webkit-box-shadow: 2px 2px 2px #000;
 	box-shadow: 2px 2px 2px #000;
+}
+
+#banner .search-container{
+    height: 21px;
+    position: absolute;
+    width: 50;
+    top: 40px;
+    right: 400px;
+    border: 1px solid black;
+    
+}
+#banner .search-form{
+	position: relative;
+    top: 0px;
+}
+
+#banner .search{
+	background-color: white;
+	color: black;
+    font-size: .9em;
+    width: 390px;
+    height: 18px;
+    border: 0 none;
+    margin-bottom: 0;
+
+}
+
+#search-results-container{
+	position: absolute;
+    margin-left: 400px;
+    top: 200px;
+
+}
+
+#banner .search-selector{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 90px;
+	background: grey;
+	border: 0;
+   	border-radius: 0;
+   	height: 23px;
+   	-webkit-appearance: none;
+   	overflow: hidden;
+   	padding-left:10px;
+   	padding-right:10px;
+}
+
+#createForm{
+	display:block;
+	position:absolute;
+	left:100px;
+	
 }

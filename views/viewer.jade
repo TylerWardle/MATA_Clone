@@ -1,65 +1,29 @@
-doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
-    script.
-        function makeList(){
-            var comicString = "#{comicsList}"
-            var comicsList = comicString.split(",")    
-            	
-            for(i=0; i<comicsList.length;i++){
-                $('<li><a href=' + comicsList[i] + '>' + comicsList[i] + '</a></li>').appendTo('ul.comicsList')
-            }
-        }
-    
-  body(onLoad="makeList()")
-   div(id="background")
-    div(id="banner")
-        div(id="logout")
-            form#logout(name="logout",method="get", action= "/logout")
-                button#btnLogout(type="submit", style='background-color: powderblue;') Log Out
-        div(id="accountSettings")
-            form#accountSettings(name="accountSettings", method="get", action="/accountsettings")
-                button#btnAccountSettings(type="submit", style='background-color: powderblue;') Account Settings
-        div(id="profile")
-            form#profile(type="profile", method="get", action="/profile")
-                button#btnProfile(type="submit", style='background-color: powderblue;') Public Profile
-        div(id="random")
-            form#random(name="random comic", method="get", action="/webcomic/random")
-                button#btnRandom(type="submit", style='background-color: powderblue;') Random Comic
-        div(id="home")        
-            form#home(name="home",method="get", action= "/home")
-                button#btnHome(type="submit", style='background-color: powderblue;') Home  
-        div(id="browseTitle")        
-            form#browsetitle(name="title",method="get", action= "/webcomic/browse/title")
-                button#btnTitle(type="submit", style='background-color: powderblue;') Title
-        div(id="browseAuthor")        
-            form#browseauthor(name="author",method="get", action= "/webcomic/browse/author")
-                button#btnAuthor(type="submit", style='background-color: powderblue;') Author
-        div(id="browseLatest")        
-            form#browseLatest(name="latest",method="get", action= "/webcomic/browse/publication_date/newest")
-                button#btnNewest(type="submit", style='background-color: powderblue;') Latest 
-        div(id="browseOldest")        
-            form#browseOldest(name="oldest",method="get", action= "/webcomic/browse/publication_date/oldest")
-                button#btnOldest(type="submit", style='background-color: powderblue;') Oldest 
-        div(id="browseHumor")        
-            form#browseGenre(name="humor",method="get", action= "/webcomic/browse/humor")
-                button#btnHumor(type="submit", style='background-color: powderblue;') Humor 
-        div(id="browseActAdv")        
-            form#browseauthor(name="action/adventure",method="get", action= "/webcomic/browse/action_adventure")
-                button#btnActAdv(type="submit", style='background-color: powderblue;') Action/Adventure
-        div(id="browseSuperhero")        
-            form#browseLatest(name="superhero",method="get", action= "/webcomic/browse/superhero")
-                button#btnSuperhero(type="submit", style='background-color: powderblue;') Superhero 
-        div(id="browseZombies")        
-            form#browseOldest(name="zombies",method="get", action= "/webcomic/browse/zombies")
-                button#btnZombies(type="submit", style='background-color: powderblue;') Zombies 
-        div(id="browsePostApoc")        
-            form#browseGenre(name="post apocalyptic",method="get", action= "/webcomic/browse/post_apocalyptic")
-                button#btnPostApo(type="submit", style='background-color: powderblue;') PostApocalyptic 
-    br
-    br        
-    |Published comics
-    ul(class="comicsList")
+extends layoutLoggedIn
+
+block content
+	div(id="form")
+		h1.
+			Have a look at these published comics #{viewer.username} !		
+	div(id="search-results-container")
+		div(class="search-results")
+			- for (var i = 0; i < comics.length; i++)
+				div(class="divider")
+				br
+				div(class="comicSummary")
+					|Title: #{comics[i].title}
+					br
+					|Author: #{comics[i].authorUsername}
+					br
+					|Description: #{comics[i].description}
+					br
+					|Genre: #{comics[i].genre}
+					br
+					-if(!comics[i].toPublish)
+						|unpublished
+					-else
+						|published
+					br
+				div(class="thumbnailContainer")
+					a(href="http://#{header}id/#{comics[i]._id}")
+						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
+				br			
