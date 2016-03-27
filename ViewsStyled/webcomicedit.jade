@@ -40,3 +40,6 @@ block content
 		form#cancelEditWebcomic(name="cancelEditWebcomic", method="get", action="/webcomic/id/#{webcomic._id}")
 			br
 			button#btnCancel(type="submit") Cancel
+		form#deleteWebcomic(name="deleteWebcomic", method="post", action="/webcomic/delete/#{webcomic._id}")
+			br
+			button#btnDelete(type="submit") Delete

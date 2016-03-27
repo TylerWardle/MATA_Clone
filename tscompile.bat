@@ -23,8 +23,6 @@ echo "compiled files in /services"
 
 cd ..
 
-pause
-
 :COMPILE_TS
 	dir /b *.ts > _tsfiles.txt
 	call tsc --module commonjs @_tsfiles.txt
