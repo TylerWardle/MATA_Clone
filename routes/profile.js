@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
+"use strict";
 var ProfileServiceProvider = require('../services/ProfileServiceProvider');
 var express = require('express');
 var router = express.Router();
@@ -150,6 +151,6 @@ var Profile = (function () {
         module.exports = router;
     };
     return Profile;
-})();
+}());
 var profile = new Profile();
 profile.startProfile();

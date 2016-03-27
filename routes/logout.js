@@ -16,6 +16,6 @@ var Logout = (function () {
         module.exports = router;
     };
     return Logout;
-})();
+}());
 var logout = new Logout();
 logout.startLogout();

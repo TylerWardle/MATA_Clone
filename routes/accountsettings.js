@@ -81,6 +81,6 @@ var AccountSettings = (function () {
         module.exports = router;
     };
     return AccountSettings;
-})();
+}());
 var accountSettings = new AccountSettings();
 accountSettings.startAccountSettings();

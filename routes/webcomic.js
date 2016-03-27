@@ -1,7 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-//<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
+"use strict";
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Webcomic = (function () {
@@ -434,6 +433,6 @@ var Webcomic = (function () {
         module.exports = router;
     };
     return Webcomic;
-})();
+}());
 var webcomic = new Webcomic();
 webcomic.startWebcomic();

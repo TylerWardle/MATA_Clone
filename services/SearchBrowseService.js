@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var express = require('express');
 var router = express.Router();
 var SearchBrowseService = (function () {
@@ -91,5 +92,5 @@ var SearchBrowseService = (function () {
     SearchBrowseService.comicModel = null;
     SearchBrowseService.cellModel = null;
     return SearchBrowseService;
-})();
+}());
 exports.SearchBrowseService = SearchBrowseService;

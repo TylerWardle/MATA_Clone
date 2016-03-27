@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
+"use strict";
 var express = require('express');
 var router = express.Router();
 var ForgotPasswordServiceProvider = (function () {
@@ -19,5 +20,5 @@ var ForgotPasswordServiceProvider = (function () {
         return false;
     };
     return ForgotPasswordServiceProvider;
-})();
+}());
 exports.ForgotPasswordServiceProvider = ForgotPasswordServiceProvider;
