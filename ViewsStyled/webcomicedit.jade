@@ -37,9 +37,8 @@ block content
 			//If the webcomic is not yet published a "submit and publish" button is shown. The submit button pressed is checked in the /update route
 			-if (!webcomic.toPublish)
 				button#btnSubmit(type="submit", name="submit", value ="publish") Update and Publish
+		form#deleteWebcomic(name= "deleteWebcomic", method="post", action="/webcomic/delete/#{webcomic._id}")
+			button#btnDelete(type="submit") Delete
 		form#cancelEditWebcomic(name="cancelEditWebcomic", method="get", action="/webcomic/id/#{webcomic._id}")
 			br
 			button#btnCancel(type="submit") Cancel
-		form#deleteWebcomic(name="deleteWebcomic", method="post", action="/webcomic/delete/#{webcomic._id}")
-			br
-			button#btnDelete(type="submit") Delete
