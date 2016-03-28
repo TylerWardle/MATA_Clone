@@ -54,7 +54,7 @@ export class SubscriptionServiceProvider
 			   {
 					$set:
 					{
-						subscriptions: user.subscriptions + "," + _username
+						subscriptions: user.subscriptions - _username
 					}
 			   });
 		});

@@ -32,7 +32,7 @@ var SubscriptionServiceProvider = (function () {
         registeredUsers.findOne({ username: _username }, function (err, user) {
             registeredUsers.update({ username: _username }, {
                 $set: {
-                    subscriptions: user.subscriptions + "," + _username
+                    subscriptions: user.subscriptions - _username
                 }
             });
         });
