@@ -98,6 +98,11 @@ a{
     margin-right: 0px;
    	width: 100%;
 }
+.viewMode{
+	position:absolute;
+	border-top:300px;
+	white-space: nowrap;
+}
 
 .search-results{
 	width:80%;

@@ -5,18 +5,15 @@ var router = express.Router();
 var AccountSettingsServiceProvider = (function () {
     function AccountSettingsServiceProvider() {
     }
-    AccountSettingsServiceProvider.prototype.create = function (req, res) {
+    AccountSettingsServiceProvider.prototype.changeAccountSettings = function (req, res) {
         var db = req.db;
+        var registeredUsers = db.get('registeredUsers');
         return true;
     };
-    AccountSettingsServiceProvider.prototype.read = function (req, res) {
-        return false;
-    };
-    AccountSettingsServiceProvider.prototype.update = function (req, res) {
-        return false;
-    };
-    AccountSettingsServiceProvider.prototype.remove = function (req, res) {
-        return false;
+    AccountSettingsServiceProvider.prototype.getAccountSettings = function (req, res) {
+        var db = req.db;
+        var registeredUsers = db.get('registeredUsers');
+        return true;
     };
     return AccountSettingsServiceProvider;
 })();

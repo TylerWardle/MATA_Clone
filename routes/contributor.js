@@ -20,8 +20,9 @@ var contributor = (function () {
             var s = new Service.SearchBrowseService(req.mongoose);
             contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (error, contributor) {
                 s.getComics(req, function (comics) {
+                    console.log("length of an empty array: " + new Array());
                     //console.log(comics);
-                    res.render('contributor', { "contributor": contributor, "header": req.headers['host'] + "/webcomic/", "comics": comics });
+                    res.render('contributor', { "contributor": contributor, "favorites": contributor.favorites, "header": req.headers['host'] + "/webcomic/", "comics": comics });
                 });
             });
         });

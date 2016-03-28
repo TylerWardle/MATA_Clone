@@ -24,8 +24,9 @@ export class Comic{
             genre: String,
             toPublish: Boolean,
             openToContribution: Boolean,
+            openToCommenting: Boolean,
             thumbnailID: String,
-            upvotes: Number,
+            upvotes: Number
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -42,8 +43,9 @@ export class Comic{
            _genre: String, 
            _toPublish: Boolean, 
            _openToContribution: Boolean, 
-           _thumbnailID: String, 
-           _upvotes: Number,
+           _openToCommenting: Boolean,
+           _thumbnailID: String,
+           _upvotes: Number, 
            callback: Function): any {
         var db = this.mongoose.connection;
         var _publicationDate = new Date();
@@ -60,10 +62,11 @@ export class Comic{
             genre: _genre,
             toPublish: _toPublish,
             openToContribution: _openToContribution,
+            openToCommenting: _openToCommenting,
             thumbnailID: _thumbnailID,
             upvotes: _upvotes
         });
-
+        
         // insert the new comic obj into the DB
         c.save(function (err, doc) {
             if (err)
@@ -111,6 +114,7 @@ export class Comic{
            _genre: String, 
            _toPublish: Boolean, 
            _openToContribution,
+           _openToCommenting,
            _thumbnailID, 
            _upvotes: Number,
            callback: Function): void {
@@ -130,7 +134,8 @@ export class Comic{
             toPublish: _toPublish,
             thumbnailID: _thumbnailID,
             openToContribution:_openToContribution,
-            upvotes: _upvotes
+            openToCommenting: _openToCommenting,
+            _upvotes: _upvotes
         });
 
         var comicData = a_comic.toObject();

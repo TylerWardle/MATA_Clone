@@ -26,8 +26,9 @@ class contributor{
         	contributors.findOne({guid: ObjectID(req.cookies._id)}, function(error, contributor)
         	{
                 s.getComics(req,(comics:any): void =>{
+                    console.log("length of an empty array: " + new Array<String>());
                   //console.log(comics);
-        		  res.render('contributor',{"contributor": contributor,"header": req.headers['host'] + "/webcomic/", "comics": comics});	
+        		  res.render('contributor',{"contributor": contributor,"favorites": contributor.favorites, "header": req.headers['host'] + "/webcomic/", "comics": comics});	
                 });	
         	});
         });

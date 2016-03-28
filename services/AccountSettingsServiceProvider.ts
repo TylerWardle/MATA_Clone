@@ -1,34 +1,26 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 
-import providers = require('../interfaces/IServiceProvider');
 
 var express = require('express');
 var router = express.Router();
 
-export class AccountSettingsServiceProvider implements providers.IServiceProvider 
+export class AccountSettingsServiceProvider
 {
 	constructor() { }
 	
-	create(req:any, res:any): Boolean
+	changeAccountSettings(req:any, res:any): Boolean
 	{
 		var db = req.db;
-
+		var registeredUsers = db.get('registeredUsers');
 		return true;
 	}
-	
-	read(req:any, res:any): Boolean
+
+	getAccountSettings(req: any, res: any): Boolean
 	{
-		return false;
-	}
-	
-	update(req:any, res:any): Boolean
-	{
-		return false;
-	}
-	
-	remove(req:any, res:any): Boolean
-	{
-		return false;
+		var db = req.db;
+		var registeredUsers = db.get('registeredUsers');
+		
+		return true;
 	}
 } 
