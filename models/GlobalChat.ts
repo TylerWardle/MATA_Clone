@@ -6,6 +6,9 @@ import ChatUser = require('./ChatUser');
 	all online users. */
 export class GlobalChat 
 {
+	// This instance will be used but chat, signin, and logout routers.
+	private static _instance:GlobalChat = new GlobalChat();
+
 	private _messages: ChatMessage.ChatMessage[];
 	private _onlineUsers: ChatUser.ChatUser[];
 	private _currentMessageCount: number = 0;
@@ -19,6 +22,14 @@ export class GlobalChat
 		
 		this._onlineUsers = [];
 		this._onlineUsers[256];
+		
+		GlobalChat._instance = this;
+	}
+	
+	/* Handle to the globalchat instance. */
+	public static getInstance():GlobalChat
+	{
+		return GlobalChat._instance;
 	}
 	
 	/* Returns a list of online users. */
