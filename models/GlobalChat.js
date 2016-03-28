@@ -12,7 +12,12 @@ var GlobalChat = (function () {
         this._messages[1024];
         this._onlineUsers = [];
         this._onlineUsers[256];
+        GlobalChat._instance = this;
     }
+    /* Handle to the globalchat instance. */
+    GlobalChat.getInstance = function () {
+        return GlobalChat._instance;
+    };
     /* Returns a list of online users. */
     GlobalChat.prototype.getOnlineUsersList = function () {
         return this._onlineUsers;
@@ -26,16 +31,19 @@ var GlobalChat = (function () {
     GlobalChat.prototype.addUserToChat = function (username) {
         var newUser = new ChatUser.ChatUser(username);
         this._onlineUsers.push(newUser);
+        this._onlineUserCount++;
     };
     /* Adds an incoming message to the list of messages.  */
     GlobalChat.prototype.addIncomingMessageToChatMessages = function (message, username) {
         var newMessage = new ChatMessage.ChatMessage(message, username);
         this._messages.push(newMessage);
+        this._currentMessageCount++;
     };
     /* Removes a user from the list of online user.
         This happens when the user logs out. */
     GlobalChat.prototype.removeUserFromChat = function (username) {
         delete this._onlineUsers[username];
+        this._onlineUserCount--;
     };
     /* Returns true if there are new messages to pull. */
     GlobalChat.prototype.getCurrentMessageCount = function () {
@@ -45,6 +53,8 @@ var GlobalChat = (function () {
     GlobalChat.prototype.getOnlineUsers = function () {
         return this._onlineUserCount;
     };
+    // This instance will be used but chat, signin, and logout routers.
+    GlobalChat._instance = new GlobalChat();
     return GlobalChat;
 }());
 exports.GlobalChat = GlobalChat;

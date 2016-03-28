@@ -6,6 +6,9 @@ import ChatUser = require('./ChatUser');
 	all online users. */
 export class GlobalChat 
 {
+	// This instance will be used but chat, signin, and logout routers.
+	private static _instance:GlobalChat = new GlobalChat();
+
 	private _messages: ChatMessage.ChatMessage[];
 	private _onlineUsers: ChatUser.ChatUser[];
 	private _currentMessageCount: number = 0;
@@ -19,6 +22,14 @@ export class GlobalChat
 		
 		this._onlineUsers = [];
 		this._onlineUsers[256];
+		
+		GlobalChat._instance = this;
+	}
+	
+	/* Handle to the globalchat instance. */
+	public static getInstance():GlobalChat
+	{
+		return GlobalChat._instance;
 	}
 	
 	/* Returns a list of online users. */
@@ -39,6 +50,7 @@ export class GlobalChat
 	{
 		var newUser = new ChatUser.ChatUser(username);
 		this._onlineUsers.push(newUser);
+		this._onlineUserCount++;
 	}
 	
 	/* Adds an incoming message to the list of messages.  */
@@ -46,6 +58,7 @@ export class GlobalChat
 	{
 		var newMessage = new ChatMessage.ChatMessage(message,username);
 		this._messages.push(newMessage);
+		this._currentMessageCount++;
 	}
 	
 	/* Removes a user from the list of online user.
@@ -53,6 +66,7 @@ export class GlobalChat
 	removeUserFromChat(username:string) 
 	{
 		delete this._onlineUsers[username];
+		this._onlineUserCount--;
 	}
 	
 	/* Returns true if there are new messages to pull. */
