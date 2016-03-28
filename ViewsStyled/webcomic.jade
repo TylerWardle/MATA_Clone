@@ -23,7 +23,8 @@ block content
 			br
 			|Genre: #{webcomic.genre}
 			br
-			|Author: #{webcomic.authorUsername}
+			a(href="/profile/user/#{webcomic.authorUsername}") Author: #{webcomic.authorUsername}
+			//|Author: #{webcomic.authorUsername}
 			br
 			div(class="switch")
 				input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
