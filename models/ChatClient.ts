@@ -1,7 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-//<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
 export class ChatClient{   
     private static client: any = null;  
