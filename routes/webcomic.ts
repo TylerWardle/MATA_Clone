@@ -88,48 +88,41 @@ class Webcomic {
             var cc = new ComicCell.ComicCell(req.mongoose);
             var commentService = new CommentService.CommentService(req, res);
             fs.readFile(req.file.path, function (err, img) {
-                commentService.insert("I'm at HalfFoods", "lulu", "56f9a88d0b1196fc142bf170", (commentID: string): void => {
-                    //console.log(commentID);
-                    commentService.getAll("56f8741205c5965c16d9a13e", (comments: any): any => {
-                        console.log("++++++++++++++++++++++++++++++++++" + comments[0].comment);
-                        console.log("++++++++++++++++++++++++++++++++++" + comments[1].comment);
-                        console.log("++++++++++++++++++++++++++++++++++" + comments.length);
-                        c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, thumbnailID, (comicID: String): void => {
 
-                            // read the image file passed in the request and save it
-                            cc.insert(comicID, authorID, authorID, toPublish, (imgName: String): void=> {
-                                // If there's an error
-                                if (!imgName) {
-                                    console.log("There was an error")
-                                    res.redirect("./create");
-                                    res.end();
-                                } else {
-                                    //var newPath = "./uploads/fullsize/" + imgName;
-                                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, imgName, (): void => {});
-                                    var newPath = "./uploads/fullsize/" + imgName;
-                                    //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
-                            
-                                    // write image file to uploads/fullsize folder
-                                    fs.writeFile(newPath, img, function (err) {
-                                        if (err)
-                                            return console.error(err);
-                                        //redirect to the newly created comic
-                                        res.redirect('./id/' + comicID);
-                                    });
-                                }
-                                
-                                var db = req.db;
-                                var contributors = db.get('contributors');
-                                var ObjectId = require('mongodb').ObjectID;
-                                contributors.update({ guid: ObjectId(req.cookies._id) }, {
-                                    $addToSet: {
-                                        comicIDs: [comicID]
-                                    }
-                                });
-                                
+                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, thumbnailID, (comicID: String): void => {
+
+                    // read the image file passed in the request and save it
+                    cc.insert(comicID, authorID, authorID, toPublish, (imgName: String): void=> {
+                        // If there's an error
+                        if (!imgName) {
+                            console.log("There was an error")
+                            res.redirect("./create");
+                            res.end();
+                        } else {
+                            //var newPath = "./uploads/fullsize/" + imgName;
+                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, imgName, (): void => {});
+                            var newPath = "./uploads/fullsize/" + imgName;
+                            //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
+                    
+                            // write image file to uploads/fullsize folder
+                            fs.writeFile(newPath, img, function (err) {
+                                if (err)
+                                    return console.error(err);
+                                //redirect to the newly created comic
+                                res.redirect('./id/' + comicID);
                             });
+                        }
+                        
+                        var db = req.db;
+                        var contributors = db.get('contributors');
+                        var ObjectId = require('mongodb').ObjectID;
+                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
+                            $addToSet: {
+                                comicIDs: [comicID]
+                            }
                         });
-                    });                    
+                        
+                    });
                 });
             });
         });
