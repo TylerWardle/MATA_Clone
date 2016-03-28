@@ -49,11 +49,11 @@ class ForgotPassword {
 				if(user.securityAnswer === req.body.securityAnswer)
 				{
 					res.cookie('_id',user._id);
-					res.render('resetpassword', { title: 'Access Granted! Reset Your Password' });
+					res.render('resetpassword', { title: 'Reset Your Password', alert: 'Access Granted!' });
 				}		
 				else
 				{
-					res.render("recoveraccount", { title: "Secret Answer Incorrect" });
+					res.render("recoveraccount", { title: 'Reset Your Password', alert: "Secret Answer Incorrect" });
 				}
 			});
 		});
@@ -71,7 +71,7 @@ class ForgotPassword {
 													password: req.body.password
 												}
 										   });
-					res.render('signin', { title: 'Your password was successfully reset! Sign in!' });
+					res.render('signin', { title: 'Sign in!', alert: 'Your password was successfully reset!' });
 				}		
 				else
 				{
