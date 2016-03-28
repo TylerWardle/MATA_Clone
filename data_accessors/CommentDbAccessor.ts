@@ -35,8 +35,15 @@ export class CommentDbAccessor{
     }
 
 
-	get(commentID: string): any {
-		return "returned from CommentDbAccessor get()";
+	get(commentID: string, callback: Function): any {
+		var db = this.mongoose.connection;
+        var commentDAO = CommentDbAccessor.comment;
+
+        commentDAO.findById({_id : commentID}, function (err, comment) {
+            if (err)
+                return console.error(err);
+            callback(comment);
+        });
 	}
 
 	getAll(comicID: string, callback: Function) : any {
@@ -50,7 +57,16 @@ export class CommentDbAccessor{
         });
 	}
 
-	delete(commentID: string, userID: string): void {}
+	delete(commentID: string, callback: Function): void {
+        var db = this.mongoose.connection;
+        var commentDAO = CommentDbAccessor.comment;
+
+        commentDAO.remove({ _id: commentID }, function (err, comment) {
+            if (err)
+                return console.error(err);
+            callback();
+        });
+    }
 
 	deleteAll(comicID: string, userID: string): void {}
 }
