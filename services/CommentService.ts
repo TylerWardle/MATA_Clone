@@ -42,8 +42,7 @@ export class CommentService{
         commentDAO.get(commentID, (comment): any => {
         	// get comic object to extract its comicID
         	comicDAO.get(comment.comicID, (comic): any => {
-        		if (comment.authorID == comic.authorID || comment.authorID == userID) {
-        			//allow deletion if the invoker is either the author of the comment or the owner of the comic
+        		if (userID == comic.authorID || userID == comment.authorID) { //allow deletion if the invoker is either the author of the comment or the owner of the comic
         			commentDAO.delete(commentID, (): any => {
         				callback(true);
         			});
@@ -51,6 +50,24 @@ export class CommentService{
         			callback(false);
         		} 
         	});
+        });
+	}
+
+	deleteAll(comicID: string, userID: string, callback: Function): any {
+		var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
+
+
+        var comicDAO = new Comic.Comic(this.req.mongoose);
+
+        // get comic object to extract its comicID
+        comicDAO.get(comicID, (comic): any => {
+        	if (userID == comic.authorID) {	//allow deletion if the invoker is the owner of the comic
+        		commentDAO.deleteAll(comicID, (): any => {
+        			callback(true);
+        		});
+        	} else {
+        		callback(false);
+        	} 
         });
 	}
 }

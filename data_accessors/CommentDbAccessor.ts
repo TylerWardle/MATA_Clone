@@ -68,7 +68,16 @@ export class CommentDbAccessor{
         });
     }
 
-	deleteAll(comicID: string, userID: string): void {}
+	deleteAll(comicID: string, callback: Function): void {
+        var db = this.mongoose.connection;
+        var commentDAO = CommentDbAccessor.comment;
+
+        commentDAO.remove({ comicID: comicID}, function (err, comment) {
+            if (err)
+                return console.error(err);
+            callback();
+        });
+    }
 }
 
 
