@@ -13,5 +13,5 @@ cd ../routes
 tsc --module commonjs *.ts
 echo "compiled files in /routes"
 cd ../services
-tsc --modules commonjs *.ts
+tsc --module commonjs *.ts
 echo "compiled files in /services"
