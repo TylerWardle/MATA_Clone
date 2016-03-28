@@ -13,10 +13,17 @@ var Subscription = (function () {
             var contributorId = req.params.id;
             subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
         });
-        /* Delete unsubscribe to a contributor. */
+        /* Delete Unsubscribe to a contributor. */
         router.delete('/', function (req, res) {
             var contributorId = req.params.id;
-            subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
+            subscriptionServiceProvider.unsubscribeFromUser(req, res, contributorId);
+        });
+        /* Get list of subscripts for a user*/
+        router.get('/', function (req, res) {
+            var contributorId = req.params.id;
+            var subscriptions = subscriptionServiceProvider.getSubscriptionListForUser(req, res, contributorId);
+            var subscriptionList = subscriptions.split(',');
+            // render if here.
         });
         module.exports = router;
     };

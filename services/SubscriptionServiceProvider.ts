@@ -31,17 +31,12 @@ export class SubscriptionServiceProvider
 	}
 	
 	/*  Returns the list of subscription for a given user. */
-	getSubscriptionListForUser(req:any, res:any, _username:any): Boolean
+	getSubscriptionListForUser(req:any, res:any, _username:any): any
 	{
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
 		
-		registeredUsers.findOne({username:_username}, function(err, user) {
-			
-			return user;
-		});
-		
-		return true;
+		return registeredUsers.findOne({username:_username});
 	}
 	
 	
