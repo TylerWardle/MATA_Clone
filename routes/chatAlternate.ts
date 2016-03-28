@@ -53,9 +53,9 @@ class ChatAlternate {
                 //console.log(timeDiff);
                 
                 //if(timeDiff < this.CHAT_TIME_OUT){
-			         res.json(history[0].messages);
+			        res.json(history[0].messages);
                 //}else{
-                    res.json();
+                    //res.json();
                 //}
             });
             
