@@ -90,7 +90,10 @@ class Webcomic {
             fs.readFile(req.file.path, function (err, img) {
                 commentService.insert("I'm at HalfFoods", "lulu", "56f9a88d0b1196fc142bf170", (commentID: string): void => {
                     //console.log(commentID);
-                    commentService.deleteAll("56f9a88d0b1196fc142bf170", "56f78313eb3263f0144cd608", (isDeleted: any): any => {
+                    commentService.getAll("56f8741205c5965c16d9a13e", (comments: any): any => {
+                        console.log("++++++++++++++++++++++++++++++++++" + comments[0].comment);
+                        console.log("++++++++++++++++++++++++++++++++++" + comments[1].comment);
+                        console.log("++++++++++++++++++++++++++++++++++" + comments.length);
                         c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, thumbnailID, (comicID: String): void => {
 
                             // read the image file passed in the request and save it
