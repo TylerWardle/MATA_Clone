@@ -13,7 +13,8 @@ var Chat = (function () {
         /* POST a new chat message */
         router.post('/', function (req, res) {
             var username = req.cookies.username;
-            var message = req.body.message;
+            var message = req.body.chatMessage;
+            res.json(message);
             chatService.addIncomingMessageToChatMessages(message, username);
         });
         /* GET chat history */
@@ -29,6 +30,7 @@ var Chat = (function () {
         /* GET flag check for new chats */
         router.get('/status', function (req, res) {
             // returns the current number of message in the chat
+            res.json(true);
         });
         /* GET the last n  entries?*/
         router.get('/status:n', function (req, res) {

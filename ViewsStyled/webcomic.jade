@@ -32,22 +32,24 @@ block content
 		//if the user viewing the comic is also the author of the comic then display the edit button
 		br
 	-if(isAuthor)
-		div(class="edit-Btn")
-			a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
+		div(id="action-buttons")
+			div(class="edit-Btn")
+				a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
 					img(src="/assets/edit.svg")
 	br
 	div(id="images")
-		div(class="image-container")
+		div(id="image-container")
 			- for (var i = 0; i < cells.length; i++)
 				img(id="images", src="http://#{header}#{cells[i]._id}")
 				br
 				br
 		//If user is a contributor show the add cell button
 	p #{viewMode}
-	div(class="view-mode-btn")
-		-if(accountType == "contributor" && webcomic.openToContribution)
-			a(href="#newCell", name="newCellBtn", title="AddCell", class="AddCell", id="contributor")
-				img(src="/assets/arrows.svg")
+	-if(accountType == "contributor" && webcomic.openToContribution)
+		div(id="action-buttons")
+			div(class="AddCell")
+				a(href="#newCell", name="newCellBtn")
+					img(src="/assets/arrows.svg")
 	br
 	br
 	br

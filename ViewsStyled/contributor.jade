@@ -4,10 +4,6 @@ block content
 	div(id="homepage-header")
 		h1.
 			Welcome to your Homepage , #{contributor.username}!
-		div(id="createwebcomic")
-			div(class="newComicBtn")
-				a(href="/webcomic/create")
-					img(src="/assets/new.svg")
 	div(id="search-results-container")
 		div(class="search-results")
 			- for (var i = 0; i < comics.length; i++)
