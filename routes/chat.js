@@ -14,9 +14,8 @@ var Chat = (function () {
         router.post('/', function (req, res) {
             var username = req.cookies.username;
             var message = req.body.chatMessage;
-            //console.log(req.body.chatMessage);
-            res.json(message);
-            //chatService.addIncomingMessageToChatMessages(message, username);
+            //res.json(message);
+            chatService.addIncomingMessageToChatMessages(message, username);
         });
         /* GET chat history */
         router.get('/history', function (req, res) {
