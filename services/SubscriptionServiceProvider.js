@@ -23,10 +23,7 @@ var SubscriptionServiceProvider = (function () {
     SubscriptionServiceProvider.prototype.getSubscriptionListForUser = function (req, res, _username) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
-        registeredUsers.findOne({ username: _username }, function (err, user) {
-            return user;
-        });
-        return true;
+        return registeredUsers.findOne({ username: _username });
     };
     /* Unsubcribe from a  user. */
     SubscriptionServiceProvider.prototype.unsubscribeFromUser = function (req, res, _username) {
@@ -36,7 +33,7 @@ var SubscriptionServiceProvider = (function () {
         registeredUsers.findOne({ username: _username }, function (err, user) {
             registeredUsers.update({ username: _username }, {
                 $set: {
-                    subscriptions: user.subscriptions + "," + _username
+                    subscriptions: user.subscriptions - _username
                 }
             });
         });

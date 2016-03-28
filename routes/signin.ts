@@ -3,6 +3,7 @@
 import RegisteredUser = require('../models/RegisteredUser');
 import Viewer = require('../models/Viewer');
 import Contributor = require('../models/Contributor');
+import GlobalChat = require('../models/GlobalChat');
 
 
 class Signin {
@@ -12,6 +13,8 @@ class Signin {
     startSignin() {
 		var express = require('express');
 		var router = express.Router();
+		
+		var globalChat = GlobalChat.GlobalChat.getInstance();
 
 		/* POST to sign into the system. */
 		router.post('/', function(req, res) {
@@ -26,6 +29,9 @@ class Signin {
 			registeredUsers.findOne({username:req.body.username}, function(err, user) {
 				if(user)
 				{
+					// add the user to the global chat
+					globalChat.addUserToChat(req.body.username);
+					
 					//res.set('_id', user._id);
 					if(user.password === req.body.password){
 					
@@ -43,14 +49,10 @@ class Signin {
 						res.cookie('userName',user.username);
 						if(user.accountType === "contributor"){
 							res.redirect("contributor");
-							//res.redirect("contributor/"+user._id);
-							//res.render('contributor', { title: 'Welcome back!'});	
 						}
 						else
 						{
 							res.redirect("viewer");
-							//res.redirect("viewer/"+user._id);
-							//res.render('viewer', { title: 'Welcome back!'});
 						}
 					}
 					else
