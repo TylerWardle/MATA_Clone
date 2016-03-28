@@ -4,12 +4,13 @@
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 
 export class ChatClient{   
-    static client: any = null;  
-    mongoose: any;
+    private static client: any = null;  
+    private static mongoose: any;
+    private static ChatClientSchema: any;
 
     constructor(mongoose: any){
-        this.mongoose = mongoose;
-        var db = mongoose.connection;
+        ChatClient.mongoose = mongoose;
+        //var db = mongoose.connection;
         
         var messageSchema = mongoose.Schema({
             message         : { type : String },
@@ -22,28 +23,32 @@ export class ChatClient{
             lastMessageDate : {type : Date},
             messages        : [messageSchema]
             });
+        
+        ChatClient.ChatClientSchema = clientSchema; 
+//        if (ChatClient.client == null){
+//            ChatClient.client = mongoose.model('client', clientSchema);
+//            
+//            var clientSingelton = new ChatClient.client({   _id: 1,
+//                                                            lastMessageDate: Date(),
+//                                                            messages: []
+//                                                        });
+//            clientSingelton.save();
+//        }
+        
+    }
     
-        if (ChatClient.client == null){
-            ChatClient.client = mongoose.model('client', clientSchema);
-            
+    //Get instance of chat client if it exists otherwise create and return a new one.
+    public static getInstance(mongoose: any):ChatClient{
+        var client = new ChatClient(mongoose);
+        if (this.client == null){
+            this.client = this.mongoose.model('client', this.ChatClientSchema);
             var clientSingelton = new ChatClient.client({   _id: 1,
                                                             lastMessageDate: Date(),
                                                             messages: []
                                                         });
             clientSingelton.save();
         }
+        return ChatClient.client    
     }
-
-//    insert(_message: any): any {
-//        console.log("test 1");
-//        var client = ChatClient.client;
-//        client.update({_id:1}, {$set: {messages : {  message: "test", 
-//                                                      userName: "test", 
-//                                                      date: Date.now }}});
-//        console.log("test 2");
-//
-//    }
-       
-    
             
 }

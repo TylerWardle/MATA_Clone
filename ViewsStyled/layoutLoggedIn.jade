@@ -59,7 +59,7 @@ html
 		script(src="/scripts/chat.js")
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 		script.
-
+			
 			//This script get the new chat objects from the server
 			function updateChat(){
 				$.get("/chatAlternate", $(this).serialize(), function(messages){
@@ -70,10 +70,23 @@ html
 						}
 				},'json');
 			}
+			//start polling for new chats
+			window.onload = pollingLoop();
+			var newMessage = new Audio('/assets/XboxNotification.mp3');
+			newMessage.loop = false;
 			
+			//Poll for new chats every 1 second. if there are new chats update chat history and wait 5 seconds
 			function pollingLoop(){
-				//alert("test");
-				//setTimeout(pollingLoop, 2000);
+				$.get("/chatAlternate/areNewChats", $(this).serialize(), function(answer){
+					if(answer){
+						updateChat();
+						newMessage.play();
+						setTimeout(pollingLoop, 10000);
+					}else{
+						setTimeout(pollingLoop, 1000);
+					}
+				});
+				
 			}
 			
 			

@@ -4,8 +4,8 @@
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 var ChatClient = (function () {
     function ChatClient(mongoose) {
-        this.mongoose = mongoose;
-        var db = mongoose.connection;
+        ChatClient.mongoose = mongoose;
+        //var db = mongoose.connection;
         var messageSchema = mongoose.Schema({
             message: { type: String },
             userName: { type: String },
@@ -16,15 +16,30 @@ var ChatClient = (function () {
             lastMessageDate: { type: Date },
             messages: [messageSchema]
         });
-        if (ChatClient.client == null) {
-            ChatClient.client = mongoose.model('client', clientSchema);
+        ChatClient.ChatClientSchema = clientSchema;
+        //        if (ChatClient.client == null){
+        //            ChatClient.client = mongoose.model('client', clientSchema);
+        //            
+        //            var clientSingelton = new ChatClient.client({   _id: 1,
+        //                                                            lastMessageDate: Date(),
+        //                                                            messages: []
+        //                                                        });
+        //            clientSingelton.save();
+        //        }
+    }
+    //Get instance of chat client if it exists otherwise create and return a new one.
+    ChatClient.getInstance = function (mongoose) {
+        var client = new ChatClient(mongoose);
+        if (this.client == null) {
+            this.client = this.mongoose.model('client', this.ChatClientSchema);
             var clientSingelton = new ChatClient.client({ _id: 1,
                 lastMessageDate: Date(),
                 messages: []
             });
             clientSingelton.save();
         }
-    }
+        return ChatClient.client;
+    };
     ChatClient.client = null;
     return ChatClient;
 })();

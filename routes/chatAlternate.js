@@ -9,11 +9,11 @@ var ChatAlternate = (function () {
     ChatAlternate.prototype.startChat = function () {
         var express = require('express');
         var router = express.Router();
-        var CHAT_TIME_OUT = 5000;
+        //var CHAT_TIME_OUT = 10000;
         /* POST a new chat message */
         router.post('/', function (req, res) {
-            //initialize the singelton
-            var client = new ChatClient.ChatClient(req.mongoose);
+            //initialize or get the singelton
+            var client = ChatClient.ChatClient.getInstance(req.mongoose);
             var db = req.db;
             var clients = db.get('clients');
             var username = req.cookies.userName;
@@ -26,24 +26,40 @@ var ChatAlternate = (function () {
         });
         /* GET chat history */
         router.get('/', function (req, res) {
-            //initialize the singelton
-            var client = new ChatClient.ChatClient(req.mongoose);
+            //initialize or get the singelton
+            var client = ChatClient.ChatClient.getInstance(req.mongoose);
             var db = req.db;
             var clients = db.get('clients');
             clients.find({}, function (err, history) {
                 var currentTime = new Date();
                 var lastChat = new Date(history[0].lastMessageDate);
                 var timeDiff = Math.abs(currentTime.getTime() - lastChat.getTime());
-                //console.log(timeDiff);
-                //if(timeDiff < this.CHAT_TIME_OUT){
                 res.json(history[0].messages);
-                //}else{
-                //res.json();
-                //}
+            });
+        });
+        //Check to see if there have been any new chats within the last 10 seconds and return true if so. 
+        //Otherwise return false
+        router.get('/areNewChats', function (req, res) {
+            //initialize or get the singelton
+            var client = ChatClient.ChatClient.getInstance(req.mongoose);
+            var db = req.db;
+            var clients = db.get('clients');
+            clients.find({}, function (err, history) {
+                var currentTime = new Date();
+                var lastChat = new Date(history[0].lastMessageDate);
+                var timeDiff = Math.abs(currentTime.getTime() - lastChat.getTime());
+                //console.log(timeDiff + " " + ChatAlternate.CHAT_TIME_OUT);
+                if (timeDiff < ChatAlternate.CHAT_TIME_OUT) {
+                    res.json(true);
+                }
+                else {
+                    res.json(false);
+                }
             });
         });
         module.exports = router;
     };
+    ChatAlternate.CHAT_TIME_OUT = 10000;
     return ChatAlternate;
 })();
 var chatAlternate = new ChatAlternate();
