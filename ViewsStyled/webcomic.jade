@@ -55,7 +55,7 @@ block content
 	br
 	
 	- for (var i = 0; i < comments.length; i++)
-		form(action="/comment/delete/#{comments[i]._id}", method="post")
+		form(action="/comment/delete/#{webcomic._id}/#{comments[i]._id}", method="post")
 			li #{comments[i].comment}
 			button.btn.btn-sm(type="submit") Delete
 

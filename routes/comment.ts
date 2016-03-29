@@ -25,15 +25,13 @@ class Comment {
 		});
 
 		// delete a comment
-		router.post('/delete/:id', function (req, res) {
-			console.log("*******************************MMMMMMMMEEEEEE!!!");
+		router.post('/delete/:comicID/:commentID', function (req, res) {
 			var commentService = new CommentService.CommentService(req, res);
-			var commentID = req.params.id;
+			var commentID = req.params.commentID;
 			var userID = req.cookies._id;
 			commentService.delete(commentID, userID, (isDeleted: boolean): void => {
-				console.log("*******************************MMMMMMMMEEEEEE!!!");
 				var header = req.headers['host'];
-				res.redirect("http://"+header+"/webcomic/id/"+req.body.comicID);
+				res.redirect("http://"+header+"/webcomic/id/"+req.params.comicID);
 			});
 		});
 /*
