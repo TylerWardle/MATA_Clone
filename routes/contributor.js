@@ -15,15 +15,27 @@ var contributor = (function () {
         router.get('/', function (req, res) {
             var db = req.db;
             var contributors = db.get('contributors');
+            var registeredUsers = db.get('registeredUsers');
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);
             contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (error, contributor) {
-                s.getComics(req, function (comics) {
-                    console.log("length of an empty array: " + new Array());
-                    //console.log(comics);
-                    res.render('contributor', { "contributor": contributor, "favorites": contributor.favorites, "header": req.headers['host'] + "/webcomic/", "comics": comics });
-                });
+                console.log(contributor);
+                if (contributor.favoritesC != null) {
+                    var favorites = contributor.favoritesC;
+                    s.getComics(req, function (comics) {
+                        console.log("length of an empty array: " + new Array());
+                        //console.log(comics);
+                        res.render('contributor', { "contributor": contributor, "favorites": favorites, "header": req.headers['host'] + "/webcomic/", "comics": comics });
+                    });
+                }
+                else {
+                    s.getComics(req, function (comics) {
+                        console.log("length of an empty array: " + new Array());
+                        //console.log(comics);
+                        res.render('contributor', { "contributor": contributor, "header": req.headers['host'] + "/webcomic/", "comics": comics });
+                    });
+                }
             });
         });
         module.exports = router;

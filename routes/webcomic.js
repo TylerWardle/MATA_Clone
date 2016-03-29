@@ -30,9 +30,21 @@ var Webcomic = (function () {
                         if (req.cookies._id == doc.authorID) {
                             isAuthor = true;
                         }
+                        var votedPpl = doc.votedPpl;
+                        var vv = false;
+                        var uu = null;
+                        for (var i = 0, len = votedPpl.length; i < len; i++) {
+                            if (votedPpl[i].id == user.username) {
+                                vv = true;
+                                uu = votedPpl[i];
+                                break;
+                            }
+                        }
                         cc.getAll(comicID, function (docs) {
                             res.render('webcomic', { "user": user,
                                 "webcomic": doc,
+                                "vv": vv,
+                                "uu": uu,
                                 "cells": docs,
                                 "header": req.headers['host'] + "/webcomic/image/",
                                 "isAuthor": isAuthor,
@@ -52,6 +64,7 @@ var Webcomic = (function () {
             // extract username of owner of comic from the request header
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
+            var contributors = db.get('contributors');
             console.log(req.body);
             registeredUsers.findOne({ _id: req.cookies._id }, function (err, user) {
                 // extract values of ll the comic data fields 
@@ -69,6 +82,7 @@ var Webcomic = (function () {
                     var upvotes = webcomic.upvotes;
                     var votedPpl = webcomic.votedPpl;
                     var vv = false;
+                    var uu = null;
                     for (var i = 0, len = votedPpl.length; i < len; i++) {
                         if (votedPpl[i].id == user.username) {
                             vv = true;
@@ -84,18 +98,24 @@ var Webcomic = (function () {
                     }
                     // updating favorites in registeredUser when the comic is favorited/unfavorited
                     if (req.param('fav')) {
-                        registeredUsers.update({ guid: (req.cookies._id) }, {
-                            $addToSet: {
-                                favorites: [comicID]
-                            }
-                        });
+                        console.log(req.body);
+                        if (user.accountType == "contributor") {
+                            contributors.update({ guid: (req.cookies._id) }, {
+                                $addToSet: {
+                                    favoritesC: [comicID]
+                                }
+                            });
+                        }
                     }
-                    else {
-                        registeredUsers.update({ guid: (req.cookies._id) }, {
-                            $pull: {
-                                favorites: [comicID]
-                            }
-                        });
+                    else if (req.param('unfav')) {
+                        console.log(req.body);
+                        if (user.accountType == "contributor") {
+                            contributors.update({ guid: (req.cookies._id) }, {
+                                $pull: {
+                                    favoritesC: [comicID]
+                                }
+                            });
+                        }
                     }
                     // update the comic
                     c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {

@@ -15,6 +15,20 @@ block script
 			}	
 		}	
 block content
+	//script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+	//script.
+		$(document).ready(function(){
+		$('.voteup').click(function() {
+		$(this).toggleClass('on');
+		});
+		});
+	
+	//script.
+		$(document).ready(function(){
+		$('.votedown').click(function() {
+		$(this).toggleClass('on');
+		});
+		});	 
 	div(id="comic-info-container", class="comic-info-container")
 		h1.
 			#{webcomic.title}
@@ -29,8 +43,16 @@ block content
 			br
 			div
 				form#formUpvotes(name="ud", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
-						button#btnUpvote(type='submit', name='op_u',value='op_u') upvote	
-						button#btnDownvote(type='submit', name='op_d',value='opd') downvote		
+						button#btnUpvote(type='submit', name='op_u',value='op_u') upvote
+						if(vv && uu.votetype==1) 
+							span.voteup.on
+						else
+							span.voteup  
+						button#btnDownvote(type='submit', name='op_d',value='op_d') downvote
+						if(vv && uu.votetype==-1)
+							span.votedown.on
+						else
+							span.votedown
 			br		
 			//div(class="switch")
 				input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")

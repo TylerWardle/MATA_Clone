@@ -11,7 +11,6 @@ var RegisteredUser = (function () {
         this.lastName = lastName;
         this.accountType = accountType;
         this.guid = Guid.newGuid();
-        this.favorites = new Array();
         //this.secretQuestion = sQuestion;
         //this.secretAnswer = secretAnswer;
     }
@@ -38,12 +37,6 @@ var RegisteredUser = (function () {
     };
     RegisteredUser.prototype.getSecretAnswer = function () {
         return this.secretAnswer;
-    };
-    RegisteredUser.prototype.getFavorites = function () {
-        return this.favorites;
-    };
-    RegisteredUser.prototype.addFavorite = function (favorite) {
-        this.favorites.push(favorite);
     };
     return RegisteredUser;
 })();

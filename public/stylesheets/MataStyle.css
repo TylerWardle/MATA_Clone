@@ -675,3 +675,32 @@ select:focus, input:focus{
     right: 0px;
     
 }
+
+.voteup {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 -25px;
+} 
+
+
+.voteup.on {
+  background-position: 0 2px;
+}
+
+.votedown {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('http://i.imgur.com/kDBL4lD.png');
+  background-position: 0 -5px;
+} 
+
+.votedown.on {
+  background-position: 0 -30px;
+}
