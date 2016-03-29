@@ -13,8 +13,17 @@ export class CommentService{
 
 	insert(comment: string, authorID: string, comicID: string, callback: Function): any {
 		var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
-		commentDAO.insert(comment, authorID, comicID, (commentID: any): any => {
-			callback(commentID);
+
+		// retrieve authorUsername that corresponds with authorID
+		var db = this.req.db;
+        var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ _id: authorID }, function(err, user) {
+        	if (err)
+                return console.error(err);
+			var authorUsername = user.username;
+			commentDAO.insert(comment, authorID, authorUsername, comicID, (commentID: any): any => {
+				callback(commentID);
+			});
 		});
 	}
 

@@ -11,7 +11,9 @@ export class CommentDbAccessor{
         this.commentSchema = new this.schema({ 
         	comment: String,
         	authorID: String,
+            authorUsername: String,
         	comicID: String,
+            publicationDate: { type: Date, default: Date.now }
         });
 
         if (CommentDbAccessor.comment == null) { 
@@ -19,12 +21,14 @@ export class CommentDbAccessor{
         }
     }
 
-    insert(comment: string, authorID: string, comicID: string, callback: Function): any {
+    insert(comment: string, authorID: string, authorUsername: string, comicID: string, callback: Function): any {
 		var db = this.mongoose.connection;
         var commentDAO = new CommentDbAccessor.comment({
         	comment: comment,
         	authorID: authorID,
-        	comicID: comicID
+            authorUsername: authorUsername,
+        	comicID: comicID,
+            publicationDate: new Date()
         });
         
         commentDAO.save(function (err, comment) {
