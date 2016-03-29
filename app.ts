@@ -32,7 +32,9 @@ class Application {
 
         var routes = require('./routes');
 
-        var app = express();        
+        var app = express();   
+
+        app.locals.moment = require('moment');     
 
         // view engine setup
         //app.set('views', path.join(__dirname, 'views'));

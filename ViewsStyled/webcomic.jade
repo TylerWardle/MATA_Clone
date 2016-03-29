@@ -1,5 +1,8 @@
 extends layoutLoggedIn 
 
+style.
+	include /stylesheets/MataStyle.css
+
 block script
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 	script.
@@ -78,8 +81,8 @@ block content
 			//hide
 				div(id="viewMode")
 					button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
-		hide
-			-if(isAuthor)
+		-if(isAuthor)
+			hide
 				div(id="action-buttons")
 					div(class="edit-Btn")
 						a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
@@ -89,6 +92,38 @@ block content
 			div(id="image-container")
 				- for (var i = 0; i < cells.length; i++)
 					img(id="images", src="http://#{header}#{cells[i]._id}")
+		br
+		br
+		br
+
+		-if (isAuthor)
+			form(action="/comment/delete/#{webcomic._id}", method="post")
+				button.btn.btn-sm(type="submit") Delete All
+		br
+		br
+
+		- for (var i = 0; i < comments.length; i++)
+			- var date = comments[i].publicationDate
+			h2 #{comments[i].authorUsername} commented #{moment(date).fromNow()} (on #{moment(date).format('MMMM Do YYYY, h:mm ')})
+			| #{comments[i].comment}
+			-if (isAuthor || user._id == comments[i].authorID)
+				form(action="/comment/delete/#{webcomic._id}/#{comments[i]._id}", method="post")
+					button.btn.btn-sm(type="submit") Delete
+			br
+			br
+
+		form(action="/comment/#{webcomic._id}", method="post")
+			input(placeholder="Enter a comment...", type="text", name="comment")
+			button.btn.btn-sm(type="submit") Post
+		
+		div(id="newCell" class="newCellDialog")
+			div
+				a(href="#close" title="Close" class="close") X
+				h2.
+					Add a new Cell!
+				div
+					form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
+						input#firstImage(type="file",name="image", required="")
 					br
 					br
 			//If user is a contributor show the add cell button
@@ -112,6 +147,3 @@ block content
 						input#firstImage(type="file",name="image", required="")
 						br
 						button#btnSubmit(type="submit") Submit
-			
-
-

@@ -4,6 +4,7 @@
 ///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
+var CommentService = require('../services/CommentService');
 var Webcomic = (function () {
     function Webcomic() {
     }
@@ -41,14 +42,19 @@ var Webcomic = (function () {
                             }
                         }
                         cc.getAll(comicID, function (docs) {
-                            res.render('webcomic', { "user": user,
-                                "webcomic": doc,
-                                "vv": vv,
-                                "uu": uu,
-                                "cells": docs,
-                                "header": req.headers['host'] + "/webcomic/image/",
-                                "isAuthor": isAuthor,
-                                "accountType": req.cookies.accountType });
+                            //get comments
+                            var commentService = new CommentService.CommentService(req, res);
+                            commentService.getAll(comicID, function (comments) {
+                                res.render('webcomic', { "user": user,
+                                    "webcomic": doc,
+                                    "vv": vv,
+                                    "uu": uu,
+                                    "cells": docs,
+                                    "header": req.headers['host'] + "/webcomic/image/",
+                                    "isAuthor": isAuthor,
+                                    "accountType": req.cookies.accountType,
+                                    "comments": comments });
+                            });
                         });
                     });
                 }
@@ -283,16 +289,33 @@ var Webcomic = (function () {
             else {
                 openToCommenting = false;
             }
-            //set the toPublish field relative to which submit button is pushed
-            if (req.body.submit == "publish") {
-                toPublish = true;
+            if (!openToCommenting) {
+                var commentService = new CommentService.CommentService(req, res);
+                commentService.deleteAll(comicID, authorID, function (isDeleted) {
+                    //set the toPublish field relative to which submit button is pushed
+                    if (req.body.submit == "publish") {
+                        toPublish = true;
+                    }
+                    // update the comic
+                    var c = new Comic.Comic(req.mongoose);
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
+                        // redirect client to updated comic web page
+                        res.redirect('/webcomic/id/' + comicID);
+                    });
+                });
             }
-            // update the comic
-            var c = new Comic.Comic(req.mongoose);
-            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
-                // redirect client to updated comic web page
-                res.redirect('/webcomic/id/' + comicID);
-            });
+            else {
+                //set the toPublish field relative to which submit button is pushed
+                if (req.body.submit == "publish") {
+                    toPublish = true;
+                }
+                // update the comic
+                var c = new Comic.Comic(req.mongoose);
+                c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
+                    // redirect client to updated comic web page
+                    res.redirect('/webcomic/id/' + comicID);
+                });
+            }
         });
         // Retrieve old comic fields to edit on 
         router.get('/edit/:id', function (req, res) {
@@ -308,13 +331,16 @@ var Webcomic = (function () {
             var comicID = req.params.id;
             var authorID = req.cookies._id;
             // Remove this comic document
-            var c = new Comic.Comic(req.mongoose);
-            c.delete(comicID, authorID, function () {
-                // remove associated comic cell documents
-                var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, function () {
-                    var header = req.headers['host'];
-                    res.redirect("http://" + header + "/contributor");
+            var commentService = new CommentService.CommentService(req, res);
+            commentService.deleteAll(comicID, authorID, function (isDeleted) {
+                var c = new Comic.Comic(req.mongoose);
+                c.delete(comicID, authorID, function () {
+                    // remove associated comic cell documents
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.deleteAll(comicID, authorID, function () {
+                        var header = req.headers['host'];
+                        res.redirect("http://" + header + "/contributor");
+                    });
                 });
             });
         });

@@ -5,18 +5,22 @@ var CommentDbAccessor = (function () {
         this.commentSchema = new this.schema({
             comment: String,
             authorID: String,
-            comicID: String
+            authorUsername: String,
+            comicID: String,
+            publicationDate: { type: Date, default: Date.now }
         });
         if (CommentDbAccessor.comment == null) {
             CommentDbAccessor.comment = this.mongoose.model('Comment', this.commentSchema);
         }
     }
-    CommentDbAccessor.prototype.insert = function (comment, authorID, comicID, callback) {
+    CommentDbAccessor.prototype.insert = function (comment, authorID, authorUsername, comicID, callback) {
         var db = this.mongoose.connection;
         var commentDAO = new CommentDbAccessor.comment({
             comment: comment,
             authorID: authorID,
-            comicID: comicID
+            authorUsername: authorUsername,
+            comicID: comicID,
+            publicationDate: new Date()
         });
         commentDAO.save(function (err, comment) {
             if (err)

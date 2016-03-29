@@ -7,6 +7,8 @@ import Comic = require('../models/Comic');
 import ComicCell = require('../models/ComicCell');
 import RegisteredUser = require('../models/RegisteredUser');
 import Contributor = require('../models/Contributor');
+import CommentService = require('../services/CommentService');
+
 
 class Webcomic {
 
@@ -51,14 +53,20 @@ class Webcomic {
                             }
                         }
                         cc.getAll(comicID, (docs: any): void => {
-                            res.render('webcomic', { "user": user, 
-                                                     "webcomic": doc, 
-                                                     "vv": vv,
-                                                     "uu": uu,
-                                                     "cells": docs, 
-                                                     "header": req.headers['host'] + "/webcomic/image/", 
-                                                     "isAuthor": isAuthor, 
-                                                     "accountType": req.cookies.accountType});
+
+                            //get comments
+                            var commentService = new CommentService.CommentService(req, res);
+                            commentService.getAll(comicID, (comments: any): any => {
+                                res.render('webcomic', { "user": user, 
+                                                         "webcomic": doc, 
+                                                         "vv": vv,
+                                                         "uu": uu,
+                                                         "cells": docs, 
+                                                         "header": req.headers['host'] + "/webcomic/image/", 
+                                                         "isAuthor": isAuthor, 
+                                                         "accountType": req.cookies.accountType,
+                                                         "comments": comments});
+                            });
                         });
 
                     });
@@ -318,18 +326,39 @@ class Webcomic {
             } else {
                 openToCommenting = false;
             }
-            //set the toPublish field relative to which submit button is pushed
-            if (req.body.submit == "publish"){
-                toPublish = true;
+
+            if (!openToCommenting) {
+                var commentService = new CommentService.CommentService(req, res);
+                commentService.deleteAll(comicID, authorID, (isDeleted: boolean): any => {
+
+                    //set the toPublish field relative to which submit button is pushed
+                    if (req.body.submit == "publish") {
+                        toPublish = true;
+                    }
+
+                    // update the comic
+                    var c = new Comic.Comic(req.mongoose);
+
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, (): void => {
+                        // redirect client to updated comic web page
+                        res.redirect('/webcomic/id/' + comicID);
+                    });
+                });
             }
+            else{
+                    //set the toPublish field relative to which submit button is pushed
+                    if (req.body.submit == "publish") {
+                        toPublish = true;
+                    }
 
-            // update the comic
-            var c = new Comic.Comic(req.mongoose);
+                    // update the comic
+                   var c = new Comic.Comic(req.mongoose);
 
-            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes,votedPpl, (): void => {
-                // redirect client to updated comic web page
-                res.redirect('/webcomic/id/' + comicID);
-            });
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, (): void => {
+                        // redirect client to updated comic web page
+                        res.redirect('/webcomic/id/' + comicID);
+                    });
+            }
         });
 
         // Retrieve old comic fields to edit on 
@@ -350,14 +379,18 @@ class Webcomic {
             var authorID = req.cookies._id;
         
             // Remove this comic document
+            var commentService = new CommentService.CommentService(req, res);
+            commentService.deleteAll(comicID, authorID, (isDeleted: boolean): any => {
             var c = new Comic.Comic(req.mongoose);
-            c.delete(comicID, authorID, (): void => {
-                // remove associated comic cell documents
-                var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, (): void => { 
-					var header = req.headers['host'];
-					res.redirect("http://"+header+"/contributor");
-				});
+                c.delete(comicID, authorID, (): void => {
+                    // remove associated comic cell documents
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.deleteAll(comicID, authorID, (): void => { 
+                        
+    					var header = req.headers['host'];
+    					res.redirect("http://"+header+"/contributor");
+    				});
+                });
             });
         });
 

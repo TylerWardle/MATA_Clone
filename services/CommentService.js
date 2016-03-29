@@ -7,8 +7,16 @@ var CommentService = (function () {
     }
     CommentService.prototype.insert = function (comment, authorID, comicID, callback) {
         var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
-        commentDAO.insert(comment, authorID, comicID, function (commentID) {
-            callback(commentID);
+        // retrieve authorUsername that corresponds with authorID
+        var db = this.req.db;
+        var registeredUsers = db.get('registeredUsers');
+        registeredUsers.findOne({ _id: authorID }, function (err, user) {
+            if (err)
+                return console.error(err);
+            var authorUsername = user.username;
+            commentDAO.insert(comment, authorID, authorUsername, comicID, function (commentID) {
+                callback(commentID);
+            });
         });
     };
     CommentService.prototype.get = function (commentID, callback) {
