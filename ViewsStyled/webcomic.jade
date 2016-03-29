@@ -1,5 +1,8 @@
 extends layoutLoggedIn 
 
+style.
+	include /stylesheets/MataStyle.css
+
 block script
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 	script.
@@ -57,14 +60,18 @@ block content
 	-if (isAuthor)
 		form(action="/comment/delete/#{webcomic._id}", method="post")
 			button.btn.btn-sm(type="submit") Delete All
+	br
+	br
 
 	- for (var i = 0; i < comments.length; i++)
-		li #{comments[i].authorUsername}
-		li #{comments[i].publicationDate}
-		li #{comments[i].comment}
+		- var date = comments[i].publicationDate
+		h2 #{comments[i].authorUsername} commented #{moment(date).fromNow()} (on #{moment(date).format('MMMM Do YYYY, h:mm ')})
+		| #{comments[i].comment}
 		-if (isAuthor || user._id == comments[i].authorID)
 			form(action="/comment/delete/#{webcomic._id}/#{comments[i]._id}", method="post")
 				button.btn.btn-sm(type="submit") Delete
+		br
+		br
 
 	form(action="/comment/#{webcomic._id}", method="post")
 		input(placeholder="Enter a comment...", type="text", name="comment")
