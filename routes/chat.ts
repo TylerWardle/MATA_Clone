@@ -1,7 +1,7 @@
  ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
- import globalChat = require('../models/GlobalChat');
+
+import GlobalChat = require('../models/GlobalChat');
 
 /* This router is responsible for updating the global chat.*/
 class Chat {
@@ -11,7 +11,7 @@ class Chat {
     startChat() {
 		var express = require('express');
 		var router = express.Router();
-		var chatService = new globalChat.GlobalChat();
+		var chatService = GlobalChat.GlobalChat.getInstance();
 		
 		/* POST a new chat message */
 		router.post('/', function (req, res) {

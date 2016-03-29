@@ -72,6 +72,6 @@ var Application = (function () {
         module.exports = app;
     };
     return Application;
-})();
+}());
 var application = new Application();
 application.startApp();

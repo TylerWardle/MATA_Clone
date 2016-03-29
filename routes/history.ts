@@ -26,13 +26,16 @@ class ViewingHistory {
 
 
 		/* GET the history of webcomics a user has  */
-		router.get('/', function (req, res) {
-		
-			var historyLinks = historyServiceProvider.getViewingHistory(req, res);
+		router.get('/', function (req, res){ 
+			var contributorId = req.params.id;
+			var history = historyServiceProvider.getViewingHistory(req, res);			
 			
-			// render the links here. waiting for new ui.
-
+			var historyList =  history.split(',');
+			
+			//render it here
+			
 		});
+		
 		module.exports = router;
 	}
 }
