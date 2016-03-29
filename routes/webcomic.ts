@@ -63,7 +63,6 @@ class Webcomic {
             var comicID = req.params.id;
             var c = new Comic.Comic(req.mongoose);
             // extract username of owner of comic from the request header
-            var authorUsername = req.cookies.userName;
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
             console.log(req.body);
@@ -78,6 +77,7 @@ class Webcomic {
                     var description = webcomic.description;
                     var genre = webcomic.genre;
                     var authorID = webcomic.authorID;
+                    var authorUsername = webcomic.authorUsername;
                     var openToContribution = webcomic.openToContribution;
                     var openToCommenting = webcomic.openToCommenting
                     var thumbnailID = webcomic.thumbnailID;
