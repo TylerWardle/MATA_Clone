@@ -21,8 +21,18 @@ class Comment {
 			commentService.insert(comment, authorID, comicID, (commentID: string): void => {
 				var header = req.headers['host'];
 				res.redirect("http://"+header+"/webcomic/id/"+req.body.comicID);
-				//console.log("++++++++++++++++++++++++" + "INSERTED COMMENT!");
-				//res.render('comment', { "commentID": commentID });
+			});
+		});
+
+		router.post('/delete/id/:id', function (req, res) {
+			console.log("*******************************MMMMMMMMEEEEEE!!!");
+			var commentService = new CommentService.CommentService(req, res);
+			var commentID = req.params.id;
+			var userID = req.cookies._id;
+			commentService.delete(commentID, userID, (isDeleted: boolean): void => {
+				console.log("*******************************MMMMMMMMEEEEEE!!!");
+				var header = req.headers['host'];
+				res.redirect("http://"+header+"/webcomic/id/"+req.body.comicID);
 			});
 		});
 
