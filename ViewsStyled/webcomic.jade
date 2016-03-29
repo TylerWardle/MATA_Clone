@@ -55,11 +55,11 @@ block content
 	br
 	
 	- for (var i = 0; i < comments.length; i++)
-		form(action="/comment/delete/id/#{comments[i]._id}")
-			li #{comments[i]}
+		form(action="/comment/delete/#{comments[i]._id}", method="post")
+			li #{comments[i].comment}
 			button.btn.btn-sm(type="submit") Delete
 
-	form(action="/comment", method="post")
+	form(action="/comment/#{webcomic._id}", method="post")
 		input(placeholder="Enter a comment...", type="text", name="comment")
 		button.btn.btn-sm(type="submit") Post
 	

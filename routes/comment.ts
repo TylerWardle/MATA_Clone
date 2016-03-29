@@ -12,19 +12,20 @@ class Comment {
 		var router = express.Router();
 		
 		// post a new comment
-		router.post('/', function (req, res) {
+		router.post('/:id', function (req, res) {
 			var commentService = new CommentService.CommentService(req, res);
 			var comment = req.body.comment;
 			var authorID = req.cookies._id;
-			var comicID = req.body.comicID;
+			var comicID = req.params.id;
 
 			commentService.insert(comment, authorID, comicID, (commentID: string): void => {
 				var header = req.headers['host'];
-				res.redirect("http://"+header+"/webcomic/id/"+req.body.comicID);
+				res.redirect("http://"+header+"/webcomic/id/"+comicID);
 			});
 		});
 
-		router.post('/delete/id/:id', function (req, res) {
+		// delete a comment
+		router.post('/delete/:id', function (req, res) {
 			console.log("*******************************MMMMMMMMEEEEEE!!!");
 			var commentService = new CommentService.CommentService(req, res);
 			var commentID = req.params.id;
@@ -35,21 +36,13 @@ class Comment {
 				res.redirect("http://"+header+"/webcomic/id/"+req.body.comicID);
 			});
 		});
-
-		/*
-
-		// get a comment
-		router.get('/id/:id', function (req, res) {
+/*
+		// get comments
+		router.get('/', function (req, res) {
 			var commentService = CommentService.CommentService(req, res);
-			commentService.get(req.params.id, (comment: any) : void => {
-				res.render('comment', { "comment": comment });
-			});
-		});
+			var comicID = req.body.comicID;
 
-		// get all comments
-		router.get('/id/:id', function (req, res) {
-			var commentService = CommentService.CommentService(req, res);
-			commentService.get(req.params.id, (comment: any) : void => {
+			commentService.getAll(comicID, (comment: any) : void => {
 				res.render('comment', { "comment": comment });
 			});
 		});
