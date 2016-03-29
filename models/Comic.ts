@@ -26,7 +26,8 @@ export class Comic{
             openToContribution: Boolean,
             openToCommenting: Boolean,
             thumbnailID: String,
-            upvotes: Number
+            upvotes: Number,
+            votedPpl : [{ id : String , votetype: Number }]
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -46,6 +47,7 @@ export class Comic{
            _openToCommenting: Boolean,
            _thumbnailID: String,
            _upvotes: Number, 
+           _votedPpl : [{ id : String , votetype: Number }],
            callback: Function): any {
         var db = this.mongoose.connection;
         var _publicationDate = new Date();
@@ -64,7 +66,8 @@ export class Comic{
             openToContribution: _openToContribution,
             openToCommenting: _openToCommenting,
             thumbnailID: _thumbnailID,
-            upvotes: _upvotes
+            upvotes: _upvotes,
+            votedPpl: _votedPpl
         });
         
         // insert the new comic obj into the DB
@@ -117,6 +120,7 @@ export class Comic{
            _openToCommenting,
            _thumbnailID, 
            _upvotes: Number,
+           _votedPpl : [{ id : String , votetype: Number }],
            callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
@@ -135,7 +139,8 @@ export class Comic{
             thumbnailID: _thumbnailID,
             openToContribution:_openToContribution,
             openToCommenting: _openToCommenting,
-            _upvotes: _upvotes
+            _upvotes: _upvotes,
+            votedPpl: _votedPpl
         });
 
         var comicData = a_comic.toObject();
