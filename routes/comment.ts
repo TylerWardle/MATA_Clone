@@ -34,43 +34,17 @@ class Comment {
 				res.redirect("http://"+header+"/webcomic/id/"+req.params.comicID);
 			});
 		});
-/*
-		// get comments
-		router.get('/', function (req, res) {
-			var commentService = CommentService.CommentService(req, res);
-			var comicID = req.body.comicID;
 
-			commentService.getAll(comicID, (comment: any) : void => {
-				res.render('comment', { "comment": comment });
+		// delete all comments
+		router.post('/delete/:comicID/', function (req, res) {
+			var commentService = new CommentService.CommentService(req, res);
+			var userID = req.cookies._id;
+			var comicID = req.params.comicID;
+			commentService.deleteAll(comicID, userID, (isDeleted: boolean): void => {
+				var header = req.headers['host'];
+				res.redirect("http://"+header+"/webcomic/id/"+comicID);
 			});
 		});
-
-			getAll(comicID: string, callback: Function) : any {
-		var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
-		commentDAO.getAll(comicID, (comments: any): any => {
-			callback(comments);
-		});
-	}
-
-		})	get(commentID: string, callback: Function) : any {
-		var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
-		commentDAO.get(commentID, (comment: any): any => {
-			callback(comment);
-		});
-	}
-
-	insert(comment: string, authorID: string, comicID: string, callback: Function): any {
-			var username = req.cookies.username;
-			var message = req.body.chatMessage;
-            res.json(message);
-			chatService.addIncomingMessageToChatMessages(message, username);
-		});
-
-		router.get('/history', function (req, res) {
-			var history = chatService.getChatMessages();
-			res.json(history);
-		});
-		*/
 
 		module.exports = router;
 	}
