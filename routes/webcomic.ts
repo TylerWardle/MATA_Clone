@@ -44,17 +44,6 @@ class Webcomic {
                             //get comments
                             var commentService = new CommentService.CommentService(req, res);
                             commentService.getAll(comicID, (comments: any): any => {
-                            
-                            // TESTING: pass client dummy COMMENTS
-                            /*
-                                var commentArr = new Array<String>();
-                                commentArr.push("Life is about making an impact, not making an income. --Kevin @Kruse");
-                                commentArr.push("Whatever the mind of man can conceive and believe, it can achieve. –Napoleon Hill");
-                                commentArr.push("Strive not to be a success, but rather to be of value. –Albert Einstein");
-                                commentArr.push("Two roads diverged in a wood, and I—I took the one less traveled by, And that has made all the difference.  –Robert Frost");
-                                commentArr.push("I attribute my success to this: I never gave or took any excuse. –Florence Nightingale");
-                            */
-
                                 res.render('webcomic', { "user": user, 
                                                          "webcomic": doc, 
                                                          "cells": docs, 
@@ -248,14 +237,18 @@ class Webcomic {
             var authorID = req.cookies._id;
         
             // Remove this comic document
+            var commentService = new CommentService.CommentService(req, res);
+            commentService.deleteAll(comicID, authorID, (isDeleted: boolean): any => {
             var c = new Comic.Comic(req.mongoose);
-            c.delete(comicID, authorID, (): void => {
-                // remove associated comic cell documents
-                var cc = new ComicCell.ComicCell(req.mongoose);
-                cc.deleteAll(comicID, authorID, (): void => { 
-					var header = req.headers['host'];
-					res.redirect("http://"+header+"/contributor");
-				});
+                c.delete(comicID, authorID, (): void => {
+                    // remove associated comic cell documents
+                    var cc = new ComicCell.ComicCell(req.mongoose);
+                    cc.deleteAll(comicID, authorID, (): void => { 
+                        
+    					var header = req.headers['host'];
+    					res.redirect("http://"+header+"/contributor");
+    				});
+                });
             });
         });
 

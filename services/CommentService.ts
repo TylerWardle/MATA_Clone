@@ -65,7 +65,6 @@ export class CommentService{
 	deleteAll(comicID: string, userID: string, callback: Function): any {
 		var commentDAO = new CommentDbAccessor.CommentDbAccessor(this.req.mongoose);
 
-
         var comicDAO = new Comic.Comic(this.req.mongoose);
 
         // get comic object to extract its comicID
