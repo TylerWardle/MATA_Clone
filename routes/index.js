@@ -22,6 +22,8 @@ var Router = (function () {
         router.use('/forgotpassword/reset', require('./forgotpassword'));
         router.use('/SearchBrowseResults', require('./SearchBrowseResults'));
         router.use('/chat', require('./chat'));
+        router.use('/browse', require('./browse'));
+        router.use('/chatAlternate', require('./chatAlternate'));
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'MATA_WEBCOMICS' });

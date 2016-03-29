@@ -1,7 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
-var globalChat = require('../models/GlobalChat');
+var GlobalChat = require('../models/GlobalChat');
 /* This router is responsible for updating the global chat.*/
 var Chat = (function () {
     function Chat() {
@@ -9,7 +8,7 @@ var Chat = (function () {
     Chat.prototype.startChat = function () {
         var express = require('express');
         var router = express.Router();
-        var chatService = new globalChat.GlobalChat();
+        var chatService = GlobalChat.GlobalChat.getInstance();
         /* POST a new chat message */
         router.post('/', function (req, res) {
             var username = req.cookies.username;

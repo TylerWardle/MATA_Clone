@@ -184,7 +184,7 @@ a{
 */
 
 .c-button{
-  	position: absolute;
+  	position: fixed;
   	right: 0;
   	top: 0;
   	width: 105px;
@@ -228,7 +228,6 @@ a{
   -moz-appearance: none;
   appearance: none;
 }
-
 
 /**
  * Menu overview.
@@ -415,15 +414,20 @@ body.has-active-menu {
 */
 
 .c-chat--slide-bottom{
-  position: relatve;
+  position: fixed;
   width: 300px;
   height: 600px;
   text-align: left;
-  overflow-x: scroll;
   right: 0px;s
 }
 
+.scrollList{
+	overflow: scroll;	
+	height: 440px;
+}
+
 .c-chat--slide-bottom .c-chat__items{
+	
   list-style: none;
   margin: 0;
   margin-right: 12px;
@@ -463,7 +467,7 @@ body.has-active-menu {
 }
 
 .chat-message-text{
-	position: absolute;
+	position: fixed;
 	background: white;
 	bottom: 0px;
 	right:0px;

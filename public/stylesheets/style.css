@@ -33,6 +33,86 @@ a {
 	width: 100px;
 }
 
+
+#random{
+	position: absolute;
+	right: 135px;
+	top: 20px;
+	width: 200px;
+}
+
+
+#browseAuthor{
+	position: absolute;
+	left: 30px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseTitle{
+	position: absolute;
+	left: 100px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseLatest{
+	position: absolute;
+	left: 100px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseOldest{
+	position: absolute;
+	left: 240px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseActAdv{
+	position: absolute;
+	left: 310px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseHumor{
+	position: absolute;
+	left: 450px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseZombies{
+	position: absolute;
+	left: 450px;
+	top: 90px;
+	width: 200px;
+}
+
+#browsePostApoc{
+	position: absolute;
+	left: 520px;
+	top: 90px;
+	width: 200px;
+}
+
+#browseSuperhero{
+	position: absolute;
+	left: 700px;
+	top: 90px;
+	width: 200px;
+}
+
+
+#random{
+	position: absolute;
+	right: 135px;
+	top: 20px;
+	width: 200px;
+}
+
 #profiledata
 {
 	position: absolute;
@@ -244,11 +324,6 @@ a {
 	position: relative;
 	left: 100px;
 	top: 160px
-}
-#deleteWebcomic{
-	position:absolute;
-	left: 140px;
-	top:90%;
 }
 #belowimage{
 	position: absolute;

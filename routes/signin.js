@@ -1,9 +1,11 @@
+var GlobalChat = require('../models/GlobalChat');
 var Signin = (function () {
     function Signin() {
     }
     Signin.prototype.startSignin = function () {
         var express = require('express');
         var router = express.Router();
+        var globalChat = GlobalChat.GlobalChat.getInstance();
         /* POST to sign into the system. */
         router.post('/', function (req, res) {
             // Set our internal DB variable
@@ -13,6 +15,8 @@ var Signin = (function () {
             // Fetch the document
             registeredUsers.findOne({ username: req.body.username }, function (err, user) {
                 if (user) {
+                    // add the user to the global chat
+                    globalChat.addUserToChat(req.body.username);
                     //res.set('_id', user._id);
                     if (user.password === req.body.password) {
                         // Update the login time

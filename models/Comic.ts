@@ -45,8 +45,8 @@ export class Comic{
            _toPublish: Boolean, 
            _openToContribution: Boolean, 
            _openToCommenting: Boolean,
-           _thumbnailID: String,
-           _upvotes: Number, 
+           _thumbnailID: String, 
+           _upvotes: Number,
            _votedPpl : [{ id : String , votetype: Number }],
            callback: Function): any {
         var db = this.mongoose.connection;
@@ -69,7 +69,7 @@ export class Comic{
             upvotes: _upvotes,
             votedPpl: _votedPpl
         });
-        
+
         // insert the new comic obj into the DB
         c.save(function (err, doc) {
             if (err)
@@ -139,7 +139,7 @@ export class Comic{
             thumbnailID: _thumbnailID,
             openToContribution:_openToContribution,
             openToCommenting: _openToCommenting,
-            _upvotes: _upvotes,
+            upvotes: _upvotes,
             votedPpl: _votedPpl
         });
 

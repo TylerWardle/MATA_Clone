@@ -18,8 +18,10 @@ var ViewingHistory = (function () {
         });
         /* GET the history of webcomics a user has  */
         router.get('/', function (req, res) {
-            var historyLinks = historyServiceProvider.getViewingHistory(req, res);
-            // render the links here. waiting for new ui.
+            var contributorId = req.params.id;
+            var history = historyServiceProvider.getViewingHistory(req, res);
+            var historyList = history.split(',');
+            //render it here
         });
         module.exports = router;
     };

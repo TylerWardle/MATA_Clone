@@ -97,7 +97,7 @@ var Comic = (function () {
             thumbnailID: _thumbnailID,
             openToContribution: _openToContribution,
             openToCommenting: _openToCommenting,
-            _upvotes: _upvotes,
+            upvotes: _upvotes,
             votedPpl: _votedPpl
         });
         var comicData = a_comic.toObject();
