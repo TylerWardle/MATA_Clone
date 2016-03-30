@@ -18,59 +18,81 @@ class Browse {
       router.get('/byTitle', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getComicsSortedByTitle((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
 
       router.get('/byAuthor', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getComicsSortedByAuthor((comicObjs: any): any => {
-          res.render('browse');
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
 
       router.get('/byPublicationDate/Oldest', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getLeastRecentlyPublishedComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
 
       router.get('/byPublicationDate/Newest', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getMostRecentlyPublishedComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
 
       router.get('/byGenre/zombies', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getZombieComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
+
       router.get('/byGenre/post_apocalyptic', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getPostApocalypticComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
+
       router.get('/byGenre/humor', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getHumorComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
+
       router.get('/byGenre/superhero', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getSuperheroComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
+
       router.get('/byGenre/action_adventure', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getActionAdventureComics((comicObjs: any): any => {
-          res.render('browse'); 
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
         });
       });
 

@@ -142,22 +142,41 @@ export class ComicCell {
         });
     }
 
-    getRepresentativeImagesBody(comicIDs: any, index: any, comicCellIDArr: any, callback: Function): void {
+    getRepresentativeImagesBody(comicIDs: any, index: any, imageHeader: any, comicCellIDArr: any, callback: Function): void {
         this.getRepresentative(comicIDs[index], (doc: any): void => {
-            comicCellIDArr.push(doc._id);
+            comicCellIDArr.push(imageHeader + doc._id);
             if (index == comicIDs.length - 1)
                 callback(comicCellIDArr);
             else
-                this.getRepresentativeImagesBody(comicIDs, index + 1, comicCellIDArr, callback);
+                this.getRepresentativeImagesBody(comicIDs, index + 1, imageHeader, comicCellIDArr, callback);
         });
     }
 
     // given a list of comic IDs, return a list of image links each associated with the respective comicID 
-    getRepresentativeImages(comicIDs: any, callback: Function): any {
+    getRepresentativeImages(comicIDs: any, imageHeader: any, callback: Function): any {
         var db = this.mongoose.connection;
         var comicCellModel = ComicCell.comicCell;
         var comicCellIDArr = new Array<String>();
 
-        this.getRepresentativeImagesBody(comicIDs, 0, comicCellIDArr, callback);
+        this.getRepresentativeImagesBody(comicIDs, 0, imageHeader, comicCellIDArr, callback);
     }
+
+    getThumbnailBody(comicObjs: any, index: any, thumbnailArr: any, callback: Function): void {
+        this.getRepresentative(comicObjs[index]._id, (thumbnail: any): void => {
+            thumbnailArr.push(thumbnail);
+            if (index == comicObjs.length - 1)
+                callback(thumbnailArr);
+            else
+                this.getThumbnailBody(comicObjs, index + 1, thumbnailArr, callback);
+        });
+    }
+
+    getThumbnail(comicObjs: any, callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicCellModel = ComicCell.comicCell;
+        var thumbnailArr = new Array<String>();
+
+        this.getThumbnailBody(comicObjs, 0, thumbnailArr, callback);
+    }
+
 }
