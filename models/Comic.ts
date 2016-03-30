@@ -215,7 +215,7 @@ export class Comic{
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({ 'genre': "Zombies" }, function (err, docs) {
+        comicModel.find({ 'genre': "zombies" }, function (err, docs) {
             callback(docs)
         });
     }
@@ -224,7 +224,7 @@ export class Comic{
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({ 'genre': "Post Apocalyptic" }, function (err, docs) {
+        comicModel.find({ 'genre': "post apocalyptic" }, function (err, docs) {
             callback(docs)
         });
     }
@@ -233,7 +233,7 @@ export class Comic{
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({ 'genre': "Action/Adventure" }, function (err, docs) {
+        comicModel.find({ 'genre': "action/adventure" }, function (err, docs) {
             callback(docs)
         });
     }
@@ -242,7 +242,7 @@ export class Comic{
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({ 'genre': "Humor" }, function (err, docs) {
+        comicModel.find({ 'genre': "humor" }, function (err, docs) {
             callback(docs)
         });
     }
@@ -251,7 +251,7 @@ export class Comic{
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
 
-        comicModel.find({ 'genre': "Superhero" }, function (err, docs) {
+        comicModel.find({ 'genre': "superhero" }, function (err, docs) {
             callback(docs)
         });
     }
