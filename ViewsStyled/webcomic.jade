@@ -18,6 +18,20 @@ block script
 			}	
 		}	
 block content
+	//script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+	//script.
+		$(document).ready(function(){
+		$('.voteup').click(function() {
+		$(this).toggleClass('on');
+		});
+		});
+	
+	//script.
+		$(document).ready(function(){
+		$('.votedown').click(function() {
+		$(this).toggleClass('on');
+		});
+		});	 
 	div(id="comic-info-container", class="comic-info-container")
 		h1.
 			#{webcomic.title}
@@ -28,65 +42,119 @@ block content
 			br
 			|Author: #{webcomic.authorUsername}
 			br
-			div(class="switch")
+			|Upvotes: #{webcomic.upvotes}
+			br
+			br
+			div
+				form#formUpvotes(name="ud", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+						button#btnUpvote(type='submit', name='op_u',value='op_u') upvote
+						if(vv && uu.votetype==1) 
+							div(class="upvote")
+								span.voteup.on
+						else
+							div(class="upvote")
+								span.voteup  
+						button#btnDownvote(type='submit', name='op_d',value='op_d') downvote
+						if(vv && uu.votetype==-1)
+							div(class="downvote")
+								span.votedown.on
+						else
+							div(class="downvote")
+								span.votedown
+			br		
+			//div(class="switch")
 				input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
 				label(for="cmn-toggle-1")
 				|View Mode
 		//if the user viewing the comic is also the author of the comic then display the edit button
+		form#formFavorites(name="favorites", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+			if(favb !=true)
+				button#btnFavorite(type='submit', name='fav',value='fav') Favorite	
+			else
+				button#btnUnfavorite(type='submit', name='unfav',value='unfav') Unfavorite
 		br
-	-if(isAuthor)
-		div(id="action-buttons")
-			div(class="edit-Btn")
-				a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
-					img(src="/assets/edit.svg")
-	br
-	div(id="images")
-		div(id="image-container")
-			- for (var i = 0; i < cells.length; i++)
-				img(id="images", src="http://#{header}#{cells[i]._id}")
-				br
-				br
-		//If user is a contributor show the add cell button
-	p #{viewMode}
-	-if(accountType == "contributor" && webcomic.openToContribution)
-		div(id="action-buttons")
-			div(class="AddCell")
-				a(href="#newCell", name="newCellBtn")
-					img(src="/assets/arrows.svg")
-	br
-	br
-	br
-
-	-if (isAuthor)
-		form(action="/comment/delete/#{webcomic._id}", method="post")
-			button.btn.btn-sm(type="submit") Delete All
-	br
-	br
-
-	- for (var i = 0; i < comments.length; i++)
-		- var date = comments[i].publicationDate
-		h2 #{comments[i].authorUsername} commented #{moment(date).fromNow()} (on #{moment(date).format('MMMM Do YYYY, h:mm ')})
-		| #{comments[i].comment}
-		-if (isAuthor || user._id == comments[i].authorID)
-			form(action="/comment/delete/#{webcomic._id}/#{comments[i]._id}", method="post")
-				button.btn.btn-sm(type="submit") Delete
+		-var accountType=user.accountType
+		unless accountType=="viewer"
+			html
+			script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+			script.
+				$(document).ready(function(){
+				$("button").click(function(){
+				$("hide").toggle();
+				});
+				});
+			div(class="viewMode")
+				button#btnExit(type="button", value="View-Mode") Exit View-Mode
+			hide
+				div(class="viewMode")
+					button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
+		-if(isAuthor)
+			hide
+				div(id="action-buttons")
+					div(class="edit-Btn")
+						a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
+							img(src="/assets/edit.svg")
+		br
+		br
+		br
+		div(id="images")
+			div(id="image-container")
+				- for (var i = 0; i < cells.length; i++)
+					img(id="images", src="http://#{header}#{cells[i]._id}")
+		br
 		br
 		br
 
-	form(action="/comment/#{webcomic._id}", method="post")
-		input(placeholder="Enter a comment...", type="text", name="comment")
-		button.btn.btn-sm(type="submit") Post
-	
-	div(id="newCell" class="newCellDialog")
-		div
-			a(href="#close" title="Close" class="close") X
-			h2.
-				Add a new Cell!
-			div
-				form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
-					input#firstImage(type="file",name="image", required="")
-					br
-					button#btnSubmit(type="submit") Submit
+		-if (isAuthor)
+			-if (webcomic.openToCommenting)
+				form(action="/comment/delete/#{webcomic._id}", method="post")
+					button.btn.btn-sm(type="submit") Delete All
+		br
+		br
+
+		- for (var i = 0; i < comments.length; i++)
+			- var date = comments[i].publicationDate
+			h2 #{comments[i].authorUsername} commented #{moment(date).fromNow()} (on #{moment(date).format('MMMM Do YYYY, h:mm ')})
+			| #{comments[i].comment}
+			-if (isAuthor || user._id == comments[i].authorID)
+				form(action="/comment/delete/#{webcomic._id}/#{comments[i]._id}", method="post")
+					button.btn.btn-sm(type="submit") Delete
+			br
+			br
 		
-
-
+		-if (webcomic.openToCommenting)
+			form(action="/comment/#{webcomic._id}", method="post")
+				input(placeholder="Enter a comment...", type="text", name="comment")
+				button.btn.btn-sm(type="submit") Post
+		
+		div(id="newCell" class="newCellDialog")
+			div
+				a(href="#close" title="Close" class="close") X
+				h2.
+					Add a new Cell!
+				div
+					form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
+						input#firstImage(type="file",name="image", required="")
+					br
+					br
+			//If user is a contributor show the add cell button
+		//p #{viewMode}
+		hide
+			-if(accountType == "contributor" && webcomic.openToContribution)
+				div(id="action-buttons")
+					div(class="AddCell")
+						a(href="#newCell", name="newCellBtn")
+							img(src="/assets/arrows.svg")
+		br
+		br
+		br
+		div(id="newCell" class="newCellDialog")
+			div
+				a(href="#close" title="Close" class="close") X
+				h2.
+					Add a new Cell!
+				div
+					form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
+						input#firstImage(type="file",name="image", required="")
+						br
+						button#btnSubmit(type="submit") Submit

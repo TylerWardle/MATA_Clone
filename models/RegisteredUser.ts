@@ -67,6 +67,7 @@ export class RegisteredUser
 	{
 		 return this.secretAnswer;
 	}
+	
 }
 
 class Guid {

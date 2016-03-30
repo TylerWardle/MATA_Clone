@@ -38,7 +38,7 @@ export class RegisteredUserDbAccessor
 				"aboutMe": "Nothing has been added to this section yet..",
 				"lastLogin": (new Date()).toDateString(),
 				"webComicViewingHistory": "",
-				"subscriptions": ""
+				"subscriptions": "",
 
 			}, function(err, doc) {
 				if (err){
@@ -101,4 +101,4 @@ export class RegisteredUserDbAccessor
 	{
 		return false;
 	}
-} 
+}

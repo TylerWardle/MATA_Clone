@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
@@ -10,6 +9,8 @@ var ProfileServiceProvider = (function () {
     ProfileServiceProvider.prototype.create = function (req, res) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
+        var contributors = db.get("contributors");
+        var comicID = req.params.id;
         return true;
     };
     ProfileServiceProvider.prototype.read = function (req, res) {
@@ -22,8 +23,10 @@ var ProfileServiceProvider = (function () {
             isOwner = true;
         registeredUsers.findOne({ username: userName }, function (err, user) {
             //comics.find({authorUsername:userName}, function(err,comics) {
-            comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function (err, comics) {
-                res.render('profile', { "user": user, "comics": comics, "isOwner": isOwner, "header": req.headers['host'] });
+            comics.find({ fave: { $in: [userName] } }, function (err, comicsfav) {
+                comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function (err, comics) {
+                    res.render('profile', { "user": user, "comics": comics, "favorites": comicsfav, "isOwner": isOwner, "header": req.headers['host'] });
+                });
             });
         });
         return false;
@@ -35,5 +38,5 @@ var ProfileServiceProvider = (function () {
         return false;
     };
     return ProfileServiceProvider;
-}());
+})();
 exports.ProfileServiceProvider = ProfileServiceProvider;

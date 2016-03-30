@@ -7,6 +7,7 @@ export class Comic{
     comicSchema: any;
     static comic: any = null; // static class variable
 
+
     // intializing a comic object establishes a DB connection
     constructor(mongoose: any) {
         this.mongoose = mongoose;
@@ -24,7 +25,11 @@ export class Comic{
             genre: String,
             toPublish: Boolean,
             openToContribution: Boolean,
-            thumbnailID: String
+            openToCommenting: Boolean,
+            thumbnailID: String,
+            upvotes: Number,
+            votedPpl : [{ id : String , votetype: Number }],
+            fave: [String]
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -41,7 +46,11 @@ export class Comic{
            _genre: String, 
            _toPublish: Boolean, 
            _openToContribution: Boolean, 
+           _openToCommenting: Boolean,
            _thumbnailID: String, 
+           _upvotes: Number,
+           _votedPpl : [{ id : String , votetype: Number }],
+           _fave: [String],
            callback: Function): any {
         var db = this.mongoose.connection;
         var _publicationDate = new Date();
@@ -58,9 +67,13 @@ export class Comic{
             genre: _genre,
             toPublish: _toPublish,
             openToContribution: _openToContribution,
-            thumbnailID: _thumbnailID
+            openToCommenting: _openToCommenting,
+            thumbnailID: _thumbnailID,
+            upvotes: _upvotes,
+            votedPpl: _votedPpl,
+            fave: _fave
         });
-        
+
         // insert the new comic obj into the DB
         c.save(function (err, doc) {
             if (err)
@@ -108,7 +121,11 @@ export class Comic{
            _genre: String, 
            _toPublish: Boolean, 
            _openToContribution,
+           _openToCommenting,
            _thumbnailID, 
+           _upvotes: Number,
+           _votedPpl : [{ id : String , votetype: Number }],
+           _fave: [String],
            callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
@@ -125,7 +142,11 @@ export class Comic{
             genre: _genre,
             toPublish: _toPublish,
             thumbnailID: _thumbnailID,
-            openToContribution:_openToContribution
+            openToContribution:_openToContribution,
+            openToCommenting: _openToCommenting,
+            upvotes: _upvotes,
+            votedPpl: _votedPpl,
+            fave: _fave
         });
 
         var comicData = a_comic.toObject();

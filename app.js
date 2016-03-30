@@ -15,13 +15,14 @@ var Application = (function () {
         //Retrive
         var mongo = require('mongodb');
         var monk = require('monk');
-        //var db = monk('127.0.0.1:27017/MATA');
-        var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
+        var db = monk('127.0.0.1:27017/MATA');
+        //var db = monk('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl');
         var mongoose = require('mongoose'); // #al# : mongoose connection 
-        //mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection
-        mongoose.connect('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl'); // #al# : mongoose connection 
+        mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection
+        //mongoose.connect('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl'); // #al# : mongoose connection 
         var routes = require('./routes');
         var app = express();
+        app.locals.moment = require('moment');
         // view engine setup
         //app.set('views', path.join(__dirname, 'views'));
         app.set('views', path.join(__dirname, 'ViewsStyled'));
@@ -72,6 +73,6 @@ var Application = (function () {
         module.exports = app;
     };
     return Application;
-}());
+})();
 var application = new Application();
 application.startApp();

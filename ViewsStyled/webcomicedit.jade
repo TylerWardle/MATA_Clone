@@ -31,6 +31,12 @@ block content
 			-else
 				input#contribution(type="checkbox", name ="openToContribution")
 			br
+			|Open to Commenting?:
+			-if (webcomic.openToCommenting)
+				input#commenting(type="checkbox", name ="openToCommenting", checked)
+			-else
+				input#commenting(type="checkbox", name ="openToCommenting")
+			br
 			br
 			br
 			button#btnSubmit(type="submit", name= "submit", value ="draft") Update

@@ -12,7 +12,7 @@ class Contributor extends RegisteredUser
 		this.comicIDs = new Array<string>();
     }
 
-    getComicIds() : string[]{
+    getComicIds(): string[]{
 		return this.comicIDs;
     }
 

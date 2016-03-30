@@ -1,6 +1,6 @@
 h2 { 
-	font-size: 20px;
-    color: #ff6666;
+	font-size: 15px;
+    color: #708090;
 }
 
 body {
@@ -73,6 +73,7 @@ a{
 	position: absolute;
 	width: 75%;
 	left:66%;
+  padding-left: 40px;
 }
 
 
@@ -102,6 +103,23 @@ a{
     margin-left: 0px;
     margin-right: 0px;
    	width: 100%;
+}
+.viewMode{
+	position:absolute;
+	top:320px;
+	white-space: nowrap;
+}
+.upvote{
+  position:absolute;
+  top:190px;
+  left:6px;
+  white-space: :nowrap;
+}
+.downvote{
+  position:absolute;
+  top:190px;
+  left: 62px;
+  white-space: :nowrap;
 }
 
 .search-results{
@@ -619,6 +637,13 @@ select:focus, input:focus{
     max-width: 100%;
     max-height: 20%
 }
+.thumbnail-container-smaller{
+  display: block;
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 150px;
+    max-height: 350px;
+}
 
 .comic-info-container{
 	position: relative;
@@ -674,4 +699,33 @@ select:focus, input:focus{
 	width:210px;
     right: 0px;
     
+}
+
+.voteup {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('http://i.stack.imgur.com/iqN2k.png');
+  background-position: 0 -25px;
+} 
+
+
+.voteup.on {
+  background-position: 0 2px;
+}
+
+.votedown {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('http://i.imgur.com/kDBL4lD.png');
+  background-position: 0 -5px;
+} 
+
+.votedown.on {
+  background-position: 0 -30px;
 }
