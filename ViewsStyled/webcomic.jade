@@ -62,10 +62,10 @@ block content
 				label(for="cmn-toggle-1")
 				|View Mode
 		//if the user viewing the comic is also the author of the comic then display the edit button
-		form#formFavorites(name="favorites", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
-			button#btnFavorite(type='submit', name='fav',value='fav') Favorite	
-			button#btnUnfavorite(type='submit', name='unfav',value='unfav') Unfavorite
-		br
+		//form#formFavorites(name="favorites", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+		//	button#btnFavorite(type='submit', name='fav',value='fav') Favorite	
+		//	button#btnUnfavorite(type='submit', name='unfav',value='unfav') Unfavorite
+		//br
 		-var accountType=user.accountType
 		unless accountType=="viewer"
 			html
@@ -111,10 +111,11 @@ block content
 					button.btn.btn-sm(type="submit") Delete
 			br
 			br
-
-		form(action="/comment/#{webcomic._id}", method="post")
-			input(placeholder="Enter a comment...", type="text", name="comment")
-			button.btn.btn-sm(type="submit") Post
+		
+		-if (webcomic.openToCommenting)
+			form(action="/comment/#{webcomic._id}", method="post")
+				input(placeholder="Enter a comment...", type="text", name="comment")
+				button.btn.btn-sm(type="submit") Post
 		
 		div(id="newCell" class="newCellDialog")
 			div
