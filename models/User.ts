@@ -17,6 +17,7 @@ export class User {
     getPassword(): string {
         return this.password;
     }
+   
 }
 
 

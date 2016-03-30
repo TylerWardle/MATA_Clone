@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 var dbAccessor = require('../data_accessors/RegisteredUserDbAccessor');
 var express = require('express');
 var router = express.Router();
@@ -14,5 +13,5 @@ var RegisteredUserServiceProvider = (function () {
         return registeredUserDataAccessor.insertUser(req, res);
     };
     return RegisteredUserServiceProvider;
-}());
+})();
 exports.RegisteredUserServiceProvider = RegisteredUserServiceProvider;

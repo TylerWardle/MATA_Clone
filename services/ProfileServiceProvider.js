@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
@@ -10,6 +9,8 @@ var ProfileServiceProvider = (function () {
     ProfileServiceProvider.prototype.create = function (req, res) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
+        var contributors = db.get("contributors");
+        var comicID = req.params.id;
         return true;
     };
     ProfileServiceProvider.prototype.read = function (req, res) {
@@ -35,5 +36,5 @@ var ProfileServiceProvider = (function () {
         return false;
     };
     return ProfileServiceProvider;
-}());
+})();
 exports.ProfileServiceProvider = ProfileServiceProvider;

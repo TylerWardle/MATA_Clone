@@ -22,6 +22,7 @@ var Application = (function () {
         mongoose.connect('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl'); // #al# : mongoose connection 
         var routes = require('./routes');
         var app = express();
+        app.locals.moment = require('moment');
         // view engine setup
         //app.set('views', path.join(__dirname, 'views'));
         app.set('views', path.join(__dirname, 'ViewsStyled'));
@@ -72,6 +73,6 @@ var Application = (function () {
         module.exports = app;
     };
     return Application;
-}());
+})();
 var application = new Application();
 application.startApp();
