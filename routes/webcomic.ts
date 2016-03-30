@@ -90,7 +90,7 @@ class Webcomic {
         });
 
         router.post('/id/:id', function(req, res) {
-            // get web comic id from reqest parameter in the URL
+	// get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
             var c = new Comic.Comic(req.mongoose);
             // extract username of owner of comic from the request header
@@ -175,7 +175,7 @@ class Webcomic {
                         });
                     });
                 });
-            });
+            });  
         });
         
         // Create new comic with associated images (one  image/comic for now) **WORKS**

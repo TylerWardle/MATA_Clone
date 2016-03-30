@@ -2,6 +2,7 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 var express = require('express');
 var router = express.Router();
+var ObjectID = require('mongodb').ObjectID;
 var AccountSettingsServiceProvider = (function () {
     function AccountSettingsServiceProvider() {
     }
@@ -13,7 +14,16 @@ var AccountSettingsServiceProvider = (function () {
     AccountSettingsServiceProvider.prototype.getAccountSettings = function (req, res) {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
-        return true;
+        // Fetch the document
+        registeredUsers.findOne({ _id: ObjectID(req.cookies._id) }, function (err, user) {
+            if (user) {
+                res.render('accountsettings', { "accountsettings": user });
+            }
+            else {
+                res.send("ACCESS DENIED");
+            }
+        });
+        return false;
     };
     return AccountSettingsServiceProvider;
 })();
