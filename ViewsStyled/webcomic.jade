@@ -44,28 +44,35 @@ block content
 			br
 			|Upvotes: #{webcomic.upvotes}
 			br
+			br
 			div
 				form#formUpvotes(name="ud", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
 						button#btnUpvote(type='submit', name='op_u',value='op_u') upvote
 						if(vv && uu.votetype==1) 
-							span.voteup.on
+							div(class="upvote")
+								span.voteup.on
 						else
-							span.voteup  
+							div(class="upvote")
+								span.voteup  
 						button#btnDownvote(type='submit', name='op_d',value='op_d') downvote
 						if(vv && uu.votetype==-1)
-							span.votedown.on
+							div(class="downvote")
+								span.votedown.on
 						else
-							span.votedown
+							div(class="downvote")
+								span.votedown
 			br		
 			//div(class="switch")
 				input(id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" onclick ="toggleView()")
 				label(for="cmn-toggle-1")
 				|View Mode
 		//if the user viewing the comic is also the author of the comic then display the edit button
-		//form#formFavorites(name="favorites", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
-		//	button#btnFavorite(type='submit', name='fav',value='fav') Favorite	
-		//	button#btnUnfavorite(type='submit', name='unfav',value='unfav') Unfavorite
-		//br
+		form#formFavorites(name="favorites", method="post", action="/webcomic/id/#{webcomic._id}", enctype='multipart/form-data')
+			if(favb !=true)
+				button#btnFavorite(type='submit', name='fav',value='fav') Favorite	
+			else
+				button#btnUnfavorite(type='submit', name='unfav',value='unfav') Unfavorite
+		br
 		-var accountType=user.accountType
 		unless accountType=="viewer"
 			html
@@ -76,10 +83,10 @@ block content
 				$("hide").toggle();
 				});
 				});
-			div(id="viewMode")
-				button#btnExit(type="button", value="View-Mode") Viewer View-Mode
-			//hide
-				div(id="viewMode")
+			div(class="viewMode")
+				button#btnExit(type="button", value="View-Mode") Exit View-Mode
+			hide
+				div(class="viewMode")
 					button#btnViewMode(type="button", value="View-Mode") Viewer View-Mode
 		-if(isAuthor)
 			hide
@@ -87,6 +94,8 @@ block content
 					div(class="edit-Btn")
 						a(href="/webcomic/edit/#{webcomic._id}", name="edit-bnt")
 							img(src="/assets/edit.svg")
+		br
+		br
 		br
 		div(id="images")
 			div(id="image-container")
@@ -97,8 +106,9 @@ block content
 		br
 
 		-if (isAuthor)
-			form(action="/comment/delete/#{webcomic._id}", method="post")
-				button.btn.btn-sm(type="submit") Delete All
+			-if (webcomic.openToCommenting)
+				form(action="/comment/delete/#{webcomic._id}", method="post")
+					button.btn.btn-sm(type="submit") Delete All
 		br
 		br
 

@@ -41,8 +41,16 @@ class Webcomic {
                             isAuthor = true
                         }
                         var votedPpl = doc.votedPpl;
+                        var fave = doc.fave;
                         var vv = false;
                         var uu = null;
+                        var favb = false;
+                        for (var j = 0, len = fave.length; j < len; j++){
+                            if(fave[j]==user.username){
+                                favb = true;
+                                break;
+                            }
+                        }
                         for (var i = 0, len = votedPpl.length; i<len; i++){
                             if (votedPpl[i].id==user.username){
                                 vv = true;
@@ -50,6 +58,8 @@ class Webcomic {
                                 break;
                             }
                         }
+                        console.log(fave);
+                        console.log(user.ids)
                         cc.getAll(comicID, (docs: any): void => {
 
                             //get comments
@@ -63,6 +73,7 @@ class Webcomic {
                                                          "header": req.headers['host'] + "/webcomic/image/", 
                                                          "isAuthor": isAuthor, 
                                                          "accountType": req.cookies.accountType,
+                                                         "favb": favb,
                                                          "comments": comments});
                             });
                         });
@@ -77,7 +88,7 @@ class Webcomic {
         });
 
         router.post('/id/:id', function(req, res) {
-            // get web comic id from reqest parameter in the URL
+	// get web comic id from reqest parameter in the URL
             var comicID = req.params.id;
             var c = new Comic.Comic(req.mongoose);
             // extract username of owner of comic from the request header
@@ -102,13 +113,23 @@ class Webcomic {
                     var thumbnailID = webcomic.thumbnailID;
                     var upvotes = webcomic.upvotes;
                     var votedPpl = webcomic.votedPpl;
+                    var fave = webcomic.fave;
+                    console.log(fave);
                     var vv = false;
                     var uu = null;
+                    var favb = false;
                     for (var i = 0, len = votedPpl.length; i<len; i++){
                         if (votedPpl[i].id==user.username){
                             vv = true;
                         }
                     }
+
+                    for (var j = 0, len = fave.length; j < len; j++){
+                            if(fave[j]==user.username){
+                                favb = true ;
+                                break;
+                            }
+                        }
 
                     if (req.param('op_u')&&vv==false) {
                         upvotes++;
@@ -122,29 +143,15 @@ class Webcomic {
                     }
                     // updating favorites in registeredUser when the comic is favorited/unfavorited
 
-                    if (req.param('fav')) {
-                        console.log(req.body);
-                        if (user.accountType=="contributor"){
-                            contributors.update({ guid: (req.cookies._id) }, {
-                                $addToSet: {
-                                    favoritesC: [comicID]
-                                }
-                            });
-                        }
+                    if (req.param('fav') && favb==false) {
+                        fave.push(user.username);
                     }
-                    else if (req.param('unfav')) {
-                        console.log(req.body);
-                        if (user.accountType=="contributor"){
-                             contributors.update({ guid: (req.cookies._id) }, {
-                                $pull: {
-                                    favoritesC: [comicID]
-                                }
-                            });
-                        }
+                    else if (req.param('unfav') && favb) {
+                        fave.pull(user.username); 
                     }
 
                     // update the comic
-                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, (): void => {
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl,fave, (): void => {
                         // redirect client to updated comic web page
                         var cc = new ComicCell.ComicCell(req.mongoose);
                         //used to inform the client if the user is the author of a webcomic they are viewing
@@ -163,7 +170,7 @@ class Webcomic {
                         });
                     });
                 });
-            });
+            });  
         });
         
         // Create new comic with associated images (one  image/comic for now) **WORKS**
@@ -183,6 +190,7 @@ class Webcomic {
             var openToCommenting;
             var thumbnailID = "";
             var upvotes: Number = 0;
+            var fave: [String] = [""];
 
             if (req.body.openToContribution == "on"){
                 openToContribution = true;
@@ -203,7 +211,7 @@ class Webcomic {
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
             fs.readFile(req.file.path, function (err, img) {
-                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes,votedPpl, (comicID: String): void => {
+                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes,votedPpl,fave, (comicID: String): void => {
 
                 // read the image file passed in the request and save it
                     cc.insert(comicID, authorID, authorID, toPublish, (imgName: String): void=> {
@@ -214,7 +222,7 @@ class Webcomic {
                             res.end();
                         } else {
                             //var newPath = "./uploads/fullsize/" + imgName;
-                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes,votedPpl, (): void => {});
+                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes,votedPpl,fave, (): void => {});
                             var newPath = "./uploads/fullsize/" + imgName;
                             //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                     
@@ -312,6 +320,7 @@ class Webcomic {
             var thumbnailID;
             var upvotes;
             var votedPpl;
+            var fave;
             
             if (req.body.openToContribution == "on"){
                 openToContribution = true;
@@ -336,7 +345,7 @@ class Webcomic {
                     // update the comic
                     var c = new Comic.Comic(req.mongoose);
 
-                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, (): void => {
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, (): void => {
                         // redirect client to updated comic web page
                         res.redirect('/webcomic/id/' + comicID);
                     });
@@ -351,7 +360,7 @@ class Webcomic {
                     // update the comic
                    var c = new Comic.Comic(req.mongoose);
 
-                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, (): void => {
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave ,(): void => {
                         // redirect client to updated comic web page
                         res.redirect('/webcomic/id/' + comicID);
                     });

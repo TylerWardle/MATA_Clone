@@ -1,6 +1,10 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 var GlobalChat = require('../models/GlobalChat');
+var LogoutServiceProvider = require('../services/LogoutServiceProvider');
+var LogoutSP = new LogoutServiceProvider.LogoutServiceProvider();
+var express = require('express');
+var router = express.Router();
 var Logout = (function () {
     function Logout() {
     }
@@ -12,10 +16,7 @@ var Logout = (function () {
         router.get('/', function (req, res, db) {
             // remove the user from global chat
             globalChat.removeUserFromChat(req.cookies.username);
-            res.clearCookie('_id');
-            res.clearCookie('accountType');
-            res.clearCookie('userName');
-            res.redirect('/');
+            LogoutSP.getLogout(req, res);
         });
         module.exports = router;
     };

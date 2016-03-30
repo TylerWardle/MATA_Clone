@@ -2,10 +2,14 @@
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
 
 import GlobalChat = require('../models/GlobalChat');
+import LogoutServiceProvider = require('../services/LogoutServiceProvider');
+
+var LogoutSP = new LogoutServiceProvider.LogoutServiceProvider();
+var express = require('express');
+var router = express.Router();
 
 class Logout {
-
-    constructor() { }
+	constructor() { }
 
     startLogout() {
 
@@ -20,13 +24,10 @@ class Logout {
 			// remove the user from global chat
 			globalChat.removeUserFromChat(req.cookies.username);
 			
-			res.clearCookie('_id');
-			res.clearCookie('accountType');
-			res.clearCookie('userName');
-			res.redirect('/');
+			LogoutSP.getLogout(req,res);
 		});
 		module.exports = router;
-		
+
 		}
 	}
 	

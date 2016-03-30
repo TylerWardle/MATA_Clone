@@ -10,7 +10,12 @@ export class LogoutServiceProvider {
 	constructor() { }
 
 	getLogout(req: any, res: any): Boolean {
-		var db = req.db;
+
+			res.clearCookie('_id');
+			res.clearCookie('accountType');
+			res.clearCookie('userName');
+			res.redirect('/');
+			
 		return true;
 	}
 

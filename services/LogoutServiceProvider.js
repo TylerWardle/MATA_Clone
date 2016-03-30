@@ -6,7 +6,10 @@ var LogoutServiceProvider = (function () {
     function LogoutServiceProvider() {
     }
     LogoutServiceProvider.prototype.getLogout = function (req, res) {
-        var db = req.db;
+        res.clearCookie('_id');
+        res.clearCookie('accountType');
+        res.clearCookie('userName');
+        res.redirect('/');
         return true;
     };
     return LogoutServiceProvider;

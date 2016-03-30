@@ -7,6 +7,7 @@ export class Comic{
     comicSchema: any;
     static comic: any = null; // static class variable
 
+
     // intializing a comic object establishes a DB connection
     constructor(mongoose: any) {
         this.mongoose = mongoose;
@@ -27,7 +28,8 @@ export class Comic{
             openToCommenting: Boolean,
             thumbnailID: String,
             upvotes: Number,
-            votedPpl : [{ id : String , votetype: Number }]
+            votedPpl : [{ id : String , votetype: Number }],
+            fave: [String]
         });
 
         if (Comic.comic == null) { // ensure model is only initialized once
@@ -48,6 +50,7 @@ export class Comic{
            _thumbnailID: String, 
            _upvotes: Number,
            _votedPpl : [{ id : String , votetype: Number }],
+           _fave: [String],
            callback: Function): any {
         var db = this.mongoose.connection;
         var _publicationDate = new Date();
@@ -67,7 +70,8 @@ export class Comic{
             openToCommenting: _openToCommenting,
             thumbnailID: _thumbnailID,
             upvotes: _upvotes,
-            votedPpl: _votedPpl
+            votedPpl: _votedPpl,
+            fave: _fave
         });
 
         // insert the new comic obj into the DB
@@ -121,6 +125,7 @@ export class Comic{
            _thumbnailID, 
            _upvotes: Number,
            _votedPpl : [{ id : String , votetype: Number }],
+           _fave: [String],
            callback: Function): void {
         var db = this.mongoose.connection;
         var comicModel = Comic.comic;
@@ -140,7 +145,8 @@ export class Comic{
             openToContribution:_openToContribution,
             openToCommenting: _openToCommenting,
             upvotes: _upvotes,
-            votedPpl: _votedPpl
+            votedPpl: _votedPpl,
+            fave: _fave
         });
 
         var comicData = a_comic.toObject();
