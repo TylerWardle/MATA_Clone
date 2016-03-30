@@ -14,6 +14,10 @@ class Browse {
   		router.get('/', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getComicsSortedByTitle((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -23,6 +27,10 @@ class Browse {
       router.get('/byTitle', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getComicsSortedByTitle((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -32,6 +40,10 @@ class Browse {
       router.get('/byAuthor', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getComicsSortedByAuthor((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -41,6 +53,10 @@ class Browse {
       router.get('/byPublicationDate/Oldest', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getLeastRecentlyPublishedComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -50,6 +66,10 @@ class Browse {
       router.get('/byPublicationDate/Newest', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getMostRecentlyPublishedComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -59,6 +79,10 @@ class Browse {
       router.get('/byGenre/zombies', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getZombieComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -68,6 +92,10 @@ class Browse {
       router.get('/byGenre/post_apocalyptic', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getPostApocalypticComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -77,6 +105,10 @@ class Browse {
       router.get('/byGenre/humor', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getHumorComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -86,6 +118,10 @@ class Browse {
       router.get('/byGenre/superhero', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getSuperheroComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
@@ -95,6 +131,10 @@ class Browse {
       router.get('/byGenre/action_adventure', function(req, res) {
         var browseService = new BrowseService.BrowseService(req, res);
         browseService.getActionAdventureComics((comicObjs: any): any => {
+          if (comicObjs.length == 0) {
+            res.render('browseResults', {"Comics": null,"header": req.headers['host'] + "/webcomic/", "ComicCells": null});
+            return; 
+          }
           browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
             res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
           });
