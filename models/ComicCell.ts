@@ -160,4 +160,23 @@ export class ComicCell {
 
         this.getRepresentativeImagesBody(comicIDs, 0, imageHeader, comicCellIDArr, callback);
     }
+
+    getThumbnailBody(comicObjs: any, index: any, thumbnailArr: any, callback: Function): void {
+        this.getRepresentative(comicObjs[index]._id, (thumbnail: any): void => {
+            thumbnailArr.push(thumbnail);
+            if (index == comicObjs.length - 1)
+                callback(thumbnailArr);
+            else
+                this.getThumbnailBody(comicObjs, index + 1, thumbnailArr, callback);
+        });
+    }
+
+    getThumbnail(comicObjs: any, callback: Function): any {
+        var db = this.mongoose.connection;
+        var comicCellModel = ComicCell.comicCell;
+        var thumbnailArr = new Array<String>();
+
+        this.getThumbnailBody(comicObjs, 0, thumbnailArr, callback);
+    }
+
 }

@@ -1,7 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-//<reference path='../types/DefinitelyTyped/mongodb/mongodb-1.4.9.d.ts'/>
-///<reference path='../types/DefinitelyTyped/mongodb/mongodb.d.ts'/>
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var CommentService = require('../services/CommentService');
@@ -129,7 +127,6 @@ var Webcomic = (function () {
                     else if (req.param('unfav') && favb) {
                         fave.pull(user.username);
                     }
-                    console.log(user.ids);
                     // update the comic
                     c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function () {
                         // redirect client to updated comic web page
@@ -371,7 +368,8 @@ var Webcomic = (function () {
                 }
                 var min = 0;
                 var max = numOfComicIDs;
-                var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
+                //var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
+                var randomArrIndex = Math.floor(Math.random() * (max - min) + min);
                 if (randomArrIndex < 0) {
                     res.render("error", { message: "No webcomics found." });
                 }

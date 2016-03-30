@@ -132,6 +132,22 @@ var ComicCell = (function () {
         var comicCellIDArr = new Array();
         this.getRepresentativeImagesBody(comicIDs, 0, imageHeader, comicCellIDArr, callback);
     };
+    ComicCell.prototype.getThumbnailBody = function (comicObjs, index, thumbnailArr, callback) {
+        var _this = this;
+        this.getRepresentative(comicObjs[index]._id, function (thumbnail) {
+            thumbnailArr.push(thumbnail);
+            if (index == comicObjs.length - 1)
+                callback(thumbnailArr);
+            else
+                _this.getThumbnailBody(comicObjs, index + 1, thumbnailArr, callback);
+        });
+    };
+    ComicCell.prototype.getThumbnail = function (comicObjs, callback) {
+        var db = this.mongoose.connection;
+        var comicCellModel = ComicCell.comicCell;
+        var thumbnailArr = new Array();
+        this.getThumbnailBody(comicObjs, 0, thumbnailArr, callback);
+    };
     ComicCell.comicCell = null; // static class variable
     return ComicCell;
 })();
