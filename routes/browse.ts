@@ -10,9 +10,14 @@ class Browse {
 
   		var express = require('express');
   		var router = express.Router();
-  		
+
   		router.get('/', function(req, res) {
-  			res.render('browse');   
+        var browseService = new BrowseService.BrowseService(req, res);
+        browseService.getComicsSortedByTitle((comicObjs: any): any => {
+          browseService.getRepresentativeImages(comicObjs, (thumbnailArr: any): any => {
+            res.render('browseResults', {"Comics": comicObjs,"header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr}); 
+          });
+        });
   		});
 
       router.get('/byTitle', function(req, res) {
