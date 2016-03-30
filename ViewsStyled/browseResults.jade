@@ -41,6 +41,9 @@ html
 						li: a( href="/browse/byGenre/superhero" ) Superhero
 						li: a( href="/browse/byGenre/zombies" ) Zombies
 						li: a( href="/browse/byGenre/post_apocalyptic" ) Post Apocalyptic
+				-for (var i = 0; i < 31; i++)
+					li: a
+				li: a( href="/home" ) Home
 block script
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
 	script.
@@ -48,7 +51,7 @@ block script
 block content
 	div(id="form")
 		h1.
-			Search Results
+			Browse Results
 			
 	div(id="search-results-container")
 		div(class="search-results")
