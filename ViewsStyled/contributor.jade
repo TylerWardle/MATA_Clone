@@ -27,12 +27,3 @@ block content
 					a(href="http://#{header}id/#{comics[i]._id}")
 						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
 				br
-			h2.
-				#{contributor.username}'s Favorited Comics
-			-var notnull=favorites
-			unless notnull==null
-				-for (var i = 0; i < favorites.length; i++)
-					div(class="thumbnail-container")
-						p #{favorites[i].title}
-						a(href="http://#{header}/webcomic/id/#{favorites[i]._id}")
-							img(src="http://#{header}/webcomic/image/#{favorites[i].thumbnailID}")				

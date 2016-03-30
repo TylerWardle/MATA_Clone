@@ -32,8 +32,16 @@ var Webcomic = (function () {
                             isAuthor = true;
                         }
                         var votedPpl = doc.votedPpl;
+                        var fave = doc.fave;
                         var vv = false;
                         var uu = null;
+                        var favb = false;
+                        for (var j = 0, len = fave.length; j < len; j++) {
+                            if (fave[j] == user.username) {
+                                favb = true;
+                                break;
+                            }
+                        }
                         for (var i = 0, len = votedPpl.length; i < len; i++) {
                             if (votedPpl[i].id == user.username) {
                                 vv = true;
@@ -41,6 +49,8 @@ var Webcomic = (function () {
                                 break;
                             }
                         }
+                        console.log(fave);
+                        console.log(user.ids);
                         cc.getAll(comicID, function (docs) {
                             //get comments
                             var commentService = new CommentService.CommentService(req, res);
@@ -53,6 +63,7 @@ var Webcomic = (function () {
                                     "header": req.headers['host'] + "/webcomic/image/",
                                     "isAuthor": isAuthor,
                                     "accountType": req.cookies.accountType,
+                                    "favb": favb,
                                     "comments": comments });
                             });
                         });
@@ -87,11 +98,20 @@ var Webcomic = (function () {
                     var thumbnailID = webcomic.thumbnailID;
                     var upvotes = webcomic.upvotes;
                     var votedPpl = webcomic.votedPpl;
+                    var fave = webcomic.fave;
+                    console.log(fave);
                     var vv = false;
                     var uu = null;
+                    var favb = false;
                     for (var i = 0, len = votedPpl.length; i < len; i++) {
                         if (votedPpl[i].id == user.username) {
                             vv = true;
+                        }
+                    }
+                    for (var j = 0, len = fave.length; j < len; j++) {
+                        if (fave[j] == user.username) {
+                            favb = true;
+                            break;
                         }
                     }
                     if (req.param('op_u') && vv == false) {
@@ -103,28 +123,15 @@ var Webcomic = (function () {
                         votedPpl.push({ id: user.username, votetype: -1 });
                     }
                     // updating favorites in registeredUser when the comic is favorited/unfavorited
-                    if (req.param('fav')) {
-                        console.log(req.body);
-                        if (user.accountType == "contributor") {
-                            contributors.update({ guid: (req.cookies._id) }, {
-                                $addToSet: {
-                                    favoritesC: [comicID]
-                                }
-                            });
-                        }
+                    if (req.param('fav') && favb == false) {
+                        fave.push(user.username);
                     }
-                    else if (req.param('unfav')) {
-                        console.log(req.body);
-                        if (user.accountType == "contributor") {
-                            contributors.update({ guid: (req.cookies._id) }, {
-                                $pull: {
-                                    favoritesC: [comicID]
-                                }
-                            });
-                        }
+                    else if (req.param('unfav') && favb) {
+                        fave.pull(user.username);
                     }
+                    console.log(user.ids);
                     // update the comic
-                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function () {
                         // redirect client to updated comic web page
                         var cc = new ComicCell.ComicCell(req.mongoose);
                         //used to inform the client if the user is the author of a webcomic they are viewing
@@ -161,6 +168,7 @@ var Webcomic = (function () {
             var openToCommenting;
             var thumbnailID = "";
             var upvotes = 0;
+            var fave = [""];
             if (req.body.openToContribution == "on") {
                 openToContribution = true;
             }
@@ -183,7 +191,7 @@ var Webcomic = (function () {
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
             fs.readFile(req.file.path, function (err, img) {
-                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function (comicID) {
+                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function (comicID) {
                     // read the image file passed in the request and save it
                     cc.insert(comicID, authorID, authorID, toPublish, function (imgName) {
                         // If there's an error
@@ -194,7 +202,7 @@ var Webcomic = (function () {
                         }
                         else {
                             //var newPath = "./uploads/fullsize/" + imgName;
-                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes, votedPpl, function () { });
+                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes, votedPpl, fave, function () { });
                             var newPath = "./uploads/fullsize/" + imgName;
                             //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
                             // write image file to uploads/fullsize folder
@@ -277,6 +285,7 @@ var Webcomic = (function () {
             var thumbnailID;
             var upvotes;
             var votedPpl;
+            var fave;
             if (req.body.openToContribution == "on") {
                 openToContribution = true;
             }
@@ -298,7 +307,7 @@ var Webcomic = (function () {
                     }
                     // update the comic
                     var c = new Comic.Comic(req.mongoose);
-                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
+                    c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function () {
                         // redirect client to updated comic web page
                         res.redirect('/webcomic/id/' + comicID);
                     });
@@ -311,7 +320,7 @@ var Webcomic = (function () {
                 }
                 // update the comic
                 var c = new Comic.Comic(req.mongoose);
-                c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, function () {
+                c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function () {
                     // redirect client to updated comic web page
                     res.redirect('/webcomic/id/' + comicID);
                 });

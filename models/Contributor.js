@@ -11,19 +11,12 @@ var Contributor = (function (_super) {
     function Contributor(username, password, firstName, lastName, accountType) {
         _super.call(this, username, password, firstName, lastName, accountType);
         this.comicIDs = new Array();
-        this.favoritesC = new Array();
     }
     Contributor.prototype.getComicIds = function () {
         return this.comicIDs;
     };
     Contributor.prototype.addComicId = function (comicId) {
         this.comicIDs.push(comicId);
-    };
-    Contributor.prototype.getfavoriteC = function () {
-        return this.favoritesC;
-    };
-    Contributor.prototype.addComicIdtoFavoriteC = function (comicId) {
-        this.favoritesC.push(comicId);
     };
     return Contributor;
 })(RegisteredUser_1.RegisteredUser);

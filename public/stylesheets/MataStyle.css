@@ -73,6 +73,7 @@ a{
 	position: absolute;
 	width: 75%;
 	left:66%;
+  padding-left: 40px;
 }
 
 
@@ -105,8 +106,20 @@ a{
 }
 .viewMode{
 	position:absolute;
-	border-top:300px;
+	top:320px;
 	white-space: nowrap;
+}
+.upvote{
+  position:absolute;
+  top:190px;
+  left:6px;
+  white-space: :nowrap;
+}
+.downvote{
+  position:absolute;
+  top:190px;
+  left: 62px;
+  white-space: :nowrap;
 }
 
 .search-results{
@@ -623,6 +636,13 @@ select:focus, input:focus{
     margin-right: 0px;
     max-width: 100%;
     max-height: 20%
+}
+.thumbnail-container-smaller{
+  display: block;
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 150px;
+    max-height: 350px;
 }
 
 .comic-info-container{

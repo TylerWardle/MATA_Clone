@@ -23,8 +23,10 @@ var ProfileServiceProvider = (function () {
             isOwner = true;
         registeredUsers.findOne({ username: userName }, function (err, user) {
             //comics.find({authorUsername:userName}, function(err,comics) {
-            comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function (err, comics) {
-                res.render('profile', { "user": user, "comics": comics, "isOwner": isOwner, "header": req.headers['host'] });
+            comics.find({ fave: { $in: [userName] } }, function (err, comicsfav) {
+                comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function (err, comics) {
+                    res.render('profile', { "user": user, "comics": comics, "favorites": comicsfav, "isOwner": isOwner, "header": req.headers['host'] });
+                });
             });
         });
         return false;
