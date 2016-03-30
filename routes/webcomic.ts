@@ -272,7 +272,8 @@ class Webcomic {
 
                 var min = 0;
                 var max = numOfComicIDs;
-                var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
+                //var randomArrIndex = Math.floor(Math.random() * (max - min + 1) + min);
+                var randomArrIndex = Math.floor(Math.random() * (max - min) + min);
 
                 if (randomArrIndex < 0) {
                     res.render("error", { message: "No webcomics found." });
