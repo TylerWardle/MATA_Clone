@@ -12,9 +12,13 @@ block content
 				div(id="editProfile")
 					form#EditProfile(type="editProfile", method="get", action="/profile/edit")
 						button#btnEdit(type="submit") Edit Profile
+			-else if(isSubscribed)
+				div(id="subscribe")
+					form#EditProfile(type="subscribe", method="post", action="/Subscription/delete/#{user.username}")
+						button#btnEdit(type="submit") un-subscribe	
 			-else
 				div(id="subscribe")
-					form#EditProfile(type="subscribe", method="post", action="/profile/subscribe")
+					form#EditProfile(type="subscribe", method="post", action="/Subscription/#{user.username}")
 						button#btnEdit(type="submit") subscribe	
 			div(class="userInfo")
 				p

@@ -31,17 +31,21 @@ export class ProfileServiceProvider implements providers.IServiceProvider
         var comics = db.get("comics");
         var userName = req.params.userName;
         var isOwner = false;
-
+        var isSubscribed = false;
         if(userName === req.cookies.userName)
             isOwner = true;
         
         registeredUsers.findOne({username:userName}, function(err, user) {
+            
         	//see if the field fave in comics contains the user's username (to render favorited comics on profile page)
             comics.find( { fave: { $in: [userName] } }, function(err,comicsfav){
             	//see if a comic is published and is owned by the user to show published comics on profile page)
 				comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function(err, comics) {
-					res.render('profile', { "user": user, "comics": comics, "favorites": comicsfav, "isOwner": isOwner, "header": req.headers['host'] });
-
+                    registeredUsers.findOne({username:req.cookies.userName, subscriptions: userName}, function(err, userTwo) {
+                       if(userTwo != null)
+                            isSubscribed = true;    
+					   res.render('profile', { "user": user, "comics": comics, "favorites": comicsfav, "isOwner": isOwner, "header": req.headers['host'], "isSubscribed": isSubscribed });
+                    });
 				}); 
             });
         });

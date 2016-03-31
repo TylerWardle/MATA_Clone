@@ -25,8 +25,8 @@ var RegisteredUserServiceProvider = (function () {
                     "profilePicture": "http://www.openshot.org/images/blank_profile.png",
                     "aboutMe": "Nothing has been added to this section yet..",
                     "lastLogin": (new Date()).toDateString(),
-                    "webComicViewingHistory": "",
-                    "subscriptions": ""
+                    "webComicViewingHistory": [""],
+                    "subscriptions": [""]
                 }, function (err, doc) {
                     if (err) {
                         res.render("error", { message: "There was a problem adding the information to the database.1" });
