@@ -9,7 +9,7 @@ describe("A suite", () =>{
   });
 });
 
-describe("test getPublishedComics", () =>{
+describe("test chat service", () =>{
   beforeAll( () =>{  
         
   });
