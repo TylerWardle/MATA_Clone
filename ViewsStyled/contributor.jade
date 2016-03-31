@@ -3,15 +3,14 @@ extends layoutLoggedIn
 block content
 	div(id="homepage-header")
 		h1.
-			Welcome to your Homepage, #{contributor.username}!
+	//Welcome to your Homepage, #{contributor.username}!		
 	div(id="search-results-container")
 		div(id="columnFour")
 			div(class="search-results")
 				h4.
-					Your webcomics
+					My Webcomics
 				ol(id="selectable")
 					- for (var i = 0; i < comics.length; i++)
-						//div(class="divider")
 						li(class="searchItem")
 							br
 							div(class="comic-info-container")
@@ -32,20 +31,21 @@ block content
 							div(class="thumbnail-container")
 								a(href="http://#{header}id/#{comics[i]._id}")
 									img(id="thumbnails", src="http://#{header}thumbnail/#{comics[i].thumbnailID}")
-							br
 		div(id="columnFive")
 			h4.
-				Viewing History
+				My History
 			ol(id="selectable")
 				-if(viewedComics)
 					- for (var i = 0; i < viewedComics.length; i++)
 						li(class="searchItem")
-							|#{viewedComics[i].title}
-							a(href="http://#{header}id/#{viewedComics[i]._id}")
-								img(id="thumbnails", src="http://#{header}thumbnail/#{viewedComics[i].thumbnailID}")
+							br
+							div(class="comic-info-container")
+								|#{viewedComics[i].title}
+								a(href="http://#{header}id/#{viewedComics[i]._id}")
+									img(id="thumbnails", src="http://#{header}thumbnail/#{viewedComics[i].thumbnailID}")
 		div(id="columnSix")
 			h4.
-				Subscribed Users
+				My Subscriptions
 			ol(id="selectable")
 				-if(users)
 					- for (var i = 0; i < users.length; i++)
