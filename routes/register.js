@@ -70,6 +70,7 @@ var Register = (function () {
                             }
                         }
                     });
+                    res.redirect("signin");
                 }
             });
         });
