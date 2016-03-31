@@ -62,6 +62,10 @@ a{
 	position: absolute;
 	width: 48%;
 	left:50%;
+	word-wrap: normal;
+	white-space: normal;
+	padding: 0;
+	font-size: 24px;
 }
 
 #columnThree{
@@ -70,6 +74,38 @@ a{
 	left:66%;
 }
 
+.gridItem{
+	width: 20%;
+	display: inline-block;
+	margin: 2px;
+    padding: 2px;
+	
+}
+#selectable{
+	list-style-type: none;
+	margin: 0;
+    padding: 0;
+}
+
+#selectable .ui-selected {
+    color: white;
+    font-weight: bold;
+}
+
+#selectable .ui-selecting { 
+	background: white; 
+}
+
+#selectable .ui-selected { 
+	background: #AAF0D1; 
+	color: white; 
+}
+
+#selectable li { 
+	margin: 3px; 
+	padding: 0.2em; 
+	font-size: 1.4em; 
+}
 
 
 #banner{

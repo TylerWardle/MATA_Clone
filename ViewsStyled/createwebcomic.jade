@@ -1,41 +1,58 @@
 extends layoutLoggedIn 
 
 block content
-  div(id="createForm")
-    div(id="form")
-        h1.
-            New Comic!
-    div(id="belowform")
-      
-        form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
-            //|Title:
-            input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
-            br
-            //|Description:
-            input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
-            br
-            br
-            |Open to Contribution?:
-            input#openToContribution(type="checkbox", name="openToContribution")
-            br
-            br
-            |Genre: 
-            select(name="genre")
-                option(value="zombies") Zombies
-                option(value="post apocalyptic") Post Apocalyptic
-                option(value="action/adventure") Action/Adventure
-                option(value="humor") Humor
-                option(value="superhero") Superhero
-            br
-            br    
-            input#toPublish(type="hidden", name="toPublish", value="false")
-            input#firstImage(type="file",name="image", required="")
-            br
-            br
-            br
-            //Two submit buttons, which one is pressed is checked in the /submit route and the value of toPublish is set there
-            button#btnSubmit(type="submit", name="submit", value="draft") Submit
-            button#btnSubmit(type="submit", name="submit", value="publish") Submit and Publish
-
-
-
+	div(id="createForm")
+		div(id="columnOne")
+			div(id="form")
+				h1.
+					New Comic
+		
+			form#formCreateWebComic(name="createWebComic", method="post", action="/webcomic/submit", enctype='multipart/form-data')
+				//|Title:
+				input#comicTitle(type="text", placeholder="Title",name="title", required="", autocomplete="off")
+				br
+				//|Description:
+				input#description(type="text", placeholder="Description",name="description", required="", autocomplete="off")
+				br
+				br
+				|Open to Contribution?:
+				input#openToContribution(type="checkbox", name="openToContribution")
+				br
+				br
+				|Genre: 
+				select(name="genre")
+					option(value="zombies") Zombies
+					option(value="post apocalyptic") Post Apocalyptic
+					option(value="action/adventure") Action/Adventure
+					option(value="humor") Humor
+					option(value="superhero") Superhero
+				br
+				br    
+				input#toPublish(type="hidden", name="toPublish", value="false")
+				input#firstImage(type="file",name="image")
+				input#selectedImageID(type="hidden", name="selectedImageID")
+				br
+				br
+				br
+				//Two submit buttons, which one is pressed is checked in the /submit route and the value of toPublish is set there
+				button#btnSubmit(type="submit", name="submit", value="draft") Submit
+				button#btnSubmit(type="submit", name="submit", value="publish") Submit and Publish
+			
+		div(id="columnTwo")
+			h4.
+				Upload a file or use one of these recent images!
+			ol(id="selectable")
+				- for (var i = 0; i < comicCells.length; i++)
+					li(class="gridItem", value="#{comicCells[i]._id}")
+						img(id="images", src="http://#{header}/webcomic/thumbnail/#{comicCells[i]._id}")					
+block scripts
+	script.
+		$(function() {
+			$( "#selectable" ).selectable({
+				stop :function(event, ui){
+					$(".ui-selected", this).each(function () {
+						$('#selectedImageID').val($(this).attr('value'));
+					});
+				}
+			});
+		});

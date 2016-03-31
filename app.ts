@@ -29,7 +29,10 @@ class Application {
         var mongoose = require('mongoose'); // #al# : mongoose connection 
         //mongoose.connect('mongodb://localhost/MATA'); // #al# : mongoose connection
         mongoose.connect('mongodb://heroku_21q1wxnl:otpu73q7n7h9o1ff9lvmbifs8q@ds047315.mongolab.com:47315/heroku_21q1wxnl'); // #al# : mongoose connection 
-
+        
+        var easyimg = require('easyimage');
+        var imagemagick = require('imagemagick');
+        
         var routes = require('./routes');
 
         var app = express();        
