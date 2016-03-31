@@ -8,6 +8,7 @@ import Contributor = require('../models/Contributor');
 import CommentService = require('../services/CommentService');
 import VotesServiceProvider = require('../services/VotesServiceProvider');
 import FavoritesServiceProvider = require('../services/FavoritesServiceProvider');
+import HistoryServiceProvider = require('../services/HistoryServiceProvider');
 
 
 class Webcomic {
@@ -22,7 +23,8 @@ class Webcomic {
         var ObjectId = require('mongodb').ObjectID;
         var easyimg = require('easyimage');
         var imagemagick = require('imagemagick');
-
+        
+        var history = new HistoryServiceProvider.HistoryServiceProvider();
 
         // View comic with associated images (one image/comic for now)
         // TODO: image does not display correctly!!
@@ -31,6 +33,8 @@ class Webcomic {
             var comicID = req.params.id;
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
+            
+            history.addWebComicLinkToList(req, res, comicID);
             
             registeredUsers.findOne({ _id: req.cookies._id }, function(err, user) {
            

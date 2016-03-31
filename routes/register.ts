@@ -44,9 +44,9 @@ class Register {
 					"securityAnswer": req.body.securityAnswer,
 					"profilePicture": "http://www.openshot.org/images/blank_profile.png",
 					"aboutMe": "Nothing has been added to this section yet..",
-					"lastLogin": (new Date()).toDateString(),
-					"webComicViewingHistory": "",
-					"subscriptions": "",
+					"lastLogin": (new Date()).toDateString()
+					//"webComicViewingHistory": ""
+					//"subscriptions": [""],
 					
 				}, function(err, doc) {
 					if (err) {

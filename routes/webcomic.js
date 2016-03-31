@@ -3,6 +3,7 @@
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var CommentService = require('../services/CommentService');
+var HistoryServiceProvider = require('../services/HistoryServiceProvider');
 var Webcomic = (function () {
     function Webcomic() {
     }
@@ -13,6 +14,7 @@ var Webcomic = (function () {
         var ObjectId = require('mongodb').ObjectID;
         var easyimg = require('easyimage');
         var imagemagick = require('imagemagick');
+        var history = new HistoryServiceProvider.HistoryServiceProvider();
         // View comic with associated images (one image/comic for now)
         // TODO: image does not display correctly!!
         router.get('/id/:id', function (req, res) {
@@ -20,6 +22,7 @@ var Webcomic = (function () {
             var comicID = req.params.id;
             var db = req.db;
             var registeredUsers = db.get('registeredUsers');
+            history.addWebComicLinkToList(req, res, comicID);
             registeredUsers.findOne({ _id: req.cookies._id }, function (err, user) {
                 // get comic from the db
                 if (req.cookies._id != null) {

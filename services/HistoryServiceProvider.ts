@@ -14,17 +14,19 @@ export class HistoryServiceProvider
 	{
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
-		
-		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
-			// check for duplicate and update.
-			registeredUsers.update({username:req.cookies._username},
-			   {
-					$set:
-					{
-						webComicViewingHistory: user.webComicViewingHistory + "," + webcomicId
-					}
-			   });
-		});
+		var ObjectId = require('mongodb').ObjectID;
+        registeredUsers.update({username:req.cookies.userName}, {$push: {webComicViewingHistory : ObjectId(webcomicId)}});
+        
+//		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
+//			// check for duplicate and update.
+//			registeredUsers.update({username:req.cookies._username},
+//			   {
+//					$set:
+//					{
+//						webComicViewingHistory: user.webComicViewingHistory + "," + webcomicId
+//					}
+//			   });
+//		});
 		
 		return true;
 	}
@@ -34,11 +36,15 @@ export class HistoryServiceProvider
 	{
 		var db = req.db;
 		var registeredUsers = db.get('registeredUsers');
-		
-		registeredUsers.findOne({username:req.cookies._username}, function(err, user) {
-			return user.viewingHistory;
-		});
-		
-		return true;
+        var comics = db.get('comics');
+        
+        registeredUsers.findOne({username:req.cookies.userName}, function(err, user){
+            if(user){
+                comics.find({_id: {$in: user.webComicViewingHistory}}, function(err, comicsViewed) {
+                    //console.log(comicsViewed);
+                    return comicsViewed;
+                });
+            }
+        });
 	}
 } 

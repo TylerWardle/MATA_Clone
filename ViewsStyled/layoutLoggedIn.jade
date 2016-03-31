@@ -75,6 +75,7 @@ html
 				},'json');
 			}
 			//start polling for new chats
+			window.onload = getCookie("accountType");
 			window.onload = pollingLoop();
 			var newMessage = new Audio('/assets/XboxNotification.mp3');
 			newMessage.loop = false;
@@ -136,3 +137,14 @@ html
 				updateChat();
 			});
 			
+			// Original JavaScript code by Chirp Internet: www.chirp.com.au
+			// Please acknowledge use of this code by including this header.
+			function getCookie(name){
+				var re = new RegExp(name + "=([^;]+)"); 
+				var value = re.exec(document.cookie); 
+				if(value[1] == "contributor"){
+					$('.newComicBtn').show();
+				}else{
+					$('.newComicBtn').hide();
+				}
+			};
