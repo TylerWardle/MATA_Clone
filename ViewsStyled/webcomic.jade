@@ -129,11 +129,12 @@ block content
 		
 				//If user is a contributor show the add cell button
 	p #{viewMode}
-	-if(accountType == "contributor" && webcomic.openToContribution)
-		div(id="action-buttons")
-			div(class="AddCell")
-				a(href="#newCell", name="newCellBtn")
-					img(src="/assets/arrows.svg")
+	hide
+		-if(accountType == "contributor" && webcomic.openToContribution)
+			div(id="action-buttons")
+				div(class="AddCell")
+					a(href="#newCell", name="newCellBtn")
+						img(src="/assets/arrows.svg")
 	br
 	br
 	br
