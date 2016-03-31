@@ -10,7 +10,6 @@ var RegisteredUserServiceProvider = (function () {
         var registeredUsers = db.get('registeredUsers');
         registeredUsers.findOne({ username: req.body.username }, function (err, item) {
             if (item) {
-                console.log("reached item found case");
                 return false;
             }
             else {
@@ -19,7 +18,7 @@ var RegisteredUserServiceProvider = (function () {
                 var lastName = req.body.lastName;
                 var accountType = req.body.accountType;
                 var password = req.body.password;
-                registeredUsers.insert({
+                db.insert({
                     "username": req.body.username.toLowerCase(),
                     "firstName": req.body.firstName,
                     "lastName": req.body.lastName,
@@ -38,7 +37,8 @@ var RegisteredUserServiceProvider = (function () {
                     }
                     else {
                         if (accountType === "viewer") {
-                            var viewers = req.db.get('viewers');
+                            var viewers = db.get('viewers');
+                            //var newViewer = new Viewer(username, password, firstName, lastName, accountType);
                             viewers.insert({
                                 "username": doc.username,
                                 "firstName": doc.firstName,
@@ -51,7 +51,7 @@ var RegisteredUserServiceProvider = (function () {
                             });
                         }
                         else {
-                            var contributors = req.db.get('contributors');
+                            var contributors = db.get('contributors');
                             //var newContributor = new Contributor(username, password, firstName, lastName, accountType);
                             contributors.insert({
                                 "username": doc.username,
