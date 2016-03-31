@@ -1,8 +1,9 @@
 extends layout
 
 block content
-    div(id="title")
-        h1= title
+    div(class="login-message-field")
+        div(id="title")
+            h1= title
     form#formForgotPassword(name="recover",method="post",action="/forgotpassword/recover")
         div(id="secretQuestion")
             h3= securityQuestion

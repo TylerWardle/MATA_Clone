@@ -67,6 +67,10 @@ a{
 	position: absolute;
 	width: 48%;
 	left:50%;
+	word-wrap: normal;
+	white-space: normal;
+	padding: 0;
+	font-size: 24px;
 }
 
 #columnThree{
@@ -76,6 +80,38 @@ a{
   padding-left: 40px;
 }
 
+.gridItem{
+	width: 20%;
+	display: inline-block;
+	margin: 2px;
+    padding: 2px;
+	
+}
+#selectable{
+	list-style-type: none;
+	margin: 0;
+    padding: 0;
+}
+
+#selectable .ui-selected {
+    color: white;
+    font-weight: bold;
+}
+
+#selectable .ui-selecting { 
+	background: white; 
+}
+
+#selectable .ui-selected { 
+	background: #AAF0D1; 
+	color: white; 
+}
+
+#selectable li { 
+	margin: 3px; 
+	padding: 0.2em; 
+	font-size: 1.4em; 
+}
 
 
 #banner{
@@ -83,6 +119,18 @@ a{
 	width: 100%;
 	top:0;
 	background-color: #AAF0D1;
+  	border: none;
+  	box-shadow: none;
+  	border-radius: none;
+  	height: 100px;
+  	z-index: 50;
+}
+
+.login-message-field{
+	position:fixed;
+	left: 150px;
+	top:0;
+	background-color: transparent;
   	border: none;
   	box-shadow: none;
   	border-radius: none;
@@ -239,6 +287,7 @@ a{
 .o-wrapper {
   position: absolute; 
   width:100%;
+  height: 100%;
   margin:0;
   border: 0;
   transition: transform 0.5s;

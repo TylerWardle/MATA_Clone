@@ -17,7 +17,8 @@ block content
 				div(class="comic-info-container")
 					|Title: #{Comics[i].title}
 					br
-					|Author: #{Comics[i].authorUsername}
+					a(href="/profile/user/#{Comics[i].authorUsername}") Author: #{Comics[i].authorUsername}
+					//|Author: #{Comics[i].authorUsername}
 					br
 					|Description: #{Comics[i].description}
 					br

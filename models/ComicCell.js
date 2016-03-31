@@ -6,7 +6,7 @@ var ComicCell = (function () {
         this.schema = this.mongoose.Schema;
         // define ComicCell Object schema for storing Comic data fields
         this.comicCellSchema = new this.schema({
-            comicID: String,
+            comicID: [{ type: String }],
             ownerID: String,
             collaboratorID: String,
             toPublish: Boolean

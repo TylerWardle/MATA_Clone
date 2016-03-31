@@ -60,6 +60,8 @@ html
 		script(src="/scripts/menu.js")
 		script(src="/scripts/chat.js")
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js")
+		script(src="//code.jquery.com/ui/1.11.4/jquery-ui.js")
+		block scripts
 		script.
 			
 			//This script get the new chat objects from the server
@@ -83,7 +85,7 @@ html
 					if(answer){
 						updateChat();
 						newMessage.play();
-						setTimeout(pollingLoop, 10000);
+						setTimeout(pollingLoop, 12000);
 					}else{
 						setTimeout(pollingLoop, 1000);
 					}
@@ -133,3 +135,4 @@ html
 				slidebottom.open();
 				updateChat();
 			});
+			
