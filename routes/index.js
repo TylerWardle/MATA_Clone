@@ -25,6 +25,7 @@ var Router = (function () {
         router.use('/browse', require('./browse'));
         router.use('/chatAlternate', require('./chatAlternate'));
         router.use('/comment', require('./comment'));
+        router.use('/Subscription', require('./Subscription'));
         /* GET home page. */
         router.get('/', function (req, res, next) {
             res.render('index', { title: 'MATA_WEBCOMICS' });

@@ -11,6 +11,8 @@ var Webcomic = (function () {
         var router = express.Router();
         var fs = require('fs');
         var ObjectId = require('mongodb').ObjectID;
+        var easyimg = require('easyimage');
+        var imagemagick = require('imagemagick');
         // View comic with associated images (one image/comic for now)
         // TODO: image does not display correctly!!
         router.get('/id/:id', function (req, res) {
@@ -169,6 +171,7 @@ var Webcomic = (function () {
             var thumbnailID = "";
             var upvotes = 0;
             var fave = [""];
+            var selectedImageID = req.body.selectedImageID;
             if (req.body.openToContribution == "on") {
                 openToContribution = true;
             }
@@ -190,40 +193,59 @@ var Webcomic = (function () {
             }
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
-            fs.readFile(req.file.path, function (err, img) {
-                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function (comicID) {
-                    // read the image file passed in the request and save it
-                    cc.insert(comicID, authorID, authorID, toPublish, function (imgName) {
-                        // If there's an error
-                        if (!imgName) {
-                            console.log("There was an error");
-                            res.redirect("./create");
-                            res.end();
-                        }
-                        else {
-                            //var newPath = "./uploads/fullsize/" + imgName;
-                            c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes, votedPpl, fave, function () { });
-                            var newPath = "./uploads/fullsize/" + imgName;
-                            //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
-                            // write image file to uploads/fullsize folder
-                            fs.writeFile(newPath, img, function (err) {
-                                if (err)
-                                    return console.error(err);
-                                //redirect to the newly created comic
-                                res.redirect('./id/' + comicID);
-                            });
-                        }
-                        var db = req.db;
-                        var contributors = db.get('contributors');
-                        var ObjectId = require('mongodb').ObjectID;
-                        contributors.update({ guid: ObjectId(req.cookies._id) }, {
-                            $addToSet: {
-                                comicIDs: [comicID]
+            if (req.file) {
+                fs.readFile(req.file.path, function (err, img) {
+                    c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, thumbnailID, upvotes, votedPpl, fave, function (comicID) {
+                        // read the image file passed in the request and save it
+                        cc.insert(comicID, authorID, authorID, toPublish, function (imgName) {
+                            // If there's an error
+                            if (!imgName) {
+                                console.log("There was an error");
+                                res.redirect("./create");
+                                res.end();
                             }
+                            else {
+                                //var newPath = "./uploads/fullsize/" + imgName;
+                                c.update(comicID, title, authorID, authorUsername, publicationDate, description, genre, toPublish, openToContribution, openToCommenting, imgName, upvotes, votedPpl, fave, function () { });
+                                var newPath = "./uploads/fullsize/" + imgName;
+                                //var imageList = [(req.headers['host'] + "/webcomic/image/" + imgName)];
+                                // write image file to uploads/fullsize folder
+                                fs.writeFile(newPath, img, function (err) {
+                                    if (err)
+                                        return console.error(err);
+                                    //redirect to the newly created comic
+                                    res.redirect('./id/' + comicID);
+                                });
+                                easyimg.rescrop({
+                                    src: newPath, dst: './uploads/thumbnails/' + imgName,
+                                    width: 128, height: 128,
+                                    //cropwidth:128, cropheight:128,
+                                    x: 0, y: 0
+                                }).then(function (image) {
+                                    console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
+                                }, function (err) {
+                                    console.log(err);
+                                });
+                            }
+                            var db = req.db;
+                            var contributors = db.get('contributors');
+                            contributors.update({ guid: ObjectId(req.cookies._id) }, {
+                                $addToSet: {
+                                    comicIDs: [comicID]
+                                }
+                            });
                         });
                     });
                 });
-            });
+            }
+            else {
+                var db = req.db;
+                var comicCells = db.get('comiccells');
+                c.insert(title, authorID, authorUsername, description, genre, toPublish, openToContribution, openToCommenting, selectedImageID, upvotes, votedPpl, fave, function (comicID) {
+                    comicCells.update({ _id: ObjectId(selectedImageID) }, { $push: { comicID: comicID } });
+                    res.redirect('./id/' + comicID);
+                });
+            }
         });
         //Add a new cell to an existing web comic
         router.post('/newCell/:id', function (req, res) {
@@ -255,6 +277,16 @@ var Webcomic = (function () {
                                 //redirect to the newly created comic
                                 res.redirect('/webcomic/id/' + comicID);
                             });
+                            easyimg.rescrop({
+                                src: newPath, dst: './uploads/thumbnails/' + imgName,
+                                width: 128, height: 128,
+                                //cropwidth:128, cropheight:128,
+                                x: 0, y: 0
+                            }).then(function (image) {
+                                console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
+                            }, function (err) {
+                                console.log(err);
+                            });
                         }
                     });
                 });
@@ -264,6 +296,13 @@ var Webcomic = (function () {
         router.get('/image/:file', function (req, res) {
             var file = req.params.file;
             var img = fs.readFileSync("./uploads/fullsize/" + file);
+            res.writeHead(200, { 'Content-Type': 'image/jpg' });
+            res.end(img, 'binary');
+        });
+        // get an image stored in uploads/thumbnail/    
+        router.get('/thumbnail/:file', function (req, res) {
+            var file = req.params.file;
+            var img = fs.readFileSync("./uploads/thumbnails/" + file);
             res.writeHead(200, { 'Content-Type': 'image/jpg' });
             res.end(img, 'binary');
         });
@@ -355,7 +394,12 @@ var Webcomic = (function () {
         });
         // create a webcomic route
         router.get('/create', function (req, res) {
-            res.render('createwebcomic', { title: 'Create a Comic!' });
+            var db = req.db;
+            var comicCells = db.get('comiccells');
+            //comicCells.find({toPublish: true}, {sort: {_id:1},limit:20}, function(err, comicCells){
+            comicCells.find({}, { sort: { _id: -1 }, limit: 20 }, function (err, comicCells) {
+                res.render('createwebcomic', { title: 'Create a Comic!', "comicCells": comicCells, "header": req.headers['host'] });
+            });
         });
         // make a route for get random webcomic ID 
         router.get('/random', function (req, res) {
