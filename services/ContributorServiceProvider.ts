@@ -4,6 +4,7 @@
 import Comic = require('../models/Comic');
 import ComicCell = require('../models/ComicCell');
 import Service = require('../services/SearchBrowseService');
+import HistoryServiceProvider = require('../services/HistoryServiceProvider');
 
 var express = require('express');
 var router = express.Router();
@@ -17,18 +18,24 @@ export class ContributorServiceProvider {
 	    var db = req.db;
         var contributors = db.get('contributors');
         var registeredUsers = db.get('registeredUsers');
+        var comicsDB = db.get('comics');
         var c = new Comic.Comic(req.mongoose);
         var cc = new ComicCell.ComicCell(req.mongoose);
         var s = new Service.SearchBrowseService(req.mongoose);
+        var history = new HistoryServiceProvider.HistoryServiceProvider();
             
       	registeredUsers.findOne({_id: ObjectID(req.cookies._id)}, function(error, contributor)
     	{
             s.getComics(req,(comics:any): void =>{
-            //console.log(comics);
                 registeredUsers.find({username: {$in: contributor.subscriptions}}, function(err, users) {
-                    //console.log(users);
-                    //console.log(contributor.subscriptions);
-     		        res.render('contributor',{"users": users, "contributor": contributor,"header": req.headers['host'] + "/webcomic/", "comics": comics});
+                    comicsDB.find({_id: {$in: contributor.webComicViewingHistory}} , {sort: {_id:-1}}, function(err, comicsViewed) {
+         		        res.render('contributor',{  "users": users, 
+                                                    "contributor": contributor,
+                                                    "header": req.headers['host'] + "/webcomic/",
+                                                    "comics": comics,
+                                                    "viewedComics": comicsViewed
+                                                    });
+                    });
                 });    	
             });	
         });

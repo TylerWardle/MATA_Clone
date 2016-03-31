@@ -5,7 +5,7 @@ block content
 		h1.
 			Welcome to your Homepage, #{contributor.username}!
 	div(id="search-results-container")
-		div(id="columnOne")
+		div(id="columnFour")
 			div(class="search-results")
 				h4.
 					Your webcomics
@@ -33,7 +33,17 @@ block content
 								a(href="http://#{header}id/#{comics[i]._id}")
 									img(id="thumbnails", src="http://#{header}thumbnail/#{comics[i].thumbnailID}")
 							br
-		div(id="columnTwo")
+		div(id="columnFive")
+			h4.
+				Viewing History
+			ol(id="selectable")
+				-if(viewedComics)
+					- for (var i = 0; i < viewedComics.length; i++)
+						li(class="searchItem")
+							|#{viewedComics[i].title}
+							a(href="http://#{header}id/#{viewedComics[i]._id}")
+								img(id="thumbnails", src="http://#{header}thumbnail/#{viewedComics[i].thumbnailID}")
+		div(id="columnSix")
 			h4.
 				Subscribed Users
 			ol(id="selectable")

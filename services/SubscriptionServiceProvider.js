@@ -10,8 +10,8 @@ var SubscriptionServiceProvider = (function () {
         var db = req.db;
         var registeredUsers = db.get('registeredUsers');
         //registeredUsers.findOne({username:_username}, function(err, user) {
-        console.log(_username);
-        console.log(req.cookies.userName);
+        //console.log(_username);
+        //console.log(req.cookies.userName);
         //registeredUsers.update({username:_username},
         registeredUsers.update({ username: req.cookies.userName }, { $push: { subscriptions: _username } });
         //});
