@@ -101,17 +101,20 @@ var Webcomic = (function () {
                     var vv = false;
                     var uu = null;
                     var favb = false;
+                    // checking to see if a user is in votedPpl (users who have already voted cannot vote again)
                     for (var i = 0, len = votedPpl.length; i < len; i++) {
                         if (votedPpl[i].id == user.username) {
                             vv = true;
                         }
                     }
+                    // checking to see if a user is in fave (has already voted)
                     for (var j = 0, len = fave.length; j < len; j++) {
                         if (fave[j] == user.username) {
                             favb = true;
                             break;
                         }
                     }
+                    // upvoting or downvoting in a webcomic. users can only vote once
                     if (req.param('op_u') && vv == false) {
                         upvotes++;
                         votedPpl.push({ id: user.username, votetype: 1 });

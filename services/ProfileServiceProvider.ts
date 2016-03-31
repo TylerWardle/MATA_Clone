@@ -36,8 +36,9 @@ export class ProfileServiceProvider implements providers.IServiceProvider
             isOwner = true;
         
         registeredUsers.findOne({username:userName}, function(err, user) {
-            //comics.find({authorUsername:userName}, function(err,comics) {
+        	//see if the field fave in comics contains the user's username (to render favorited comics on profile page)
             comics.find( { fave: { $in: [userName] } }, function(err,comicsfav){
+            	//see if a comic is published and is owned by the user to show published comics on profile page)
 				comics.find({ $and: [{ authorUsername: userName }, { 'toPublish': true }] }, function(err, comics) {
 					res.render('profile', { "user": user, "comics": comics, "favorites": comicsfav, "isOwner": isOwner, "header": req.headers['host'] });
 
