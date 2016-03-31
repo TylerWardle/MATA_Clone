@@ -87,6 +87,15 @@ a{
     padding: 2px;
 	
 }
+
+.searchItem{
+	width: 45%;
+	display: inline-block;
+	margin: 2px;
+    padding: 2px;
+	
+}
+
 #selectable{
 	list-style-type: none;
 	margin: 0;
@@ -171,6 +180,7 @@ a{
 }
 
 .search-results{
+	display: inline-block;
 	width:80%;
 }
 

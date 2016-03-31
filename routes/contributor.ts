@@ -23,6 +23,7 @@ class contributor{
         router.get('/', function(req, res) {
         	var db = req.db;
             var contributors = db.get('contributors');
+            
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);

@@ -14,16 +14,18 @@ class Subscription {
 		var subscriptionServiceProvider = new SubscriptionService.SubscriptionServiceProvider();
 
 		/* POST Subscribe to a contributor. */
-		router.post('/', function (req, res) {
+		router.post('/:id', function (req, res) {
 			var contributorId = req.params.id;
 			subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
+            res.redirect('/profile/user/'+ contributorId); 
 		});
 
 
 		/* Delete Unsubscribe to a contributor. */
-		router.delete('/', function (req, res) {
+		router.post('/delete/:id', function (req, res) {
 			var contributorId = req.params.id;
 			subscriptionServiceProvider.unsubscribeFromUser(req, res, contributorId);
+            res.redirect('/profile/user/'+ contributorId);
 		});
 		
 		/* Get list of subscripts for a user*/

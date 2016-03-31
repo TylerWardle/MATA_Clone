@@ -5,25 +5,39 @@ block content
 		h1.
 			Welcome to your Homepage, #{contributor.username}!
 	div(id="search-results-container")
-		div(class="search-results")
-			- for (var i = 0; i < comics.length; i++)
-				div(class="divider")
-				br
-				div(class="comic-info-container")
-					|Title: #{comics[i].title}
-					br
-					|Author: #{comics[i].authorUsername}
-					br
-					|Description: #{comics[i].description}
-					br
-					|Genre: #{comics[i].genre}
-					br
-					-if(!comics[i].toPublish)
-						|unpublished
-					-else
-						|published
-					br
-				div(class="thumbnail-container")
-					a(href="http://#{header}id/#{comics[i]._id}")
-						img(id="thumbnails", src="http://#{header}image/#{comics[i].thumbnailID}")
-				br
+		div(id="columnOne")
+			div(class="search-results")
+				h4.
+					Your webcomics
+				ol(id="selectable")
+					- for (var i = 0; i < comics.length; i++)
+						//div(class="divider")
+						li(class="searchItem")
+							br
+							div(class="comic-info-container")
+								|#{comics[i].title}
+								//|Title: #{comics[i].title}
+								//br
+								//|Author: #{comics[i].authorUsername}
+								//br
+								//|Description: #{comics[i].description}
+								//br
+								//|Genre: #{comics[i].genre}
+								//br
+								//-if(!comics[i].toPublish)
+								//	|unpublished
+								//-else
+								//	|published
+								//br
+							div(class="thumbnail-container")
+								a(href="http://#{header}id/#{comics[i]._id}")
+									img(id="thumbnails", src="http://#{header}thumbnail/#{comics[i].thumbnailID}")
+							br
+		div(id="columnTwo")
+			h4.
+				Subscribed Users
+			ol(id="selectable")
+				- for (var i = 0; i < users.length; i++)
+					li(class="gridItem")
+						a(href="/profile/user/#{users[i].username}")
+							img(src="#{users[i].profilePicture}")
