@@ -20,8 +20,8 @@ var ContributorServiceProvider = (function () {
             s.getComics(req, function (comics) {
                 //console.log(comics);
                 registeredUsers.find({ username: { $in: contributor.subscriptions } }, function (err, users) {
-                    console.log(users);
-                    console.log(contributor.subscriptions);
+                    //console.log(users);
+                    //console.log(contributor.subscriptions);
                     res.render('contributor', { "users": users, "contributor": contributor, "header": req.headers['host'] + "/webcomic/", "comics": comics });
                 });
             });

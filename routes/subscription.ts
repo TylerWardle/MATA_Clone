@@ -17,6 +17,7 @@ class Subscription {
 		router.post('/:id', function (req, res) {
 			var contributorId = req.params.id;
 			subscriptionServiceProvider.subscribeToUser(req, res, contributorId);
+            
             res.redirect('/profile/user/'+ contributorId); 
 		});
 

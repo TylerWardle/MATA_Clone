@@ -37,7 +37,8 @@ block content
 			h4.
 				Subscribed Users
 			ol(id="selectable")
-				- for (var i = 0; i < users.length; i++)
-					li(class="gridItem")
-						a(href="/profile/user/#{users[i].username}")
-							img(src="#{users[i].profilePicture}")
+				-if(users)
+					- for (var i = 0; i < users.length; i++)
+						li(class="gridItem")
+							a(href="/profile/user/#{users[i].username}")
+								img(src="#{users[i].profilePicture}")
