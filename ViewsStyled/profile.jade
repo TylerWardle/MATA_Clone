@@ -35,7 +35,7 @@ block content
 					div(class="thumbnail-container-smaller")
 						p #{comics[i].title}
 						a(href="http://#{header}/webcomic/id/#{comics[i]._id}")
-							img(src="http://#{header}/webcomic/image/#{comics[i].thumbnailID}")
+							img(src="http://#{header}/webcomic/thumbnail/#{comics[i].thumbnailID}")
 		div(id="columnThree")
 			h2.
 				#{user.username}'s Favorited Comics
@@ -45,7 +45,7 @@ block content
 					div(class="thumbnail-container-smaller")
 						p #{favorites[i].title}
 						a(href="http://#{header}/webcomic/id/#{favorites[i]._id}")
-							img(src="http://#{header}/webcomic/image/#{favorites[i].thumbnailID}")				
+							img(src="http://#{header}/webcomic/thumbnail/#{favorites[i].thumbnailID}")				
 						
 			
 			
