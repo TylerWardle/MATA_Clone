@@ -13,7 +13,7 @@ describe("Test Insert Comment", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService;
   	cs.insert("dummy comment", "dummy authorID", "dummy comicID", (commentID: any): any => {
-  		expect(commentID).toBeNotUndefined(); 
+  		expect(commentID).toBeDefined(); 
   	});
   });
 });
@@ -25,9 +25,9 @@ describe("Test Get Comment", () =>{
   	cs.get(dummyCommentID, (comment: any): any => {
         expect(comment.comment).toEqual("dummy comment");
         expect(comment.authorID).toEqual("dummy authorID");
-        expect(comment.authorUsername).toBeNotUndefined();
+        expect(comment.authorUsername).toBeDefined();
         expect(comment.comicID).toEqual("dummy comicID");
-        expect(comment.publicationDate).toBeNotUndefined();
+        expect(comment.publicationDate).toBeDefined();
   	});
   });
 });
@@ -41,9 +41,9 @@ describe("Test Get All Comments", () =>{
 
         expect(comments[0].comment).toEqual("dummy comment");
         expect(comments[0].authorID).toEqual("dummy authorID");
-        expect(comments[0].authorUsername).toBeNotUndefined();
+        expect(comments[0].authorUsername).toBeDefined();
         expect(comments[0].comicID).toEqual("dummy comicID");
-        expect(comments[0].publicationDate).toBeNotUndefined();
+        expect(comments[0].publicationDate).toBeDefined();
   	});
   });
 });
@@ -54,10 +54,10 @@ describe("Test Delete Comments", () =>{
   	var commentID = "123456789";
   	var userID = "dummy userID";
   	cs.delete(commentID, "non existent userID", (isDeleted: boolean): any => {	// Test handler for a failed delete
-  		expect(isDeleted).toBe(false);
+  		expect(isDeleted).toBeFalsy();
 
   		cs.delete(commentID, "dummy userID", (isDeleted: boolean): any => {	// Test handler for a successful delete
-  			expect(isDeleted).toBe(true);
+  			expect(isDeleted).toBeTruthy());
   		});
   	});
   });
@@ -69,13 +69,13 @@ describe("Test Delete All Comments", () =>{
   	var commentID = "123456789";
   	var userID = "dummy userID";
   	cs.insert("dummy comment", "dummy authorID", "dummy comicID", (commentID: any): any => {
-  		expect(commentID).toBeNotUndefined(); 
+  		expect(commentID).toBeDefined(); 
   	});
   	cs.deleteAll(commentID, "non existent userID", (isDeleted: boolean): any => {	// Test handler for a failed delete
-  		expect(isDeleted).toBe(false);
+  		expect(isDeleted).toBeFalsy;
 
   		cs.deleteAll(commentID, "dummy userID", (isDeleted: boolean): any => {	// Test handler for a successful delete
-  			expect(isDeleted).toBe(true);
+  			expect(isDeleted).toBeTruthy;
   		});
   	});
   });
