@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-"use strict";
 var BrowseService = require('../services/BrowseService');
 var Browse = (function () {
     function Browse() {
@@ -131,6 +130,6 @@ var Browse = (function () {
         module.exports = router;
     };
     return Browse;
-}());
+})();
 var browse = new Browse();
 browse.startBrowse();

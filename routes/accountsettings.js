@@ -1,4 +1,3 @@
-"use strict";
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 var AccountSettingsServiceProvider = require('../services/AccountSettingsServiceProvider');
@@ -23,6 +22,6 @@ var AccountSettings = (function () {
         module.exports = router;
     };
     return AccountSettings;
-}());
+})();
 var accountSettings = new AccountSettings();
 accountSettings.startAccountSettings();

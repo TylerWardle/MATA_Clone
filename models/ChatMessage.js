@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 /* This class models a chat message. These message object are used to
     create a global chat where the messages will be shared among all online
     registered users. */
@@ -22,5 +21,5 @@ var ChatMessage = (function () {
         return this.sentTime;
     };
     return ChatMessage;
-}());
+})();
 exports.ChatMessage = ChatMessage;

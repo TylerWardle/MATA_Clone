@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 // This class represents a registered user in the system. 
 // This class is used to verify a user before granting them
 // access to the system.
@@ -40,7 +39,7 @@ var RegisteredUser = (function () {
         return this.secretAnswer;
     };
     return RegisteredUser;
-}());
+})();
 exports.RegisteredUser = RegisteredUser;
 var Guid = (function () {
     function Guid() {
@@ -52,4 +51,4 @@ var Guid = (function () {
         });
     };
     return Guid;
-}());
+})();

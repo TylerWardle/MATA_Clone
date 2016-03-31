@@ -24,6 +24,6 @@ var Home = (function () {
         module.exports = router;
     };
     return Home;
-}());
+})();
 var home = new Home();
 home.startHome();

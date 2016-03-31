@@ -1,5 +1,4 @@
 // A callback function is passed in as a parameter for every method to make operations in mongoose synchronous
-"use strict";
 var ComicCell = (function () {
     // intializing a comicCell object establishes a DB connection
     function ComicCell(mongoose) {
@@ -151,5 +150,5 @@ var ComicCell = (function () {
     };
     ComicCell.comicCell = null; // static class variable
     return ComicCell;
-}());
+})();
 exports.ComicCell = ComicCell;

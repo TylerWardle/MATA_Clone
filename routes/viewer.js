@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-"use strict";
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Service = require('../services/SearchBrowseService');
@@ -26,6 +25,6 @@ var viewer = (function () {
         module.exports = router;
     };
     return viewer;
-}());
+})();
 var Viewer = new viewer();
 Viewer.startViewer();

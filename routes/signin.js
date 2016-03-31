@@ -1,4 +1,3 @@
-"use strict";
 var GlobalChat = require('../models/GlobalChat');
 var Signin = (function () {
     function Signin() {
@@ -53,6 +52,6 @@ var Signin = (function () {
         module.exports = router;
     };
     return Signin;
-}());
+})();
 var signin = new Signin();
 signin.startSignin();

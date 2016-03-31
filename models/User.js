@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
-"use strict";
 var User = (function () {
     function User(name, password) {
         this.name = name;
@@ -13,5 +12,5 @@ var User = (function () {
         return this.password;
     };
     return User;
-}());
+})();
 exports.User = User;

@@ -1,4 +1,3 @@
-"use strict";
 var ChatMessage = require('./ChatMessage');
 var ChatUser = require('./ChatUser');
 /*T This class models a global chat available to
@@ -56,7 +55,7 @@ var GlobalChat = (function () {
     // This instance will be used but chat, signin, and logout routers.
     GlobalChat._instance = new GlobalChat();
     return GlobalChat;
-}());
+})();
 exports.GlobalChat = GlobalChat;
 // Trying to figure out how to use a dynamic list.......
 var List = (function () {
@@ -73,7 +72,7 @@ var List = (function () {
         return this.items[index];
     };
     return List;
-}());
+})();
 var Map = (function () {
     function Map() {
         this.items = {};
@@ -88,4 +87,4 @@ var Map = (function () {
         return this.items[key];
     };
     return Map;
-}());
+})();

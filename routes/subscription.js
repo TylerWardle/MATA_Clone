@@ -1,6 +1,5 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
-"use strict";
 var SubscriptionService = require('../services/SubscriptionServiceProvider');
 var Subscription = (function () {
     function Subscription() {
@@ -31,6 +30,6 @@ var Subscription = (function () {
         module.exports = router;
     };
     return Subscription;
-}());
+})();
 var subscription = new Subscription();
 subscription.startSubscription();
