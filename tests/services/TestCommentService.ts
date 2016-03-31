@@ -12,7 +12,8 @@ import CommentService = require('../services/CommentService');
 describe("Test Insert Comment", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService;
-  	cs.insert("dummy comment", "dummy authorID", "dummy comicID", (commentID: any): any => {
+    var comicID = "507f191e810c19729de861c8";
+  	cs.insert("dummy comment", "dummy authorID", comicID, (commentID: any): any => {
   		expect(commentID).toBeDefined(); 
   	});
   });
@@ -21,8 +22,8 @@ describe("Test Insert Comment", () =>{
 describe("Test Get Comment", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService
-  	var dummyCommentID = "123456789";
-  	cs.get(dummyCommentID, (comment: any): any => {
+  	var CommentID = "507f191e810c19729de860ea";
+  	cs.get(CommentID, (comment: any): any => {
         expect(comment.comment).toEqual("dummy comment");
         expect(comment.authorID).toEqual("dummy authorID");
         expect(comment.authorUsername).toBeDefined();
@@ -35,8 +36,8 @@ describe("Test Get Comment", () =>{
 describe("Test Get All Comments", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService
-  	var dummyComicID = "dummy ComicID";
-  	cs.getAll(dummyComicID, (comments: any): any => {
+  	var comicID = "507f191e810c19729de861c8";
+  	cs.getAll(comicID, (comments: any): any => {
         expect(comments.length).toEqual(1);
 
         expect(comments[0].comment).toEqual("dummy comment");
@@ -51,7 +52,7 @@ describe("Test Get All Comments", () =>{
 describe("Test Delete Comments", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService
-  	var commentID = "123456789";
+  	var commentID = "507f191e810c19729de860ea";
   	var userID = "dummy userID";
   	cs.delete(commentID, "non existent userID", (isDeleted: boolean): any => {	// Test handler for a failed delete
   		expect(isDeleted).toBeFalsy();
@@ -66,7 +67,7 @@ describe("Test Delete Comments", () =>{
 describe("Test Delete All Comments", () =>{
   it("contains spec with an expectation", () => {
   	var cs = new CommentService.CommentService
-  	var commentID = "123456789";
+  	var commentID = "507f191e810c19729de94df8";
   	var userID = "dummy userID";
   	cs.insert("dummy comment", "dummy authorID", "dummy comicID", (commentID: any): any => {
   		expect(commentID).toBeDefined(); 
