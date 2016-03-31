@@ -1,3 +1,4 @@
+"use strict";
 var CommentDbAccessor = require('../data_accessors/CommentDbAccessor');
 var Comic = require('../models/Comic');
 var CommentService = (function () {
@@ -65,5 +66,5 @@ var CommentService = (function () {
         });
     };
     return CommentService;
-})();
+}());
 exports.CommentService = CommentService;

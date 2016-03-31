@@ -1,3 +1,4 @@
+"use strict";
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 var Comic = require('../models/Comic');
@@ -68,5 +69,5 @@ var VotesServiceProvider = (function () {
         return true;
     };
     return VotesServiceProvider;
-})();
+}());
 exports.VotesServiceProvider = VotesServiceProvider;

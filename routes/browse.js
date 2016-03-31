@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var BrowseService = require('../services/BrowseService');
 var Browse = (function () {
     function Browse() {
@@ -10,6 +11,10 @@ var Browse = (function () {
         router.get('/', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getComicsSortedByTitle(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -18,6 +23,10 @@ var Browse = (function () {
         router.get('/byTitle', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getComicsSortedByTitle(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -26,6 +35,10 @@ var Browse = (function () {
         router.get('/byAuthor', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getComicsSortedByAuthor(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -34,6 +47,10 @@ var Browse = (function () {
         router.get('/byPublicationDate/Oldest', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getLeastRecentlyPublishedComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -42,6 +59,10 @@ var Browse = (function () {
         router.get('/byPublicationDate/Newest', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getMostRecentlyPublishedComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -50,6 +71,10 @@ var Browse = (function () {
         router.get('/byGenre/zombies', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getZombieComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -58,6 +83,10 @@ var Browse = (function () {
         router.get('/byGenre/post_apocalyptic', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getPostApocalypticComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -66,6 +95,10 @@ var Browse = (function () {
         router.get('/byGenre/humor', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getHumorComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -74,6 +107,10 @@ var Browse = (function () {
         router.get('/byGenre/superhero', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getSuperheroComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -82,6 +119,10 @@ var Browse = (function () {
         router.get('/byGenre/action_adventure', function (req, res) {
             var browseService = new BrowseService.BrowseService(req, res);
             browseService.getActionAdventureComics(function (comicObjs) {
+                if (comicObjs.length == 0) {
+                    res.render('browseResults', { "Comics": null, "header": req.headers['host'] + "/webcomic/", "ComicCells": null });
+                    return;
+                }
                 browseService.getRepresentativeImages(comicObjs, function (thumbnailArr) {
                     res.render('browseResults', { "Comics": comicObjs, "header": req.headers['host'] + "/webcomic/", "ComicCells": thumbnailArr });
                 });
@@ -90,6 +131,6 @@ var Browse = (function () {
         module.exports = router;
     };
     return Browse;
-})();
+}());
 var browse = new Browse();
 browse.startBrowse();

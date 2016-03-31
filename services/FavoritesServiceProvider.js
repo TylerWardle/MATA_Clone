@@ -1,3 +1,4 @@
+"use strict";
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
 var Comic = require('../models/Comic');
@@ -69,5 +70,5 @@ var FavoritesServiceProvider = (function () {
         return true;
     };
     return FavoritesServiceProvider;
-})();
+}());
 exports.FavoritesServiceProvider = FavoritesServiceProvider;

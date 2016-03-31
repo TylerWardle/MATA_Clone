@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var GlobalChat = require('../models/GlobalChat');
 var LogoutServiceProvider = require('../services/LogoutServiceProvider');
 var LogoutSP = new LogoutServiceProvider.LogoutServiceProvider();
@@ -21,6 +22,6 @@ var Logout = (function () {
         module.exports = router;
     };
     return Logout;
-})();
+}());
 var logout = new Logout();
 logout.startLogout();

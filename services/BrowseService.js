@@ -1,3 +1,4 @@
+"use strict";
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var BrowseService = (function () {
@@ -69,7 +70,7 @@ var BrowseService = (function () {
         });
     };
     return BrowseService;
-})();
+}());
 exports.BrowseService = BrowseService;
 /*
    // sends client a list of comicID links to published web comics and a list of its representative images

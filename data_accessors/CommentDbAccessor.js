@@ -1,3 +1,4 @@
+"use strict";
 var CommentDbAccessor = (function () {
     function CommentDbAccessor(mongoose) {
         this.mongoose = mongoose;
@@ -66,5 +67,5 @@ var CommentDbAccessor = (function () {
     };
     CommentDbAccessor.comment = null;
     return CommentDbAccessor;
-})();
+}());
 exports.CommentDbAccessor = CommentDbAccessor;

@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Service = require('../services/SearchBrowseService');
@@ -23,6 +24,6 @@ var SearchBrowseResults = (function () {
         module.exports = router;
     };
     return SearchBrowseResults;
-})();
+}());
 var searchBrowseResults = new SearchBrowseResults();
 searchBrowseResults.startSearchBrowseResults();

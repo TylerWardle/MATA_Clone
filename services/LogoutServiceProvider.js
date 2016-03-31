@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/>
+"use strict";
 var express = require('express');
 var router = express.Router();
 var LogoutServiceProvider = (function () {
@@ -13,5 +14,5 @@ var LogoutServiceProvider = (function () {
         return true;
     };
     return LogoutServiceProvider;
-})();
+}());
 exports.LogoutServiceProvider = LogoutServiceProvider;
