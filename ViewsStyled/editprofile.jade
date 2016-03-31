@@ -1,25 +1,22 @@
 extends layoutLoggedIn
 
 block content
-  div(id="form")
-    h1.
-      #{user.username}
-  form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
-    div(id="aboutmeEdit") 
-        textarea#aboutMe(type="text", name="aboutMe",rows=5, cols=50)
-           | #{user.aboutMe}
-    br
-    div(id="editProfilePicture")
-        input#image(type="file",name="image")
-    br
-    div(id="profilePicture", class="profilePicture")
-        p
-            |<img align="left" src="#{user.profilePicture}" alt="" border="0" width="170" height="190" />
-    div(id="editProfilePictureMessage")
-      p Change Your Picture 
-      br
-    div(id="submitEditProfile")
-      button#btnUpdateProfile(type="submit") Save Changes
-  div(id="cancelEditProfile")
-    form#cancelEdit(type="cancelEdit", method="get", action="/profile")
-        button#btnCancelUpdateProfile(type="submit") Cancel Edit
+	div(id="columnOne")
+		h1.
+			#{user.username}
+		form#formEditProfile(name="profile",method="post",action="/profile/edit", enctype='multipart/form-data')
+			div(class="profilePicture")
+				img(src="#{user.profilePicture}")
+			|Upload a new profile picture 
+			br
+			input#image(type="file",name="image")
+			div(id="aboutmeEdit") 
+				|About
+				br
+				textarea#aboutMe(type="text", name="aboutMe")
+					|#{user.aboutMe}
+			div(id="submitEditProfile")
+				button#btnUpdateProfile(type="submit") Save Changes
+			div(id="cancelEditProfile")
+				form#cancelEdit(type="cancelEdit", method="get", action="/profile")
+					button#btnCancelUpdateProfile(type="submit") Cancel Edit
