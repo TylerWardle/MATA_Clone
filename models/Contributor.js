@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -19,4 +20,4 @@ var Contributor = (function (_super) {
         this.comicIDs.push(comicId);
     };
     return Contributor;
-})(RegisteredUser_1.RegisteredUser);
+}(RegisteredUser_1.RegisteredUser));

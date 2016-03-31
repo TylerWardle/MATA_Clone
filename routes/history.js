@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var HistoryProvider = require('../services/HistoryServiceProvider');
 /* This router is responsible for storing and retrieving user history.
     For now only  all history will be stored. */
@@ -26,6 +27,6 @@ var ViewingHistory = (function () {
         module.exports = router;
     };
     return ViewingHistory;
-})();
+}());
 var viewingHistory = new ViewingHistory();
 viewingHistory.startViewingHistory();
