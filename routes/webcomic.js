@@ -158,6 +158,16 @@ var Webcomic = (function () {
                                 //redirect to the newly created comic
                                 res.redirect('/webcomic/id/' + comicID);
                             });
+                            easyimg.rescrop({
+                                src: newPath, dst: './uploads/thumbnails/' + imgName,
+                                width: 128, height: 128,
+                                //cropwidth:128, cropheight:128,
+                                x: 0, y: 0
+                            }).then(function (image) {
+                                console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
+                            }, function (err) {
+                                console.log(err);
+                            });
                         }
                     });
                 });
