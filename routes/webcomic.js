@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var CommentService = require('../services/CommentService');
@@ -431,6 +432,6 @@ var Webcomic = (function () {
         module.exports = router;
     };
     return Webcomic;
-})();
+}());
 var webcomic = new Webcomic();
 webcomic.startWebcomic();

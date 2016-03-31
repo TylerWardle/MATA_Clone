@@ -1,3 +1,4 @@
+"use strict";
 var ForgotPassword = (function () {
     function ForgotPassword() {
     }
@@ -59,6 +60,6 @@ var ForgotPassword = (function () {
         module.exports = router;
     };
     return ForgotPassword;
-})();
+}());
 var forgotPassword = new ForgotPassword();
 forgotPassword.startForgotPassword();

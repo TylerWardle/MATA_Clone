@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var RSProvider = require('../services/RegisteredUserServiceProvider');
 var Register = (function () {
     function Register() {
@@ -79,6 +80,6 @@ var Register = (function () {
         module.exports = router;
     };
     return Register;
-})();
+}());
 var register = new Register();
 register.startRegister();

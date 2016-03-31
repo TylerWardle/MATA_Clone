@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var CommentService = require('../services/CommentService');
 var Comment = (function () {
     function Comment() {
@@ -41,6 +42,6 @@ var Comment = (function () {
         module.exports = router;
     };
     return Comment;
-})();
+}());
 var comment = new Comment();
 comment.startComment();

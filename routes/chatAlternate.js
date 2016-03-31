@@ -1,5 +1,6 @@
 ///<reference path='../types/DefinitelyTyped/node/node.d.ts'/>
 ///<reference path='../types/DefinitelyTyped/express/express.d.ts'/> 
+"use strict";
 var ChatClient = require('../models/ChatClient');
 /* This router is responsible for updating the global chat.*/
 var ChatAlternate = (function () {
@@ -60,6 +61,6 @@ var ChatAlternate = (function () {
     };
     ChatAlternate.CHAT_TIME_OUT = 10000;
     return ChatAlternate;
-})();
+}());
 var chatAlternate = new ChatAlternate();
 chatAlternate.startChat();
