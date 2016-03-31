@@ -127,34 +127,24 @@ block content
 				input(placeholder="Enter a comment...", type="text", name="comment")
 				button.btn.btn-sm(type="submit") Post
 		
-		div(id="newCell" class="newCellDialog")
+				//If user is a contributor show the add cell button
+	p #{viewMode}
+	-if(accountType == "contributor" && webcomic.openToContribution)
+		div(id="action-buttons")
+			div(class="AddCell")
+				a(href="#newCell", name="newCellBtn")
+					img(src="/assets/arrows.svg")
+	br
+	br
+	br
+	
+	div(id="newCell" class="newCellDialog")
+		div
+			a(href="#close" title="Close" class="close") X
+			h2.
+				Add a new Cell!
 			div
-				a(href="#close" title="Close" class="close") X
-				h2.
-					Add a new Cell!
-				div
-					form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
-						input#firstImage(type="file",name="image", required="")
+				form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
+					input#firstImage(type="file",name="image", required="")
 					br
-					br
-			//If user is a contributor show the add cell button
-		//p #{viewMode}
-		hide
-			-if(accountType == "contributor" && webcomic.openToContribution)
-				div(id="action-buttons")
-					div(class="AddCell")
-						a(href="#newCell", name="newCellBtn")
-							img(src="/assets/arrows.svg")
-		br
-		br
-		br
-		div(id="newCell" class="newCellDialog")
-			div
-				a(href="#close" title="Close" class="close") X
-				h2.
-					Add a new Cell!
-				div
-					form#formComicCell(name="newComicCell", method="post", action="/webcomic/newCell/#{webcomic._id}", enctype='multipart/form-data')
-						input#firstImage(type="file",name="image", required="")
-						br
-						button#btnSubmit(type="submit") Submit
+					button#btnSubmit(type="submit") Submit
