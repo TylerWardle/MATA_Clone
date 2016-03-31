@@ -3,6 +3,8 @@
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Service = require('../services/SearchBrowseService');
+var ViewerServiceProvider = require('../services/ViewerServiceProvider');
+var ViewerSP = new ViewerServiceProvider.ViewerServiceProvider();
 var viewer = (function () {
     function viewer() {
     }
@@ -18,11 +20,7 @@ var viewer = (function () {
             var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);
             //var comicsList = "https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60e, https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60f";
-            viewers.findOne({ guid: ObjectID(req.cookies._id) }, function (error, viewer) {
-                s.getComicsForViewer(req, function (comics) {
-                    res.render('viewer', { "viewer": viewer, "header": req.headers['host'] + "/webcomic/", "comics": comics });
-                });
-            });
+            ViewerSP.getViewer(req, res);
         });
         module.exports = router;
     };

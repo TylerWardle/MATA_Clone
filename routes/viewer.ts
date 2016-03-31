@@ -4,6 +4,10 @@
 import Comic = require('../models/Comic');
 import ComicCell = require('../models/ComicCell');
 import Service = require('../services/SearchBrowseService');
+import ViewerServiceProvider = require('../services/ViewerServiceProvider');
+
+var ViewerSP = new ViewerServiceProvider.ViewerServiceProvider();
+
 
 class viewer{
     
@@ -24,12 +28,7 @@ class viewer{
         var s = new Service.SearchBrowseService(req.mongoose);
         //var comicsList = "https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60e, https://fast-beach-12058.herokuapp.com/webcomic/id/56bac1a83da2ef110089f60f";
     
-    	viewers.findOne({guid: ObjectID(req.cookies._id)}, function(error, viewer)
-    	{
-    		s.getComicsForViewer(req,(comics:any): void =>{
-                  res.render('viewer',{"viewer": viewer,"header": req.headers['host'] + "/webcomic/", "comics": comics});    
-            }); 
-    	});
+        ViewerSP.getViewer(req, res);
     });
     
     module.exports = router;

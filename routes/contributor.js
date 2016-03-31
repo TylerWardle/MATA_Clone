@@ -3,6 +3,8 @@
 var Comic = require('../models/Comic');
 var ComicCell = require('../models/ComicCell');
 var Service = require('../services/SearchBrowseService');
+var ContributorServiceProvider = require('../services/ContributorServiceProvider');
+var ContributorSP = new ContributorServiceProvider.ContributorServiceProvider();
 var contributor = (function () {
     function contributor() {
     }
@@ -18,12 +20,7 @@ var contributor = (function () {
             var c = new Comic.Comic(req.mongoose);
             var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);
-            contributors.findOne({ guid: ObjectID(req.cookies._id) }, function (error, contributor) {
-                s.getComics(req, function (comics) {
-                    //console.log(comics);
-                    res.render('contributor', { "contributor": contributor, "header": req.headers['host'] + "/webcomic/", "comics": comics });
-                });
-            });
+            ContributorSP.getContributor(req, res);
         });
         module.exports = router;
     };

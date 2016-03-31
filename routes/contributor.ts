@@ -4,6 +4,10 @@
 import Comic = require('../models/Comic');
 import ComicCell = require('../models/ComicCell');
 import Service = require('../services/SearchBrowseService');
+import ContributorServiceProvider = require('../services/ContributorServiceProvider');
+
+var ContributorSP = new ContributorServiceProvider.ContributorServiceProvider();
+
 
 class contributor{
     
@@ -23,16 +27,11 @@ class contributor{
             var cc = new ComicCell.ComicCell(req.mongoose);
             var s = new Service.SearchBrowseService(req.mongoose);
             
-        	contributors.findOne({guid: ObjectID(req.cookies._id)}, function(error, contributor)
-        	{
-                s.getComics(req,(comics:any): void =>{
-                  //console.log(comics);
-        		  res.render('contributor',{"contributor": contributor,"header": req.headers['host'] + "/webcomic/", "comics": comics});	
-                });	
-        	});
+            ContributorSP.getContributor(req, res);
+
         });
 
-    module.exports = router;
+    module. exports = router;
     }
     
 }

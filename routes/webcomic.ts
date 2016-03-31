@@ -6,6 +6,8 @@ import ComicCell = require('../models/ComicCell');
 import RegisteredUser = require('../models/RegisteredUser');
 import Contributor = require('../models/Contributor');
 import CommentService = require('../services/CommentService');
+import VotesServiceProvider = require('../services/VotesServiceProvider');
+import FavoritesServiceProvider = require('../services/FavoritesServiceProvider');
 
 
 class Webcomic {
