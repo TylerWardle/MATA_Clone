@@ -22,11 +22,7 @@ export class RegisteredUserServiceProvider
 			return false;
 		} else{
 			
-			var username = req.body.username;
-			var firstName = req.body.firstName;
-			var lastName = req.body.lastName;
 			var accountType = req.body.accountType;
-			var password = req.body.password;
 			
 			db.insert({
 				"username": req.body.username.toLowerCase(),
